@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Martin Health</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f1117'/%3E%3Cpath d='M50 15 C50 15 25 45 25 62 C25 76 36.5 87 50 87 C63.5 87 75 76 75 62 C75 45 50 15 50 15Z' fill='%232dd4bf'/%3E%3Cpath d='M50 15 C50 15 25 45 25 62 C25 76 36.5 87 50 87 C63.5 87 75 76 75 62 C75 45 50 15 50 15Z' fill='url(%23wg)'/%3E%3ClinearGradient id='wg' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2360a5fa' stop-opacity='0.6'/%3E%3Cstop offset='1' stop-color='%232dd4bf' stop-opacity='0'/%3E%3C/linearGradient%3E%3Ctext x='50' y='68' text-anchor='middle' font-family='Georgia,serif' font-size='18' font-weight='bold' fill='%230f1117'%3EpH%3C/text%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Martin Health">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+:root {
+  --bg:#0f1117;--bg2:#161921;--bg3:#1e2230;--card:#1a1f2e;--card2:#222840;
+  --border:#2a3050;--text:#e8eaf2;--text2:#8b91b0;--text3:#555f80;
+  --green:#4ade80;--green2:#166534;--green-bg:#052e16;
+  --orange:#fb923c;--orange-bg:#1c0a00;
+  --red:#f87171;--red-bg:#1a0000;
+  --blue:#60a5fa;--teal:#2dd4bf;--accent:#4ade80;
+  --radius:14px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5;padding-bottom:80px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 2px;background:none;border:none;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:9px;cursor:pointer;transition:color 0.2s}
+.nav-btn.active{color:var(--accent)}
+.nav-btn svg{width:20px;height:20px}
+.screen{display:none;padding:16px;max-width:480px;margin:0 auto}
+.screen.active{display:block}
+.header{padding:20px 16px 8px;max-width:480px;margin:0 auto}
+.header h1{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text)}
+.today-date{font-size:12px;color:var(--text3);margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.card-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.kpi-label{font-size:11px;color:var(--text3);margin-bottom:4px}
+.kpi-value{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);line-height:1}
+.kpi-unit{font-size:12px;color:var(--text2);margin-left:3px}
+.kpi-status{font-size:11px;margin-top:4px}
+.kpi-status.good{color:var(--green)}.kpi-status.warn{color:var(--orange)}.kpi-status.bad{color:var(--red)}
+.hydration-bar-bg{height:10px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.hydration-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));border-radius:99px;transition:width .4s ease}
+.hydration-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-top:5px}
+.water-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.water-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--teal);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:10px 4px;cursor:pointer;text-align:center}
+.water-btn:active{background:var(--card2);transform:scale(.96)}
+.water-glasses{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.glass{width:34px;height:34px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;background:var(--bg3)}
+.glass.filled{border-color:var(--teal);background:rgba(45,212,191,.12)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.check-item:last-child{border-bottom:none}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+.check-box.checked{background:var(--green);border-color:var(--green)}
+.check-box.checked::after{content:'✓';color:#000;font-size:13px;font-weight:700}
+.check-label{font-size:14px;color:var(--text);font-weight:500}
+.check-sub{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.4}
+.check-why{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.4;font-style:italic}
+.week-tabs{display:flex;gap:6px;margin-bottom:14px}
+.week-tab{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px;cursor:pointer;text-align:center;transition:all .2s}
+.week-tab.active{background:var(--card2);border-color:var(--accent);color:var(--accent)}
+.day-tabs{display:flex;gap:4px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;scrollbar-width:none}
+.day-tabs::-webkit-scrollbar{display:none}
+.day-tab{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 12px;cursor:pointer;transition:all .2s}
+.day-tab.active{background:var(--card2);border-color:var(--accent);color:var(--accent)}
+.meal-time{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
+.meal-kcal{color:var(--orange);font-size:12px}
+.meal-content{background:var(--bg3);border-radius:var(--radius-sm);padding:12px;font-size:14px;line-height:1.5}
+.meal-content strong{color:var(--accent)}
+.meal-why{background:var(--bg);border-radius:var(--radius-sm);padding:10px 12px;font-size:12px;color:var(--text3);line-height:1.5;margin-top:6px;border-left:2px solid var(--border)}
+.recipe-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--blue);margin-top:6px;cursor:pointer;background:none;border:none;padding:0;font-family:'DM Sans',sans-serif}
+.section-div{height:1px;background:var(--border);margin:14px 0}
+.input-row{display:flex;gap:8px;align-items:center;margin-top:8px}
+.inp{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:10px 12px;outline:none}
+.inp:focus{border-color:var(--accent)}
+.inp-label{font-size:13px;color:var(--text2);min-width:80px}
+.save-btn{background:var(--accent);color:#000;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:10px 16px;cursor:pointer;white-space:nowrap}
+.save-btn:active{opacity:.8}
+.btn{display:block;width:100%;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:12px;cursor:pointer;text-align:center;margin-top:8px}
+.btn-primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+.info-box{background:var(--bg3);border-radius:var(--radius-sm);padding:12px;font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;border-left:3px solid var(--accent)}
+.info-box strong{color:var(--text)}
+.traffic-item{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm);font-size:13px;margin-bottom:4px}
+.traffic-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.traffic-dot.g{background:var(--green)}.traffic-dot.o{background:var(--orange)}.traffic-dot.r{background:var(--red)}
+.traffic-name{color:var(--text);font-weight:500}
+.traffic-reason{font-size:11px;color:var(--text3);margin-top:2px}
+.ph-scale{display:flex;height:12px;border-radius:99px;overflow:hidden;margin:8px 0}
+.ph-seg{flex:1}
+.ph-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3)}
+.alert{padding:12px 14px;border-radius:var(--radius-sm);font-size:13px;margin-bottom:10px;line-height:1.5}
+.alert-green{background:var(--green-bg);border:1px solid var(--green2);color:var(--green)}
+.alert-orange{background:var(--orange-bg);border:1px solid #92400e;color:var(--orange)}
+.alert-red{background:var(--red-bg);border:1px solid #7f1d1d;color:var(--red)}
+.monitor-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.monitor-card{background:var(--bg3);border-radius:var(--radius-sm);padding:12px}
+.monitor-label{font-size:11px;color:var(--text3);margin-bottom:6px}
+.monitor-val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text)}
+.monitor-unit{font-size:11px;color:var(--text2)}
+.monitor-date{font-size:11px;color:var(--text3);margin-top:4px}
+.trend-up{color:var(--red)}.trend-down{color:var(--green)}
+.shop-category{margin-bottom:16px}
+.shop-category-title{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.shop-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.shop-item:last-child{border-bottom:none}
+.shop-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:2px}
+.shop-check.checked{background:var(--green);border-color:var(--green)}
+.shop-check.checked::after{content:'✓';color:#000;font-size:11px;font-weight:700}
+.shop-name{font-size:14px;color:var(--text);font-weight:500}
+.shop-name.checked{text-decoration:line-through;color:var(--text3)}
+.shop-note{font-size:12px;color:var(--text2);margin-top:2px}
+/* RECEPTY */
+.recipe-search{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:10px 12px;outline:none;margin-bottom:12px}
+.recipe-search:focus{border-color:var(--accent)}
+.recipe-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+.recipe-card-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px}
+.recipe-card-meta{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.recipe-badge{font-size:11px;padding:3px 8px;border-radius:99px;border:1px solid var(--border);color:var(--text2)}
+.recipe-badge.kcal{color:var(--orange);border-color:var(--orange-bg)}
+.recipe-badge.time{color:var(--blue)}
+.recipe-badge.meal{color:var(--green);border-color:var(--green2)}
+.recipe-section-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin:10px 0 6px}
+.ingredient-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px}
+.ingredient-row:last-child{border-bottom:none}
+.ingredient-name{color:var(--text)}
+.ingredient-amount{color:var(--accent);font-weight:600;flex-shrink:0;margin-left:8px}
+.step-row{display:flex;gap:10px;padding:6px 0;font-size:13px;color:var(--text2);line-height:1.5}
+.step-num{color:var(--accent);font-weight:700;flex-shrink:0;width:20px}
+.recipe-tip{background:var(--bg);border-radius:var(--radius-sm);padding:10px;font-size:12px;color:var(--text3);margin-top:8px;border-left:2px solid var(--orange);line-height:1.5}
+.recipe-filter-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.recipe-filter-tabs::-webkit-scrollbar{display:none}
+.rf-tab{flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 12px;cursor:pointer;transition:all .2s}
+.rf-tab.active{background:var(--card2);border-color:var(--accent);color:var(--accent)}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:20px 16px 40px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto}
+.modal-close{float:right;background:none;border:none;color:var(--text2);font-size:24px;cursor:pointer;margin-top:-4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Martin Health</h1>
+  <p class="today-date" id="todayDate"></p>
+</div>
+
+<!-- DASHBOARD -->
+<div class="screen active" id="screen-dashboard">
+
+  <!-- FÁZA 1 KARTA -->
+  <div id="phase-card"></div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">pH moču (ráno)</div><div class="kpi-value" id="kpi-ph">–</div><div class="kpi-status" id="kpi-ph-status">Cieľ: &gt;6,5</div></div>
+    <div class="kpi"><div class="kpi-label">Voda dnes</div><div class="kpi-value" id="kpi-water">0<span class="kpi-unit">dl</span></div><div class="kpi-status" id="kpi-water-status">Cieľ: 35–40 dl</div></div>
+    <div class="kpi"><div class="kpi-label">Váha</div><div class="kpi-value" id="kpi-weight">–<span class="kpi-unit">kg</span></div><div class="kpi-status" id="kpi-weight-status">Cieľ: –10,4 kg</div></div>
+    <div class="kpi"><div class="kpi-label">Kyselina močová</div><div class="kpi-value" id="kpi-km">–</div><div class="kpi-status" id="kpi-km-status">Cieľ: &lt;450</div></div>
+  </div>
+
+  <!-- Kompaktná hydratácia -->
+  <div class="card">
+    <div class="card-title">💧 Voda dnes</div>
+    <div class="hydration-bar-bg"><div class="hydration-bar-fill" id="hydration-bar" style="width:0%"></div></div>
+    <div class="hydration-label"><span id="water-label">0 dl</span><span>Cieľ 35–40 dl</span></div>
+    <div class="water-btns">
+      <button class="water-btn" onclick="addWater(2)">+2 dl</button>
+      <button class="water-btn" onclick="addWater(2.5)">+2.5 dl</button>
+      <button class="water-btn" onclick="addWater(3)">+3 dl</button>
+      <button class="water-btn" onclick="addWater(-2)" style="color:var(--red)">–2 dl</button>
+    </div>
+  </div>
+
+  <div id="ph-alert-box"></div>
+
+  <div class="card">
+    <div class="card-title">⏰ Dnešný harmonogram</div>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">06:00</span><span>Vstávanie — citrátová bomba + kolagén nalačno</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">07:00</span><span>Voda + suplementy ráno (Serapeptáza)</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">08:00</span><span>Voda</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">09:30</span><span>Raňajky (v práci) — štart jedálenského okna</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">10:30</span><span>BioMineral pastilka + voda</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">11:00</span><span>Urea-Detox šťava</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">11:30</span><span>Obed v jedálni</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">12:00</span><span>Q10 + Vit E po obede</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">13:00</span><span>B9 folát + voda</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">14:00</span><span>Bylinkový čaj + voda</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">16:00</span><span>Zinok + voda</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">17:00</span><span>Krilový olej + príchod domov</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--accent);font-weight:600;width:50px">17:30</span><span style="color:var(--accent);font-weight:500">Večera doma — koniec jedálenského okna</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">19:00</span><span>BioMineral 2. pastilka + voda</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">20:30</span><span>Spine-Shot + bylinkový čaj</span></div>
+      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">22:00</span><span>Mg taurát + B6 pred spaním</span></div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3)">⏱ Pôst: 17:30 — 09:30 = 16 hodín presne (16/8)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✅ Ranné záväzky</div>
+    <div id="morning-checks"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">💊 Suplementy & čaje dnes</div>
+    <div id="suppl-list"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Monitoring — zadať hodnoty</div>
+    <div class="input-row"><span class="inp-label">Váha (kg)</span><input class="inp" type="number" id="weight-input" placeholder="napr. 70.5" step="0.1"><button class="save-btn" onclick="saveWeight()">Uložiť</button></div>
+    <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Merať každé ráno po vstávaní — pred jedlom, po toalete.</div>
+    <div class="input-row"><span class="inp-label">KM (μmol/l)</span><input class="inp" type="number" id="km-input" placeholder="napr. 490"><button class="save-btn" onclick="saveKm()">Uložiť</button></div>
+    <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Meria mama každé 2 týždne. Zadaj po každom meraní.</div>
+    <div class="input-row"><span class="inp-label">Tlak (mmHg)</span><input class="inp" type="number" id="bp-input" placeholder="napr. 125"><button class="save-btn" onclick="saveBp()">Uložiť</button></div>
+    <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Meria mama každé 2 týždne. Zadaj po každom meraní.</div>
+    <div style="margin-top:14px" id="monitor-history"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎯 Cieľové hodnoty</div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:13px">
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Váha</span><span>cieľ <strong style="color:var(--accent)">–10,4 kg</strong></span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">KM</span><span>cieľ <strong style="color:var(--accent)">&lt;450 μmol/l</strong> (štart: 518)</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">pH moču</span><span>cieľ <strong style="color:var(--accent)">&gt;6,5</strong> (štart: 5,0)</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Krvný tlak</span><span>cieľ <strong style="color:var(--accent)">&lt;130 mmHg</strong></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚨 Kedy okamžite k lekárovi</div>
+    <div class="alert alert-red">🩸 <strong>Krv v moči</strong> — ružové alebo hnedé sfarbenie</div>
+    <div class="alert alert-red">⚡ <strong>Renálna kolika</strong> — ostrá bolesť v boku do slabín</div>
+    <div class="alert alert-red">🦵 <strong>Slabosť nôh / znecitlivenie</strong> — ihneď neurológ</div>
+    <div class="alert alert-orange">⚠️ <strong>Neaktivita &gt;60 min</strong> — Leiden V — vstať, prejsť 200m</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ Kritické pravidlá suplementácie</div>
+    <div class="alert alert-red" style="margin-bottom:8px">🚫 <strong>Kolagén VYSADIŤ</strong> ak pH klesne pod 5,5 — kyslé prostredie + dusíkatá záťaž = riziko kameňov v obličkách</div>
+    <div class="alert alert-orange" style="margin-bottom:8px">⏱️ <strong>BioMineral pastilky (Biokomplex)</strong> — 10 minút pred aj po nič nejesť ani nepiť. Vstrebávajú sa cez sliznicu ústnu, nie cez žalúdok.</div>
+    <div class="alert alert-orange" style="margin-bottom:8px">🚫 <strong>Zinok (16:00) a Horčík (22:00)</strong> — NIKDY naraz! Navzájom blokujú vstrebávanie.</div>
+    <div class="alert alert-orange" style="margin-bottom:8px">🚫 <strong>Vitamín C max 500mg</strong> — viac sa premieňa na oxaláty (detegované v moči).</div>
+    <div class="alert alert-red">🚫 <strong>NESUPLEMENTOVAŤ</strong>: B12, Vitamín D — DNA predispozícia k prirodzene vysokým hladinám. Zaťažuje pečeň (bilirubín v moči).</div>
+  </div>
+</div>
+
+<!-- JEDÁLNIČEK -->
+<div class="screen" id="screen-food">
+  <div class="info-box" style="margin-bottom:14px">
+    <strong>Jedálenské okno: 10:00 – 18:00</strong><br>
+    Pred 10:00 len voda + citrátová bomba. Po 18:00 len voda a čaje.<br>
+    <strong>Denný limit: ~1 800 kcal</strong>
+  </div>
+  <div class="week-tabs">
+    <button class="week-tab active" id="wt1" onclick="setWeek(1)">Týždeň 1</button>
+    <button class="week-tab" id="wt2" onclick="setWeek(2)">Týždeň 2</button>
+    <button class="week-tab" id="wt3" onclick="setWeek(3)">HCY 14 dní</button>
+  </div>
+  <div class="day-tabs" id="day-tabs"></div>
+  <div id="meal-content"></div>
+  <div class="section-div"></div>
+  <div class="card">
+    <div class="card-title">🚦 Semafor potravín</div>
+    <div style="font-size:12px;color:var(--green);font-weight:600;margin-bottom:6px">🟢 ZELENÁ – jedz slobodne</div>
+    <div id="traffic-green"></div>
+    <div style="font-size:12px;color:var(--orange);font-weight:600;margin:12px 0 6px">🟡 ORANŽOVÁ – s mierou</div>
+    <div id="traffic-orange"></div>
+    <div style="font-size:12px;color:var(--red);font-weight:600;margin:12px 0 6px">🔴 ČERVENÁ – stopka</div>
+    <div id="traffic-red"></div>
+  </div>
+</div>
+
+<!-- VODA & pH -->
+<div class="screen" id="screen-water">
+  <div class="card">
+    <div class="card-title">🍋 Citrátová bomba – každé ráno</div>
+    <div class="info-box">Citrón je kyslý, ale v tele sa premení na bikarbonát ktorý zvyšuje pH moču. Piješ nalačno aby ste neutralizoval nočnú acidózu — ráno máš pH najkyslé.</div>
+    <div style="background:var(--bg);border-radius:var(--radius-sm);padding:12px;margin-top:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:8px">📋 RECEPT</div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">1.</span><span>Vymač šťavu z <strong style="color:var(--text)">1 celého citróna</strong></span></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">2.</span><span>Pridaj šťavu z <strong style="color:var(--text)">½ limetky</strong></span></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">3.</span><span>Zmiešaj s <strong style="color:var(--text)">300 ml Rajec/Dobrá voda</strong></span></div>
+      <div style="display:flex;gap:8px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">4.</span><span>Vypi <strong style="color:var(--text)">ihneď po vstávaní</strong> — pred jedlom, kávou, čímkoľvek</span></div>
+    </div>
+    <div class="check-item" onclick="toggleDailyCheck('citrat')">
+      <div class="check-box" id="check-citrat"></div>
+      <div><div class="check-label">Citrátová bomba dnes splnená ✓</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💧 pH moču dnes ráno</div>
+    <div class="info-box">Meriavaš pH papierikom alebo digitálnym pH metrom. Tvoje štartové pH je 5,0 — veľmi kyslé. Cieľ je nad 6,5 kde sa kryštály rozpúšťajú namiesto hromadenia.</div>
+    <div class="input-row">
+      <input class="inp" type="number" id="ph-input" placeholder="napr. 5.5" step="0.1" min="4" max="9">
+      <button class="save-btn" onclick="savePh()">Uložiť</button>
+    </div>
+    <div style="margin-top:12px">
+      <div class="ph-scale">
+        <div class="ph-seg" style="background:#ef4444"></div>
+        <div class="ph-seg" style="background:#f97316"></div>
+        <div class="ph-seg" style="background:#eab308"></div>
+        <div class="ph-seg" style="background:#84cc16"></div>
+        <div class="ph-seg" style="background:#22c55e"></div>
+        <div class="ph-seg" style="background:#10b981"></div>
+        <div class="ph-seg" style="background:#06b6d4"></div>
+      </div>
+      <div class="ph-labels"><span>4 (kritické)</span><span>6,5 (cieľ)</span><span>9</span></div>
+    </div>
+    <div id="ph-message" style="margin-top:8px;font-size:13px;color:var(--text2)"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💧 Voda dnes</div>
+    <div class="info-box"><strong>Čo piť:</strong> Rajec alebo Dobrá voda v sklenej fľaši. Min. 2 fľaše (3 litre) + čaje a šťavy = celkom 35–40 dl.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
+    <div class="hydration-bar-bg"><div class="hydration-bar-fill" id="hydration-bar2" style="width:0%"></div></div>
+    <div class="hydration-label"><span id="water-label2">0 dl</span><span>Cieľ 35–40 dl</span></div>
+    <div class="water-btns" style="margin-top:10px">
+      <button class="water-btn" onclick="addWater(2)">+2 dl</button>
+      <button class="water-btn" onclick="addWater(2.5)">+2.5 dl</button>
+      <button class="water-btn" onclick="addWater(3)">+3 dl</button>
+      <button class="water-btn" onclick="addWater(-2)" style="color:var(--red)">–2 dl</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🥤 Urea-Detox šťava – ~11:00</div>
+    <div class="info-box">Odšťavená šťava ktorá pomáha obličkám filtrovať kyselinu močovú. Uhorka = diuretikum. Stonkový zeler = ftalidy ktoré zlepšujú prietok krvi obličkami.</div>
+    <div style="background:var(--bg);border-radius:var(--radius-sm);padding:12px;margin-top:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:8px">📋 RECEPT</div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">1.</span><span><strong style="color:var(--text)">250g šalátovej uhorky</strong> (dlhá zelená) — nakrájaj</span></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">2.</span><span><strong style="color:var(--text)">125g stonkového zeleru</strong> (nie listový!) — nakrájaj</span></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">3.</span><span>Odšťavuj v odšťavovači</span></div>
+      <div style="display:flex;gap:8px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">4.</span><span>Vypi okolo <strong style="color:var(--text)">11:00</strong> — pred obedom</span></div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:8px">💡 Bez odšťavovača: zjedz uhorku a zeler ako súčasť jedla.</div>
+    <div class="check-item" onclick="toggleDailyCheck('urea')">
+      <div class="check-box" id="check-urea"></div>
+      <div><div class="check-label">Urea-Detox šťava dnes hotová ✓</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ Spine-Shot – každý večer ~20:30</div>
+    <div class="info-box">Silný protizápalový shot pre chrbticu (L4/5). Zázvor + kurkuma tlmia zápal okolo nervových koreňov. Ľanový olej je nosič — bez tuku sa kurkumín skoro vôbec nevstrebe.</div>
+    <div style="background:var(--bg);border-radius:var(--radius-sm);padding:12px;margin-top:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:8px">📋 RECEPT</div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">1.</span><span><strong style="color:var(--text)">20g čerstvého zázvoru</strong> — odšťavuj alebo nastrúhaj + vytlač</span></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">2.</span><span><strong style="color:var(--text)">10g čerstvej kurkumy</strong> — odšťavuj (alebo ½ čl prášku)</span></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">3.</span><span>Pridaj <strong style="color:var(--text)">5ml ľanového oleja</strong></span></div>
+      <div style="display:flex;gap:8px;font-size:13px;color:var(--text2)"><span style="color:var(--accent);font-weight:700">4.</span><span>Vypi večer — po cvičení alebo pred spánkom</span></div>
+    </div>
+    <div class="check-item" onclick="toggleDailyCheck('spine')">
+      <div class="check-box" id="check-spine"></div>
+      <div><div class="check-label">Spine-Shot dnes hotový ✓</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🍵 Bylinková rotácia – aktuálny týždeň</div>
+    <div class="info-box">Každý týždeň iná skupina čajov — telo si nezvykne na jednu látku. Na varenie použi vodu z vodovodu. <strong>NIE čierny ani zelený čaj</strong> — oxaláty!</div>
+    <div id="tea-rotation-display"></div>
+    <div class="check-item" onclick="toggleDailyCheck('caj')" style="margin-top:8px">
+      <div class="check-box" id="check-caj"></div>
+      <div><div class="check-label">Bylinkový čaj dnes vypitý ✓ (2–3 šálky)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔄 Prehľad všetkých 4 skupín</div>
+    <div style="display:flex;flex-direction:column;gap:8px" id="tea-all-groups"></div>
+  </div>
+</div>
+
+<!-- RECEPTY -->
+<div class="screen" id="screen-recipes">
+  <div class="info-box" style="margin-bottom:12px;font-size:12px">
+    Všetky recepty sú pre <strong>1 porciu</strong>. Váž suroviny na začiatku — po pár týždňoch budeš odhadovať od oka.
+  </div>
+  <div class="recipe-filter-tabs">
+    <button class="rf-tab active" id="rf-all" onclick="filterRecipes('all')">Všetky</button>
+    <button class="rf-tab" id="rf-b" onclick="filterRecipes('b')">🌅 Raňajky</button>
+    <button class="rf-tab" id="rf-l" onclick="filterRecipes('l')">☀️ Obed</button>
+    <button class="rf-tab" id="rf-d" onclick="filterRecipes('d')">🌙 Večera</button>
+    <button class="rf-tab" id="rf-drink" onclick="filterRecipes('drink')">🥤 Šťavy & Shoty</button>
+  </div>
+  <input class="recipe-search" type="text" placeholder="🔍 Hľadaj recept..." oninput="searchRecipes(this.value)">
+  <div id="recipes-list"></div>
+</div>
+
+<!-- NÁKUP -->
+<div class="screen" id="screen-shop">
+  <div class="week-tabs">
+    <button class="week-tab active" id="swt1" onclick="setShopWeek(1)">Týždeň 1</button>
+    <button class="week-tab" id="swt2" onclick="setShopWeek(2)">Týždeň 2</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:12px">
+    <button class="btn" style="flex:1;margin-top:0" onclick="checkAllShop()">Odškrtnúť všetko</button>
+    <button class="btn btn-primary" style="flex:1;margin-top:0" onclick="resetShop()">Reset</button>
+  </div>
+  <div id="shop-list"></div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showScreen('dashboard',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    Prehľad
+  </button>
+  <button class="nav-btn" onclick="showScreen('food',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    Jedálniček
+  </button>
+  <button class="nav-btn" onclick="showScreen('water',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 9 2 14a10 10 0 0020 0C22 9 17.52 2 12 2z"/></svg>
+    Voda & pH
+  </button>
+  <button class="nav-btn" onclick="showScreen('recipes',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    Recepty
+  </button>
+  <button class="nav-btn" onclick="showScreen('shop',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    Nákup
+  </button>
+</nav>
+
+<script>
+const W1=[
+  {day:'PO',b:'Quinoa kaša s čučoriedkami a vlašskými orechmi',bw:'Quinoa = kompletné aminokyseliny bez srvátky. Čučoriedky = antioxidanty. Priprav večer, ráno len ohrej.',bkcal:420,brid:'quinoa-kasa',l:'Kuracie prsia na prírodno + uhorkový šalát + ½ ryže',lw:'V jedálni: varené/pečené kura BEZ omáčky. Dvojitá porcia šalátu.',lkcal:550,d:'Pečený losos s feniklom a citrónovou šťavou — 20 min v rúre',dw:'Rýchla večera: rúra 180°C, 18 minút. Losos = Omega-3 pre Leiden.',dkcal:380,drid:'peceny-losos'},
+  {day:'UT',b:'Pohánkové vločky s kokosovým mliekom a tekvicovými semiačkami',bw:'Pohánka = bezlepková, nízke puríny. Zalej večer, ráno hotové.',bkcal:410,brid:'pohankove-vlocky',l:'Pečená treska alebo zubáč + dusená zelenina + varené zemiaky',lw:'Biela ryba = najmenej purínov. Ideálna v jedálni.',lkcal:520,d:'Zelené smoothie – uhorka + zeler + citrón + jablko + 1 čl inulínu',dw:'5 minút prípravy. Ľahká večera = obličky odpočívajú.',dkcal:180,drid:'zelene-smoothie'},
+  {day:'ST',b:'Cottage syr s cibuľkou, cesnakom a uhorkou',bw:'Cesnak a cibuľa POVINNÉ každý deň. 5 minút prípravy.',bkcal:280,brid:'cottage-syr',l:'Morčacie na prírodno + listový šalát poľníček + ½ ryže',lw:'Poľníček = vysoký folát (B9) pre zníženie homocysteínu.',lkcal:530,d:'Tvarohová nátierka s cesnakom a cibuľkou na kváskový chlieb',dw:'5 minút prípravy. Cesnak + cibuľa = Leiden ochrana.',dkcal:290,drid:'tvarohova-natierka'},
+  {day:'ŠT',b:'Chia puding z kokosového mlieka s čučoriedkami',bw:'Priprav večer, ráno vyber z chladničky. Nula minút ráno.',bkcal:390,brid:'chia-puding',l:'Kuracie stehno bez kože + dusená biela reďkovka + ½ zemiakov',lw:'Biela reďkovka = diuretikum, vyplavuje kyselinu močovú.',lkcal:510,d:'Smoothie Sila kokosu: kokosové mlieko + čučoriedky + inulín + vlašské orechy',dw:'5 minút mixovanie. Kyselina kaprylová z kokosu bojuje s kvasinkami.',dkcal:310,drid:'kokos-smoothie'},
+  {day:'PI',b:'Hrsť vlašských orechov + makadamiové orechy + zelené jablko',bw:'Najrýchlejšie raňajky — nič nepripravuješ. Vlašské = B6.',bkcal:350,brid:'orechy-ranajky',l:'Zubáč na pare + kapustový šalát s citrónom + ½ ryže',lw:'Zubáč na pare = najjemnejšia príprava pre obličky.',lkcal:500,d:'Shot: zázvor + kurkuma + citrón + smoothie s kokosovou dužinou + inulín',dw:'Piatkový detox — 10 minút prípravy. Protizápalový shot + črevná podpora.',dkcal:220,drid:'piatkovy-detox'},
+  {day:'SO',b:'Kváskový chlieb s avokádom, cesnakom a tekvicovými semiačkami',bw:'Víkend = pomalší začiatok. Avokádo = zdravé tuky.',bkcal:430,brid:'kvaskovy-avokado',l:'Pečené kuracie prsia s bylinkami + dusená cuketa + čakankový šalát',lw:'Čakanka = prirodzený inulín. Cuketa = nízke oxaláty.',lkcal:520,d:'Dlho ťahaný kurací vývar so zeleninou (3–4 hodiny)',dw:'VÍKEND — uvar veľký hrniec (2–3 litre), zmraz po porciách na celý týždeň.',dkcal:280,drid:'kuraci-vyvar'},
+  {day:'NE',b:'Biely jogurt bezlaktózový s vlašskými orechmi a škoricou',bw:'Bezlaktózový — DNA predispozícia. Škorica = reguluje glykémiu.',bkcal:320,brid:'jogurt-orechy',l:'Pečený losos + šalát z bielej reďkovky a uhorky + varené zemiaky',lw:'Druhý losos — Omega-3 zásobníček na ďalší týždeň.',lkcal:540,d:'Kurací vývar zo soboty ohriaty + nakrájané kuracie mäso',dw:'Vývar zo soboty — len ohreješ, 5 minút. Kolagén pre platničky.',dkcal:280,drid:'kuraci-vyvar'}
+];
+
+const W2=[
+  {day:'PO',b:'Pohánková kaša s vlašskými orechmi a škoricou',bw:'Pohánka = žiadne puríny. Priprav večer, ráno len ohrej.',bkcal:400,brid:'pohankova-kasa',l:'Morčací rezeň na prírodno + šalát z čínskej kapusty a uhorky + ½ ryže',lw:'Čínska kapusta = nízke oxaláty, dobrý zdroj folátu.',lkcal:530,d:'Zelený detox: smoothie z uhorky, zeleru, citróna a 1 čl inulínu',dw:'5 minút mixovanie. Ľahká večera po víkende = obličky odpočívajú.',dkcal:160,drid:'zelene-smoothie'},
+  {day:'UT',b:'Chia puding z kokosového mlieka s čučoriedkami',bw:'Priprav v pondelok večer. Ráno vyber z chladničky.',bkcal:390,brid:'chia-puding',l:'Pečený zubáč alebo biela ryba + dusená biela reďkovka + varené zemiaky',lw:'Biela ryba = ideálna pre obličky.',lkcal:510,d:'Avokádová nátierka s cesnakom a cibuľou',dw:'5 minút prípravy. Avokádo + cesnak + cibuľa = ochrana ciev Leiden.',dkcal:280,drid:'avokado-natierka'},
+  {day:'ST',b:'Kváskový chlieb s avokádom a cibuľkou',bw:'Rýchle raňajky — 5 minút. Avokádo + cibuľa.',bkcal:380,brid:'kvaskovy-avokado',l:'Kuracie stehno na pare bez kože + dvojitý šalát z bielej reďkovky + ½ zemiakov',lw:'Dvojitý šalát z bielej reďkovky = double diuretikum.',lkcal:500,d:'Kurací vývar zo soboty ohriaty + zelenina',dw:'Vývar zamrazený zo soboty — len ohreješ, 5 minút.',dkcal:280,drid:'kuraci-vyvar'},
+  {day:'ŠT',b:'Cottage syr s nakrájaným feniklom a vlašskými orechmi',bw:'Fenikel = diuretikum, podporuje trávenie. 5 minút prípravy.',bkcal:290,brid:'cottage-fenikel',l:'Pečený losos s citrónom + dusená cuketa + ½ ryže',lw:'Losos = Omega-3.',lkcal:540,d:'Smoothie Sila kokosu: kokosové mlieko + čučoriedky + inulín + vlašské orechy',dw:'5 minút mixovanie. Kyselina kaprylová z kokosu bojuje s kvasinkami.',dkcal:310,drid:'kokos-smoothie'},
+  {day:'PI',b:'Hrsť tekvicových semiačok + makadamiové orechy + zelené jablko',bw:'Najrýchlejšie raňajky — nič nepripravuješ.',bkcal:350,brid:'orechy-ranajky',l:'Kuracie prsia na prírodno + listový šalát s citrónovou zálievkou + ½ ryže',lw:'Citrónová zálievka = alkalizácia aj v jedálni.',lkcal:530,d:'Shot: zázvor + kurkuma + citrón + tvarohová nátierka s cesnakom a pažítkou',dw:'Piatkový detox shot + ľahká bielkovinová večera. 10 minút.',dkcal:280,drid:'tvarohova-natierka'},
+  {day:'SO',b:'Quinoa nasladko s kokosovou dužinou a pistáciami (max 15 ks!)',bw:'Pistácie = ORANŽOVÁ zóna, max 15 kusov.',bkcal:440,brid:'quinoa-kokos',l:'Pečená treska + varený fenikel + uhorkový šalát',lw:'Treska = najmenej purínov zo všetkých rýb.',lkcal:490,d:'Dlho ťahaný kurací vývar so zeleninou (3–4 hodiny)',dw:'VÍKEND — uvar veľký hrniec (2–3 litre), zmraz po porciách na celý týždeň.',dkcal:280,drid:'kuraci-vyvar'},
+  {day:'NE',b:'Biely jogurt bezlaktózový so škoricou a 2 para orechmi',bw:'Para orechy = selén. MAX 2 KS DENNE!',bkcal:290,brid:'jogurt-para',l:'Morčacie na prírodno + dusená cuketa + šalát z poľníčka + varené zemiaky',lw:'Nedela = ľahký záver týždňa.',lkcal:510,d:'Nátierka z avokáda, cibule a cesnaku',dw:'5 minút prípravy. Avokádo + cesnak + cibuľa = ochrana ciev Leiden.',dkcal:280,drid:'avokado-natierka'}
+];
+
+const WHCY=[
+  {day:'D1',b:'Pohánková kaša + čučoriedky',bkcal:350,l:'Hrachové pyré + pečený batát',lkcal:420,d:'Cuketové rezance s avokádom',dkcal:280},
+  {day:'D2',b:'Smoothie špenát + hruška – B9',bkcal:200,l:'Quinoa so sparenou brokolicou',lkcal:380,d:'Tekvicový krém bez mlieka',dkcal:220},
+  {day:'D3',b:'Konopný proteín s banánom',bkcal:320,l:'Šošovicový dhal s kurkumou',lkcal:440,d:'Pečený karfiol s citrónom',dkcal:180},
+  {day:'D4',b:'Celozrnný toast + humus + uhorka',bkcal:340,l:'Pečená treska + šalát',lkcal:480,d:'Cícerové kari jemné',dkcal:380},
+  {day:'D5',b:'Chia puding v kokosovom mlieku',bkcal:390,l:'Ryžové rezance + tofu + paprika',lkcal:420,d:'Mix listovej zeleniny s citrónom',dkcal:120},
+  {day:'D6',b:'Ovocný šalát + slnečnicové semená',bkcal:280,l:'Zeleninové rizoto – hnedá ryža',lkcal:400,d:'Batáty s hráškovým proteínom',dkcal:350},
+  {day:'D7',b:'Kaša z quinoi s malinami',bkcal:360,l:'Fazuľová polievka – nízky sodík',lkcal:380,d:'Grilovaná cuketa a tempeh',dkcal:280},
+  {day:'D8',b:'Smoothie konope + bobule + B6',bkcal:240,l:'Šošovicový šalát s jablkom',lkcal:350,d:'Dusená zelenina na pare',dkcal:150},
+  {day:'D9',b:'Toast s avokádom a klíčkami',bkcal:320,l:'Pečený zubáč + zemiakové pyré',lkcal:490,d:'Cuketová polievka s citrónom',dkcal:160},
+  {day:'D10',b:'Pohánkové lievance bezlaktózové',bkcal:380,l:'Cícerové placky + šalát',lkcal:420,d:'Rizoto s mladým hráškom',dkcal:380},
+  {day:'D11',b:'Chia kaša s jahodami',bkcal:350,l:'Hrachový guláš so zeleninou',lkcal:380,d:'Pečený zeler a batáty',dkcal:280},
+  {day:'D12',b:'Smoothie B9 + konope',bkcal:220,l:'Quinoa s grilovaným tofu',lkcal:400,d:'Tekvicové pyré s ryžou',dkcal:280},
+  {day:'D13',b:'Avokádový krém + ryžový chlebík',bkcal:340,l:'Rizoto z hnedej ryže a húb',lkcal:410,d:'Pečený karfiol s kurkumou',dkcal:180},
+  {day:'D14',b:'Konopný proteín + lesné ovocie',bkcal:300,l:'Hustá zeleninová polievka',lkcal:280,d:'Mix strukovín + citrónový dresing',dkcal:350}
+];
+
+const RECIPES=[
+  {id:'quinoa-kasa',name:'Quinoa kaša s čučoriedkami',type:'b',time:'10 min',kcal:420,
+   ingredients:[{n:'Quinoa',a:'60g (suché)'},{n:'Voda alebo Rajec',a:'180ml'},{n:'Čučoriedky',a:'80g'},{n:'Vlašské orechy',a:'20g (asi 4 ks)'},{n:'Škorica',a:'štipka'}],
+   steps:['Quinoa opláchni pod tečúcou vodou (zbavíš ju horkosti).','Daj do hrnca s 180ml vody, priveď do varu.','Znížь oheň, var 12–15 minút kým quinoa nevsiakne vodu.','Daj do misky, prihoď čučoriedky a nasekaných vlašské orechy.','Posyp škoricou.'],
+   tip:'Quinoa môžeš uvariť večer a ráno len ohriať — šetrí čas.'
+  },
+  {id:'pohankove-vlocky',name:'Pohánkové vločky s kokosovým mliekom',type:'b',time:'5 min',kcal:410,
+   ingredients:[{n:'Pohánkové vločky',a:'60g'},{n:'Kokosové mlieko',a:'150ml'},{n:'Tekvicové semiačka',a:'15g'},{n:'Čučoriedky',a:'50g'}],
+   steps:['Pohánkové vločky daj do misky.','Zahrieј kokosové mlieko (nie variť, len ohriať).','Zalej vločky mliekom, premiešaj.','Počkaj 3–5 minút kým zmäknú.','Prihoď tekvicové semiačka a čučoriedky.'],
+   tip:'Studená verzia: zalej večer a nechaj v chladničke — ráno hotové.'
+  },
+  {id:'cottage-syr',name:'Cottage syr s cibuľkou a uhorkou',type:'b',time:'5 min',kcal:280,
+   ingredients:[{n:'Cottage syr bezlaktózový',a:'150g'},{n:'Šalátová uhorka',a:'80g'},{n:'Cibuľa',a:'¼ malej (30g)'},{n:'Cesnak',a:'1 strúčik'},{n:'Olivový olej',a:'5ml (1 čl)'}],
+   steps:['Uhorku nakrájaj na drobno.','Cibuľu nadrobno, cesnak pretlač alebo nadrobno.','Zmiešaj všetko s cottage syrom.','Polej lyžičkou olivového oleja.','Môžeš jesť tak alebo natrieť na kváskový chlieb.'],
+   tip:'Cesnak a cibuľa sú POVINNÉ každý deň — chránia cievy pri Leidene.'
+  },
+  {id:'chia-puding',name:'Chia puding z kokosového mlieka',type:'b',time:'5 min + noc',kcal:390,
+   ingredients:[{n:'Chia semienka',a:'35g'},{n:'Kokosové mlieko plnotučné',a:'200ml'},{n:'Čučoriedky',a:'60g'},{n:'Škorica',a:'štipka'}],
+   steps:['Večer pred spaním: chia semienka zmiešaj s kokosovým mliekom.','Premiešaj dobre aby sa nelepiili.','Daj do pohára, zakry a daj do chladničky.','Ráno je puding hotový.','Pridaj čučoriedky a škoricu.'],
+   tip:'Vyrob si 2–3 porcie naraz — vydržia v chladničke 3 dni.'
+  },
+  {id:'orechy-ranajky',name:'Raňajky z orechov a jablka',type:'b',time:'2 min',kcal:350,
+   ingredients:[{n:'Vlašské orechy',a:'25g (asi 5 ks)'},{n:'Makadamiové orechy',a:'20g (asi 5 ks)'},{n:'Zelené jablko',a:'1 stredné (150g)'}],
+   steps:['Orechy daj do misky.','Jablko nakrájaj na kolieska alebo plátky.','Zjedz — hotovo.'],
+   tip:'Piatkové raňajky — rýchle, jednoduché. Nezabudni vypiť vodu s citrónom.'
+  },
+  {id:'kvaskovy-avokado',name:'Kváskový chlieb s avokádom',type:'b',time:'5 min',kcal:420,
+   ingredients:[{n:'Kváskový chlieb',a:'2 plátky (80g)'},{n:'Avokádo',a:'½ ks (75g)'},{n:'Cesnak',a:'1 strúčik'},{n:'Cibuľa',a:'¼ malej'},{n:'Tekvicové semiačka',a:'10g'},{n:'Olivový olej',a:'5ml'}],
+   steps:['Avokádo rozmaž vidličkou.','Pridaj pretlačený cesnak a nasekanú cibuľu, premiešaj.','Natrieš na kváskový chlieb.','Posyp tekvicovými semiačkami.','Polej kvapkou olivového oleja.'],
+   tip:'Avokádo rýchlo hnedne — priprав tesne pred jedlom.'
+  },
+  {id:'jogurt-orechy',name:'Jogurt s vlašskými orechmi',type:'b',time:'2 min',kcal:320,
+   ingredients:[{n:'Biely jogurt bezlaktózový',a:'200g'},{n:'Vlašské orechy',a:'20g'},{n:'Škorica cejlónska',a:'½ čl'}],
+   steps:['Jogurt daj do misky.','Nasekaných vlašské orechy prihoď.','Posyp škoricou.'],
+   tip:'Vždy BEZLAKTÓZOVÝ variant — DNA predispozícia na nízku laktázu.'
+  },
+  {id:'jogurt-para',name:'Jogurt so škoricou a para orechmi',type:'b',time:'2 min',kcal:290,
+   ingredients:[{n:'Biely jogurt bezlaktózový',a:'200g'},{n:'Para orechy',a:'2 ks — NIE VIAC!'},{n:'Škorica cejlónska',a:'½ čl'}],
+   steps:['Jogurt daj do misky.','Pridaj 2 para orechy — PRESNE 2.','Posyp škoricou.'],
+   tip:'Para orechy obsahujú selén. Pri viac ako 2 kusoch denne je selén toxický!'
+  },
+  {id:'pohankova-kasa',name:'Pohánková kaša so škoricou',type:'b',time:'15 min',kcal:400,
+   ingredients:[{n:'Pohánka',a:'60g'},{n:'Voda',a:'200ml'},{n:'Vlašské orechy',a:'20g'},{n:'Škorica',a:'½ čl'},{n:'Zelené jablko',a:'½ ks (75g)'}],
+   steps:['Pohánku opláchni.','Daj do hrnca s vodou, priveď do varu.','Var 10–12 minút na miernom ohni.','Daj do misky, posyp škoricou.','Pridaj nasekaných vlašské orechy a nakrájané jablko.'],
+   tip:'Pohánka má nutý zemitý chuť — škorica ju skvele dopĺňa.'
+  },
+  {id:'cottage-fenikel',name:'Cottage syr s feniklom',type:'b',time:'5 min',kcal:290,
+   ingredients:[{n:'Cottage syr bezlaktózový',a:'150g'},{n:'Fenikel',a:'60g'},{n:'Vlašské orechy',a:'20g'},{n:'Olivový olej',a:'5ml'}],
+   steps:['Fenikel nakrájaj na tenké plátky alebo nadrobno.','Zmiešaj s cottage syrom.','Prihoď nasekaných vlašské orechy.','Polej olivovým olejom.'],
+   tip:'Fenikel má sladkastú anizvovú chuť — ak ti nesedí, daj namiesto neho uhorku.'
+  },
+  {id:'quinoa-kokos',name:'Quinoa nasladko s kokosom',type:'b',time:'15 min',kcal:440,
+   ingredients:[{n:'Quinoa',a:'60g'},{n:'Kokosová dužina strúhaná nesladená',a:'20g'},{n:'Pistácie',a:'15 ks — MAX!'},{n:'Voda',a:'180ml'}],
+   steps:['Quinoa uvar podľa postupu (opláchni, 180ml vody, 12–15 min).','Daj do misky.','Posyp kokosovou dužinou.','Pridaj pistácie — presne 15 kusov.'],
+   tip:'Pistácie sú ORANŽOVÁ zóna — dodržuj limit 15 kusov.'
+  },
+  {id:'kuraci-vyvar',name:'Kurací vývar z kostí a chrupaviek',type:'d',time:'3–4 hod',kcal:280,
+   ingredients:[{n:'Kuracie kosti a chrupavky',a:'500g'},{n:'Mrkva',a:'1 väčšia (100g)'},{n:'Petržlen koreňový',a:'1 ks (80g)'},{n:'Zeler koreňový',a:'kus (60g)'},{n:'Cibuľa',a:'1 ks'},{n:'Cesnak',a:'3 strúčiky'},{n:'Voda',a:'2 litre'},{n:'Kuracie mäso',a:'200g (stehno alebo prsia)'}],
+   steps:['Kosti daj do hrnca, zalej studenou vodou.','Priveď do varu, prvú vodu zlej (zbavíš vývar peny).','Znova zalej 2 litrami čistej vody.','Pridaj nakrájanú zeleninu, cesnak, cibuľu.','Var na veľmi miernom ohni 3–4 hodiny bez pokrývky.','Pridaj kuracie mäso v poslednej hodine varenia.','Preceď cez sitko.','Podávaj s mäsom a zeleninou.'],
+   tip:'Čím dlhšie vár, tým viac kolagénu. Môžeš vyrobiť viac a zmraziť na ďalšie dni.'
+  },
+  {id:'peceny-losos',name:'Pečený losos s feniklom',type:'d',time:'20 min',kcal:380,
+   ingredients:[{n:'Losos filé',a:'150g'},{n:'Fenikel',a:'100g'},{n:'Citrón',a:'½ ks'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'}],
+   steps:['Rúru predhrej na 180°C.','Fenikel nakrájaj na plátky, daj na plech vystlaný papierom.','Losos polož na fenikel.','Polej olivovým olejom, vytlač citrón, pridaj pretlačený cesnak.','Peč 15–18 minút kým losos nie je nepriehľadný.'],
+   tip:'Losos je hotový keď sa dá ľahko roztrhať vidličkou. Neprepeč — zostane šťavnatý.'
+  },
+  {id:'zelene-smoothie',name:'Zelené smoothie s inulínom',type:'d',time:'5 min',kcal:180,
+   ingredients:[{n:'Šalátová uhorka',a:'150g'},{n:'Stonkový zeler',a:'60g'},{n:'Citrón',a:'½ ks (šťava)'},{n:'Zelené jablko',a:'½ ks'},{n:'Inulín prášok',a:'1 čl (5g)'},{n:'Voda',a:'100ml'}],
+   steps:['Všetko nakrájaj na kusy.','Daj do mixéra.','Pridaj inulín a vodu.','Mixuj 30–60 sekúnd.','Vypi ihneď.'],
+   tip:'Toto je ľahká večera — nie je to jedlo, je to tekutá podpora pre obličky a črevá.'
+  },
+  {id:'zeleninovka',name:'Hustá zeleninová polievka s kuracím',type:'d',time:'30 min',kcal:260,
+   ingredients:[{n:'Kuracie prsia',a:'100g'},{n:'Mrkva',a:'1 ks (80g)'},{n:'Zeler koreňový',a:'50g'},{n:'Cuketa',a:'100g'},{n:'Cibuľa',a:'½ ks'},{n:'Cesnak',a:'2 strúčiky'},{n:'Olivový olej',a:'10ml'},{n:'Voda alebo vývar',a:'700ml'}],
+   steps:['Cibuľu a cesnak opraž na olivovom oleji 2 minúty.','Pridaj nakrájanú mrkvu a zeler, opekaj 3 minúty.','Pridaj cuketu, zalej vodou/vývarom.','Priveď do varu, var 15 minút.','Kuracie prsia nakrájaj na kúsky, pridaj do polievky.','Var ďalších 10 minút.','Dochuť cesnakom ak treba.'],
+   tip:'Bez soli — prisol až v tanieri ak musíš. Soľ zvyšuje vylučovanie cystínu.'
+  },
+  {id:'piatkovy-detox',name:'Piatkový detox shot + smoothie',type:'d',time:'10 min',kcal:220,
+   ingredients:[{n:'Zázvor čerstvý',a:'20g'},{n:'Kurkuma čerstvá',a:'10g'},{n:'Citrón',a:'½ ks'},{n:'Kokosová dužina',a:'40g'},{n:'Inulín',a:'1 čl'},{n:'Voda',a:'100ml'}],
+   steps:['Shot: zázvor a kurkumu odšťavuj alebo nastrúhaj a vytlač cez plátno.','Zmiešaj so šťavou z citróna.','Vypi shot naraz.','Smoothie: kokosovú dužinu, inulín a vodu mixuj.','Vypi smoothie po shote.'],
+   tip:'Ľanový olej (5ml) pridaj do shotu — kurkumín bez tuku sa nevstrebe.'
+  },
+  {id:'tvarohova-natierka',name:'Tvarohová nátierka s cesnakom',type:'d',time:'5 min',kcal:290,
+   ingredients:[{n:'Tvaroh',a:'150g'},{n:'Cesnak',a:'2 strúčiky'},{n:'Cibuľa',a:'¼ ks'},{n:'Pažítka',a:'1 lyžica'},{n:'Olivový olej',a:'5ml'},{n:'Kváskový chlieb',a:'2 plátky (80g)'}],
+   steps:['Tvaroh daj do misky.','Cesnak pretlač, cibuľu nadrobno.','Premiešaj s tvarohom.','Pridaj nasekanú pažítku a olivový olej.','Natrieš na kváskový chlieb.'],
+   tip:'Cesnak a cibuľa každý deň — ochrana ciev pri Leidene.'
+  },
+  {id:'avokado-natierka',name:'Avokádová nátierka s cesnakom',type:'d',time:'5 min',kcal:280,
+   ingredients:[{n:'Avokádo',a:'1 ks (150g)'},{n:'Cibuľa',a:'¼ ks'},{n:'Cesnak',a:'2 strúčiky'},{n:'Citrón',a:'¼ ks (šťava)'},{n:'Olivový olej',a:'5ml'}],
+   steps:['Avokádo rozpolí, vyber kôstku.','Lyžicou vyber dužinu do misky.','Rozmač vidličkou.','Pridaj pretlačený cesnak, nasekanú cibuľu, šťavu z citróna.','Polej olivovým olejom, premiešaj.'],
+   tip:'Avokádo hnedne — priprав tesne pred konzumáciou. Citrón spomaľuje hnednutie.'
+  },
+  {id:'kokos-smoothie',name:'Smoothie Sila kokosu',type:'d',time:'5 min',kcal:310,
+   ingredients:[{n:'Kokosové mlieko plnotučné',a:'150ml'},{n:'Čučoriedky',a:'80g'},{n:'Inulín prášok',a:'1 čl (5g)'},{n:'Vlašské orechy',a:'15g'}],
+   steps:['Všetko daj do mixéra.','Mixuj 30 sekúnd.','Vypi ihneď.'],
+   tip:'Kyselina kaprylová z kokosu bojuje s kvasinkami. Inulín živí správne črevné baktérie.'
+  },
+  {id:'citratova-bomba',name:'Citrátová bomba',type:'drink',time:'2 min',kcal:30,
+   ingredients:[{n:'Citrón',a:'1 celý'},{n:'Limetka',a:'½ ks'},{n:'Rajec alebo Dobrá voda',a:'300ml'}],
+   steps:['Vymač šťavu z 1 celého citróna.','Vymač šťavu z ½ limetky.','Zmiešaj s 300ml vody.','Vypi IHNEĎ PO VSTÁVANÍ — pred jedlom, kávou, čímkoľvek.'],
+   tip:'Paradox: citrón je kyslý ale v tele sa premení na bikarbonát ktorý zvyšuje pH moču. Toto je najdôležitejšia vec ráno.'
+  },
+  {id:'urea-detox',name:'Urea-Detox šťava',type:'drink',time:'5 min',kcal:50,
+   ingredients:[{n:'Šalátová uhorka (dlhá zelená)',a:'250g'},{n:'Stonkový zeler (NIE listový!)',a:'125g'}],
+   steps:['Uhorku nakrájaj na kusy.','Stonkový zeler nakrájaj na kusy.','Odšťavuj v odšťavovači.','Vypi okolo 11:00 — pred obedom.'],
+   tip:'Bez odšťavovača: zjedz uhorku a stonkový zeler ako súčasť jedla — účinok je podobný.'
+  },
+  {id:'spine-shot',name:'Spine-Shot (protizápalový)',type:'drink',time:'5 min',kcal:60,
+   ingredients:[{n:'Zázvor čerstvý',a:'20g'},{n:'Kurkuma čerstvá alebo prášok',a:'10g (alebo ½ čl prášku)'},{n:'Ľanový olej',a:'5ml (1 čl)'},{n:'Citrón',a:'¼ ks (voliteľné)'}],
+   steps:['Zázvor odšťavuj alebo nastrúhaj a vytlač cez plátno.','Kurkumu odšťavuj alebo zmiešaj prášok s trochou vody.','Zmiešaj zázvor + kurkumu.','Pridaj ľanový olej — POVINNÉ, bez tuku sa kurkumín nevstrebe.','Vypi večer po cvičení alebo pred spánkom.'],
+   tip:'Ľanový olej je nosič kurkumínu — bez neho by si pil shot prakticky bez účinku.'
+  }
+];
+
+const TRAFFIC={
+  green:[
+    {n:'Voda v skle s citrónom (Rajec, Dobrá voda)',r:'Nízke TDS = ľahká pre obličky. Citrón = alkalizácia moču.'},
+    {n:'Bylinkové čaje – breza, zlatobyľ, praslička',r:'Vyplavujú kyselinu močovú. Na varenie čaju môžeš použiť vodovod.'},
+    {n:'Uhorka, stonkový zeler, cuketa, fenikel',r:'Diuretické účinky, nízke oxaláty.'},
+    {n:'Biela reďkovka, čakanka, listové šaláty',r:'Biela reďkovka = diuretikum. Čakanka = prirodzený inulín.'},
+    {n:'Kuracie prsia, morka – na prírodno / varené / pečené',r:'Biele mäso s najnižším obsahom purínov. NIE vyprážané, NIE v omáčke.'},
+    {n:'Biele ryby – treska, zubáč',r:'Najmenej purínov zo všetkých rýb.'},
+    {n:'Losos – max 1–2× týždeň',r:'Omega-3 pre cievy (Leiden). Viac má viac purínov.'},
+    {n:'Kurací vývar z kostí a chrupaviek',r:'Kolagén typ II pre platničky L3–S1.'},
+    {n:'Vlašské orechy',r:'B6 znižuje homocysteín (HCY). Kľúčové.'},
+    {n:'Makadamiové orechy',r:'Selén a zdravé tuky.'},
+    {n:'Para orechy – MAX 2 KS DENNE!',r:'Selén. Pri viac ako 2 ks denne je toxický!'},
+    {n:'Tekvicové semiačka',r:'Zinok + magnézium.'},
+    {n:'Kokosová dužina, kokosové mlieko',r:'Kyselina kaprylová bojuje s kvasinkami.'},
+    {n:'Olivový olej extra virgin',r:'Zdravé tuky, protizápalový efekt.'},
+    {n:'CESNAK A CIBUĽA – každý deň!',r:'Riedia krv a chránia cievy pri Leidenovej mutácii. POVINNÉ.'},
+    {n:'Zázvor, kurkuma, cejlónska škorica',r:'Protizápalové účinky pre platničky a obličky.'},
+    {n:'Inulín z čakanky',r:'Kŕmivo pre baktérie ktoré degradujú oxaláty v črevách.'},
+    {n:'Zelené jablká, čučoriedky, citrusy',r:'Nízka fruktóza. Fruktóza zvyšuje kyselinu močovú.'}
+  ],
+  orange:[
+    {n:'Pistácie – max 15–20 ks',r:'Vyšší obsah oxalátov. V malom množstve OK.'},
+    {n:'Biela čokoláda – max 1–2 kocky',r:'Minimálne kakao = menej oxalátov. Len príležitostne.'},
+    {n:'Kváskový chlieb',r:'Fermentovaný = lepšie stráviteľný. Max 2 plátky.'},
+    {n:'Cottage syr, kefír, biely jogurt – vždy bezlaktózové!',r:'DNA predispozícia na nízku aktivitu laktázy.'},
+    {n:'Ryža, zemiaky, quinoa, pohánka – max ½ bežnej porcie',r:'Sacharidy sú OK ale sleduj kalorický deficit.'},
+    {n:'Huby – ak bez gastro problémov',r:'Genetické riziko intolerancie húb. Sleduj reakciu.'},
+    {n:'Zelené jablká, žltý melón – malé množstvo',r:'Fruktóza zvyšuje KM — len príležitostne.'}
+  ],
+  red:[
+    {n:'SRVÁTKOVÝ PROTEÍN – STOPKA',r:'Zaťažuje obličky. Nahradený kuracím kolagénom.'},
+    {n:'Červené mäso – hovädzie, bravčové, divina',r:'Vysoký obsah purínov = zvyšuje kyselinu močovú.'},
+    {n:'Morské plody, vnútornosti',r:'Extrémne vysoký obsah purínov.'},
+    {n:'Špenát, cvikla, mangold, rebarbora',r:'Extrémne vysoký obsah oxalátov.'},
+    {n:'Čierny a zelený čaj',r:'Oxaláty! Nahraď bylinnými čajmi.'},
+    {n:'Kakao, tmavá čokoláda',r:'Oxaláty + puríny.'},
+    {n:'PARADAJKY – STOPKA',r:'Zvyšujú kyselinu močovú. Aj v omáčkach a kečupe!'},
+    {n:'Arašidy, sója',r:'Puríny + histamín.'},
+    {n:'MED, cukor, sladené limonády',r:'Fruktóza priamo zvyšuje tvorbu KM v pečeni.'},
+    {n:'Alkohol, pivo',r:'Pivo = extrémne puríny. Alkohol blokuje vylučovanie KM.'},
+    {n:'Barelová voda (plast)',r:'Mikroplasty poškodzujú obličky.'},
+    {n:'Tvrdé syry, plnotučné mlieko',r:'Laktóza + metionín = zvyšuje homocysteín.'},
+    {n:'Priemyselné oleje (slnečnicový, kukuričný)',r:'Kyselina linolová spúšťa zápalové kaskády.'},
+    {n:'Údeniny, glutamát E621, cystín E921',r:'E921 = pridaný cystín v pekárenských výrobkoch.'}
+  ]
+};
+
+const TEA_GROUPS=[
+  {
+    id:'clean',week:1,
+    name:'CLEAN — Čistiaca & Preplachová',
+    emoji:'🧹',
+    color:'var(--teal)',
+    when:'Týždeň 1 (a kedykoľvek pH klesne pod 5,5)',
+    goal:'Mechanický preplach obličiek od kryštálov kyseliny močovej (KM 518). Podpora pečene.',
+    locked:false,
+    herbs:[
+      {n:'Májová žihľava',r:'Silné diuretikum — vyplavuje kyselinu močovú z obličiek'},
+      {n:'Púpava (koreň aj list)',r:'Podporuje pečeň v močovinovom cykle'},
+      {n:'Praslička roľná',r:'Vysoký obsah kremíka, čistí obličkové tubuly'},
+      {n:'Zlatobyľ',r:'Protizápalová, upokojuje obličky'},
+      {n:'Repík lekársky',r:'Podporuje vylučovanie kyseliny močovej'},
+      {n:'Jahodové listy',r:'Jemné diuretikum, vitamín C'},
+      {n:'Harmanček',r:'Protizápalový, upokojuje tráviaci trakt'}
+    ],
+    howto:'Zmiešaj rovnaké diely všetkých bylín. 1 čl zmesi na šálku, zalejvariaca vodou, lúhuj 10 min. 2–3 šálky denne.'
+  },
+  {
+    id:'anti-inflam',week:2,
+    name:'ANTI-INFLAM — Protizápalová',
+    emoji:'🔥',
+    color:'var(--orange)',
+    when:'Týždeň 2',
+    goal:'Tlmenie zápalu okolo extrúzie L4/5. Ochrana ciev pri Leidenovej mutácii.',
+    locked:false,
+    herbs:[
+      {n:'Sušené čučoriedky',r:'Antokyány — silné protizápalové látky, chránia cievy'},
+      {n:'Zázvor (nastrúhaný čerstvý)',r:'Gingeroly tlmia zápalové mediátory pri L4/5'},
+      {n:'Kurkuma',r:'Kurkumín = prírodný protizápal podobný NSAID'},
+      {n:'Mäta pieporná',r:'Uvoľňuje svalové kŕče, chladivý efekt'},
+      {n:'Skorocel kopijovitý',r:'Protizápalový, hojivý účinok na sliznice'}
+    ],
+    howto:'Sušené čučoriedky + zázvor + kurkuma = základ. Zalej vriacou vodou, lúhuj 12 min. Pridaj kvapku ľanového oleja — kurkumín bez tuku sa nevstrebe. 2–3 šálky denne.'
+  },
+  {
+    id:'joints',week:3,
+    name:'JOINTS — Kĺby & Chrupavky',
+    emoji:'🦴',
+    color:'var(--blue)',
+    when:'Týždeň 3',
+    goal:'Stavba chrupavky a regenerácia platničiek L3–S1. Rozpúšťanie kĺbových usadenín KM.',
+    locked:false,
+    herbs:[
+      {n:'Šípky (drvené)',r:'Najbohatší prírodný zdroj Vitamínu C — stavba kolagénu'},
+      {n:'Praslička roľná',r:'Kremík = kofaktor pre syntézu kolagénu v chrupavkách'},
+      {n:'Malinové listy',r:'Protizápalové, vysoký obsah minerálov'},
+      {n:'Breza previsnutá (list)',r:'Rozpúšťa kĺbové usadeniny KM, šetrná k obličkám'}
+    ],
+    howto:'Zmiešaj rovnaké diely. 1–2 čl na šálku, vriacavoda, lúhuj 15 min (šípky potrebujú dlhšie). 2–3 šálky denne. POZOR: kostihoj VÝLUČNE NA VONKAJŠIE POUŽITIE (obklady na kríže), nie do čaju!',
+    warning:'⚠️ Kostihoj NESMIE byť v čaji — len vonkajšie obklady na kríže!'
+  },
+  {
+    id:'slim',week:4,
+    name:'SLIM & VITAL — Metabolická podpora',
+    emoji:'⚡',
+    color:'var(--green)',
+    when:'Od 2. mesiaca — ZAMKNUTÉ kým pH > 6,0 a KM < 450',
+    goal:'Podpora spaľovania tuku (cieľ –10,4 kg). Enzymatická pomoc pri spracovaní kolagénu.',
+    locked:true,
+    lockCondition:'pH stabilne > 6,0 A KM < 450 μmol/l',
+    herbs:[
+      {n:'HANNASAKI Ultraslim tropic',r:'Enzýmy bromelaín a papaín — podporujú metabolizmus tukov'},
+      {n:'Inulín (prášok)',r:'Prebiotikum, podporuje črevnú flóru'},
+      {n:'Rozmarín lekársky',r:'Zlepšuje cirkuláciu, podporuje metabolizmus'},
+      {n:'Ženšeň',r:'Vitality Booster — ALE sleduj krvný tlak! DNA predispozícia k hypertenzii'},
+      {n:'Ginko biloba',r:'Zlepšuje mikrocirkuláciu — sleduj krvný tlak!'}
+    ],
+    howto:'ZAMKNUTÉ. Odomkne sa automaticky keď pH bude stabilne nad 6,0 a KM pod 450.',
+    warning:'⚠️ Ženšeň a Ginko: pravidelne merať krvný tlak — riziko hypertenzie!'
+  }
+];
+
+function getCurrentTeaWeek(){
+  // Automaticky podľa toho odkedy začal program — uloží sa pri prvom spustení
+  if(!st.programStart)st.programStart=new Date().toISOString().split('T')[0];
+  const start=new Date(st.programStart);
+  const now=new Date();
+  const diffDays=Math.floor((now-start)/(1000*60*60*24));
+  const weekNum=(Math.floor(diffDays/7)%4)+1; // rotácia 1-2-3-4-1-2-3-4...
+  return weekNum;
+}
+
+function isSlimUnlocked(){
+  const kms=st.km||[];
+  const lastKm=kms.length?kms[kms.length-1].v:999;
+  const t=td();const ph=t.ph||0;
+  // Skontroluj či bolo pH > 6.0 aspoň 3 dni za sebou
+  let phOk=ph>=6.0;
+  return phOk&&lastKm<450;
+}
+
+function renderTeaRotation(){
+  const weekNum=getCurrentTeaWeek();
+  const group=TEA_GROUPS[weekNum-1];
+  const slimUnlocked=isSlimUnlocked();
+
+  // Aktuálna skupina
+  const display=document.getElementById('tea-rotation-display');
+  if(!display)return;
+
+  const isLocked=group.locked&&!slimUnlocked;
+
+  display.innerHTML=`
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px;margin-top:8px;border-left:3px solid ${group.color}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:20px">${group.emoji}</span>
+        <div>
+          <div style="font-weight:600;color:${group.color};font-size:14px">${group.name}</div>
+          <div style="font-size:11px;color:var(--text3)">Týždeň ${weekNum} z cyklu</div>
+        </div>
+        ${isLocked?'<span style="margin-left:auto;font-size:18px">🔒</span>':'<span style="margin-left:auto;font-size:18px">✅</span>'}
+      </div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;font-style:italic">${group.goal}</div>
+      ${isLocked?`
+        <div class="alert alert-orange" style="margin-bottom:0">
+          🔒 <strong>Zamknuté.</strong> Odomkne sa keď: ${group.lockCondition}
+        </div>
+      `:`
+        <div style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Bylinky tohto týždňa:</div>
+        ${group.herbs.map(h=>`
+          <div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px">
+            <span style="color:${group.color}">•</span>
+            <div><div style="color:var(--text);font-weight:500">${h.n}</div><div style="color:var(--text3);font-size:11px">${h.r}</div></div>
+          </div>`).join('')}
+        ${group.warning?`<div class="alert alert-red" style="margin-top:10px;margin-bottom:0">${group.warning}</div>`:''}
+        <div style="background:var(--bg);border-radius:var(--radius-sm);padding:10px;margin-top:10px;font-size:12px;color:var(--text2);border-left:2px solid var(--orange)">
+          <strong style="color:var(--text)">Príprava:</strong> ${group.howto}
+        </div>
+      `}
+    </div>`;
+
+  // Prehľad všetkých skupín
+  const all=document.getElementById('tea-all-groups');
+  if(!all)return;
+  all.innerHTML=TEA_GROUPS.map((g,i)=>{
+    const wNum=i+1;
+    const isActive=wNum===weekNum;
+    const isLock=g.locked&&!slimUnlocked;
+    return `<div style="background:${isActive?'var(--card2)':'var(--bg3)'};border-radius:var(--radius-sm);padding:12px;border:1px solid ${isActive?g.color:'var(--border)'};opacity:${isLock?0.6:1}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:18px">${g.emoji}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:${isActive?g.color:'var(--text)'}">${g.name} ${isLock?'🔒':''}</div>
+          <div style="font-size:11px;color:var(--text3)">${g.when}</div>
+        </div>
+        ${isActive?'<span style="font-size:11px;color:var(--accent);font-weight:600">TERAZ</span>':''}
+      </div>
+    </div>`;
+  }).join('');
+}
+const MORNING=[
+  {l:'Kurací kolagén nalačno',s:'Pred jedlom a kávou — s lipozomálnym Vitamínom C',w:'Kolagén typ II = stavebný materiál platničiek L3–S1. Nalačno = najlepšie vstrebávanie.'},
+  {l:'Citrátová bomba',s:'1 citrón + ½ limetky + 300ml vody — ihneď po vstávaní',w:'Neutralizuje nočnú acidózu. Ráno máš pH najkyslé.'},
+  {l:'Zmeral som pH moču',s:'pH papierikom alebo digitálnym pH metrom — zapísať do Voda & pH',w:'Ranné pH ti hovorí ako telo hospodárilo cez noc. Cieľ: nad 6,5.'},
+  {l:'Zmeral som krvný tlak',s:'Ráno pred jedlom — zapísať do Monitoringu',w:'Genetické riziko hypertenzie. Vysoký tlak ničí obličky. Dôležité aj pri Ženšeni!'},
+  {l:'Voda v skle pripravená',s:'Rajec alebo Dobrá voda — min. 2 fľaše (3 litre)',w:'Bez vody po ruke nezapiješ suplementy ani nedoplníš pitný režim.'},
+  {l:'Lymfatická prechádzka – pohybová pumpa',s:'Aspoň 10 minút chôdze ráno — aktivácia panvy a lymfy',w:'Extrúzia L4/5 blokuje lymfatický odtok. Pohyb = pumpa ktorá odtok obnoví. Počas dňa každých 90 minút vstať a prejsť sa (Leiden!).'}
+];
+
+const SUPPL=[
+  {l:'Serapeptáza (120k)',t:'08:00 — nalačno, pred kolagénom',w:'Biologický upratovač: rozkladá fibrín a biofilmy v platničkách. Jarný detox — užívaš teraz v Fáze 1.'},
+  {l:'Kurací kolagén II + Micro Vit C (500mg)',t:'09:00 — nalačno',w:'Stavba chrupaviek L3–S1: zdroj glycínu a prolínu. POZOR: Vit C max 500mg — viac sa mení na oxaláty! ZÁKAZ ak pH < 5,5!'},
+  {l:'BioMineral pastilka (Biokomplex)',t:'10:00 — nechaj rozpustiť v ústach, 10 min nič nejesť/nepiť pred aj po',w:'Bunková hygiena: jód a minerálna rovnováha bez záťaže obličiek. Vstrebáva sa priamo cez sliznicu — preto nie prehltnúť!'},
+  {l:'Koenzým Q10 + Vitamín E',t:'12:00 — po obede s jedlom',w:'Motor mitochondrií: energia pre detoxikačné procesy v pečeni. S jedlom lebo rozpustný v tukoch.'},
+  {l:'Vitamín B9 (Folát — aktívna forma)',t:'13:00 — po obede',w:'Čistič krvi: znižuje homocysteín (HCY) a upravuje veľkosť krviniek (MCV). NIE kyselina listová — len aktívna forma (methylfolát)!'},
+  {l:'Zinok (15mg)',t:'16:00 — samostatne, nie s horčíkom!',w:'Hojenie pokožky, imunita. Telo si ho neukladá — treba denne. NEUŽÍVAJ naraz s horčíkom (22:00) — navzájom blokujú vstrebávanie!'},
+  {l:'Krilový olej',t:'17:00 — pred večerou',w:'Omega-3 pre cievy pri Leidenovej mutácii. Krilový olej = lepšia biodostupnosť ako rybí olej.'},
+  {l:'BioMineral pastilka (Biokomplex)',t:'19:00 — nechaj rozpustiť v ústach, 10 min nič nejesť/nepiť pred aj po',w:'Druhá dávka pre udržanie bunkovej hladiny minerálov počas noci.'},
+  {l:'Mg taurát + Vitamín B6',t:'22:00 — pred spaním',w:'B6 odbúrava homocysteín (HCY). Horčík uvoľňuje chrbtové svaly. Neužívaj naraz so zinkom (ten je o 16:00)!'},
+  {l:'Inulín (prášok)',t:'Dopoludnie — do smoothie alebo šťavy',w:'Kŕmivo pre baktérie degradujúce oxaláty v črevách.'},
+  {l:'Bylinkový čaj — rotácia',t:'Dopoludnie + večer (2–3 šálky)',w:'Pozri záložku Voda & pH — aktuálna týždenná skupina čajov.'}
+];
+
+const SHOP1={
+  '🥦 Zelenina & ovocie':[
+    {n:'Šalátová uhorka',o:'~2,5 kg — 250g denne do Urea-Detox šťavy + šaláty (cca 7–8 ks)'},
+    {n:'Stonkový zeler',o:'~900g — 125g denne do Urea-Detox šťavy (nie listový!)'},
+    {n:'Cuketa',o:'~600g — 2 ks stredné (ŠT polievka, SO dusená)'},
+    {n:'Biela reďkovka',o:'1 väčšia (~300g) — ŠT príloha'},
+    {n:'Fenikel',o:'1 ks (~200g) — ST večera s lososom'},
+    {n:'Čakanka',o:'1 hlávka — SO šalát'},
+    {n:'Poľníček alebo rukola',o:'1 balenie (100g) — ST obed'},
+    {n:'Mrkva',o:'3 ks (~300g) — do vývaru PO + SO'},
+    {n:'Petržlen koreňový',o:'2 ks (~160g) — do vývaru'},
+    {n:'Zeler koreňový',o:'kus (~150g) — do vývaru'},
+    {n:'Zelené jablká',o:'5 ks — 1 denne (PI raňajky + do smoothie UT)'},
+    {n:'Čučoriedky',o:'~500g — PO kaša 80g, ŠT puding 60g, zvyšok do smoothie'},
+    {n:'Citróny',o:'10 ks — 1 denne do citrátovej bomby + do vody + do receptov'},
+    {n:'Limetky',o:'4 ks — ½ denne do citrátovej bomby'},
+    {n:'Avokádo',o:'2 ks — SO raňajky 75g, NE natierka 75g'},
+    {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
+    {n:'Cesnak',o:'2 hlavičky — každý deň 1–2 strúčiky'},
+    {n:'Zázvor čerstvý',o:'~200g — 20g denne do Spine-Shotu (7 dní)'},
+    {n:'Kurkuma čerstvá',o:'~100g — 10g denne do Spine-Shotu (alebo 1 balenie prášku)'}
+  ],
+  '🍗 Mäso & ryby':[
+    {n:'Kuracie prsia',o:'~600g — PO obed 150g, PI polievka 100g, SO obed 150g, zvyšok rezerva'},
+    {n:'Kuracie stehno bez kože',o:'2 ks (~300g) — ŠT obed'},
+    {n:'Morčacie mäso',o:'150g — ST obed'},
+    {n:'Kuracie kosti a chrupavky',o:'~800g — PO vývar 500g, SO vývar 500g (kúp viac ak vieš)'},
+    {n:'Treska filé',o:'150g — UT obed'},
+    {n:'Losos filé',o:'300g — ST večera 150g, NE obed 150g'},
+    {n:'Zubáč filé',o:'150g — PI obed'}
+  ],
+  '🥜 Orechy & semená':[
+    {n:'Vlašské orechy',o:'~200g — 20–25g denne (PO kaša, ST raňajky, PI+NE raňajky)'},
+    {n:'Makadamiové orechy',o:'~100g — 20g denne (PI raňajky)'},
+    {n:'Para orechy',o:'14 ks — presne 2 ks denne, 7 dní (NE raňajky a rezerva)'},
+    {n:'Tekvicové semiačka',o:'~100g — 15g UT raňajky + SO raňajky 10g'}
+  ],
+  '🌾 Obilniny & pečivo':[
+    {n:'Quinoa',o:'180g — 60g PO raňajky + 60g SO raňajky + rezerva'},
+    {n:'Pohánkové vločky',o:'120g — 60g UT raňajky × 2 použitia'},
+    {n:'Chia semienka',o:'70g — 35g ŠT puding × 2 (vyrob 2 porcie naraz)'},
+    {n:'Kváskový chlieb',o:'1 bochník — SO raňajky 80g, NE večera 80g (len kváskový!)'}
+  ],
+  '🥛 Mliečne':[
+    {n:'Cottage syr BEZLAKTÓZOVÝ',o:'2 balenia po 250g — ST raňajky 150g + rezerva'},
+    {n:'Biely jogurt BEZLAKTÓZOVÝ plnotučný',o:'1 balenie 200g — NE raňajky'},
+    {n:'Tvaroh',o:'150g — NE večera nátierka'}
+  ],
+  '🥥 Tuky & kokos':[
+    {n:'Kokosové mlieko plnotučné',o:'2 plechovky × 400ml — UT raňajky 150ml + ŠT puding 200ml'},
+    {n:'Kokosová dužina strúhaná nesladená',o:'50g — PI detox smoothie 40g'},
+    {n:'Olivový olej extra virgin',o:'1 fľaša — na varenie a šaláty celý týždeň'},
+    {n:'Ľanový olej',o:'malá fľaška — 5ml denne do Spine-Shotu (7 dní = 35ml)'}
+  ],
+  '💊 Suplementy (jednorázový nákup, nie týždenný)':[
+    {n:'Kurací kolagén typ II',o:'balenie na mesiac — ráno nalačno denne'},
+    {n:'Lipozomálny Vitamín C',o:'balenie na mesiac — s kolagénom'},
+    {n:'Methylfolát — aktívna B9',o:'NIE kyselina listová! Len methylfolát.'},
+    {n:'B6 + B12 komplex',o:'balenie na mesiac'},
+    {n:'Koenzým Q10',o:'balenie na mesiac — s obedom'},
+    {n:'Inulín prášok z čakanky',o:'~250g balenie — 5g (1 čl) denne = ~50 porcií'}
+  ],
+  '💧 Voda & čaje':[
+    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne (nie plast, nie barel!)'},
+    {n:'Dobrá voda v SKLE',o:'záloha ak Rajec nie je — rovnaké množstvo'},
+    {n:'Čaj breza',o:'1 balenie — striedaš každý deň s inými čajmi'},
+    {n:'Čaj zlatobyľ',o:'1 balenie'},
+    {n:'Čaj praslička',o:'1 balenie'}
+  ]
+};
+
+const SHOP2={
+  '🥦 Zelenina & ovocie':[
+    {n:'Šalátová uhorka',o:'~2 kg — 250g denne do Urea-Detox šťavy + šaláty (cca 6–7 ks)'},
+    {n:'Stonkový zeler',o:'~900g — 125g denne do Urea-Detox šťavy'},
+    {n:'Cuketa',o:'~500g — 2 ks (ST obed, ŠT obed)'},
+    {n:'Biela reďkovka',o:'~600g — ST obed dvojitá porcia + UT obed'},
+    {n:'Fenikel',o:'1 ks (~200g) — ŠT raňajky + SO obed varený'},
+    {n:'Čínska kapusta',o:'½ hlávky (~200g) — PO obed šalát'},
+    {n:'Poľníček',o:'1 balenie (100g) — NE obed šalát'},
+    {n:'Zelené jablká',o:'4 ks — PI raňajky + do smoothie'},
+    {n:'Čučoriedky',o:'~300g — UT puding 60g, ŠT smoothie 80g, zvyšok rezerva'},
+    {n:'Citróny',o:'10 ks — 1 denne citrátová bomba + do vody + recepty'},
+    {n:'Avokádo',o:'2 ks — ST raňajky 75g, NE večera nátierka 150g'},
+    {n:'Pažítka',o:'1 zväzok — PI večera nátierka'},
+    {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
+    {n:'Cesnak',o:'2 hlavičky — každý deň 1–2 strúčiky'},
+    {n:'Zázvor čerstvý',o:'~150g — doplniť zásobu na Spine-Shot'},
+    {n:'Kurkuma',o:'doplniť ak chýba'}
+  ],
+  '🍗 Mäso & ryby':[
+    {n:'Kuracie prsia',o:'~300g — PI obed 150g + rezerva'},
+    {n:'Kuracie stehno bez kože',o:'2 ks (~300g) — ST obed na pare'},
+    {n:'Morčací rezeň',o:'150g — PO obed na prírodno'},
+    {n:'Kuracie kosti a chrupavky',o:'~1 kg — vývar ST + SO (viac = lepší kolagén)'},
+    {n:'Losos filé',o:'150g — ŠT večera'},
+    {n:'Treska filé',o:'150g — UT obed'},
+    {n:'Zubáč filé',o:'150g — SO obed'}
+  ],
+  '🥜 Orechy & semená':[
+    {n:'Vlašské orechy',o:'~150g — doplniť zásobu (PO kaša, ŠT raňajky, ŠT smoothie)'},
+    {n:'Makadamiové orechy',o:'~100g — PI raňajky 20g'},
+    {n:'Tekvicové semiačka',o:'~50g — PI raňajky 15g'},
+    {n:'Para orechy',o:'2 ks — NE raňajky, presne 2 kusy!'},
+    {n:'Pistácie',o:'~20g — SO raňajky, presne 15 kusov!'}
+  ],
+  '🌾 Obilniny & pečivo':[
+    {n:'Pohánka',o:'60g — PO raňajky kaša'},
+    {n:'Chia semienka',o:'70g — UT puding 35g + ŠT puding 35g'},
+    {n:'Quinoa',o:'60g — SO raňajky nasladko'},
+    {n:'Kváskový chlieb',o:'½ bochníka — ST raňajky 80g'}
+  ],
+  '🥛 Mliečne':[
+    {n:'Cottage syr BEZLAKTÓZOVÝ',o:'1 balenie 250g — ŠT raňajky 150g'},
+    {n:'Biely jogurt BEZLAKTÓZOVÝ',o:'1 balenie 200g — NE raňajky'},
+    {n:'Tvaroh',o:'~200g — PI večera 150g + NE večera 150g'}
+  ],
+  '🥥 Kokos & tuky':[
+    {n:'Kokosové mlieko plnotučné',o:'2 plechovky — UT puding 200ml + ŠT smoothie 150ml'},
+    {n:'Kokosová dužina strúhaná nesladená',o:'20g — SO quinoa'},
+    {n:'Ľanový olej',o:'doplniť — 5ml denne Spine-Shot'}
+  ],
+  '💧 Voda':[
+    {n:'Rajec alebo Dobrá voda v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne, celý týždeň'}
+  ]
+};
+
+let st=JSON.parse(localStorage.getItem('mh4')||'{}');
+let cw=1,cd=0,csw=1,recipeFilter='all',recipeSearch='';
+
+function save(){localStorage.setItem('mh4',JSON.stringify(st));}
+function renderPhaseCard(){
+  const c=document.getElementById('phase-card');if(!c)return;
+  if(!st.phaseStart){
+    c.innerHTML=`
+      <div class="card" style="border-color:var(--accent);background:linear-gradient(135deg,var(--card),var(--card2))">
+        <div class="card-title">🚀 Fáza 1 — Metabolický reset</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">
+          Štart protokolu nespustený. Stlač tlačidlo keď máš všetko pripravené: suplementy, testery pH, odšťavovač a vodu v skle.
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;font-size:13px">
+          <div style="color:var(--text2)">✅ Môžeš začať hneď: voda, citróny, jedálniček, chôdza</div>
+          <div style="color:var(--text3)">⏳ Čaká na zásielku: suplementy, pH testery, odšťavovač</div>
+        </div>
+        <button onclick="startPhase1()" style="width:100%;background:var(--accent);color:#000;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;padding:14px;cursor:pointer">
+          🚀 Spustiť Fázu 1 — Deň 1
+        </button>
+      </div>`;
+    return;
+  }
+  const start=new Date(st.phaseStart);
+  const now=new Date();
+  const elapsed=Math.floor((now-start)/(1000*60*60*24));
+  const remaining=Math.max(0,120-elapsed);
+  const pct=Math.min(100,(elapsed/120)*100);
+  const cond1=elapsed>=120;
+  const kms=st.km||[];
+  const kmUnder=kms.filter(k=>k.v<450);
+  let cond2=false;
+  if(kmUnder.length>=2){
+    try{
+      const d1=kmUnder[0].d.split('.').reverse().join('-');
+      const d2=kmUnder[kmUnder.length-1].d.split('.').reverse().join('-');
+      cond2=Math.floor((new Date(d2)-new Date(d1))/(1000*60*60*24))>=28;
+    }catch(e){}
+  }
+  const lastKm=kms.length?kms[kms.length-1].v:null;
+  const phs=st.phHistory||[];
+  const last14=phs.slice(-14);
+  const avgPh=last14.length?last14.reduce((s,e)=>s+e.v,0)/last14.length:null;
+  const cond3=avgPh!==null&&avgPh>=5.5;
+  const allDone=cond1&&cond2&&cond3;
+  const ci=(v)=>v?'✅':'❌';
+  const cc=(v)=>v?'var(--green)':'var(--text3)';
+  c.innerHTML=`
+    <div class="card" style="border-color:${allDone?'var(--green)':'var(--accent)'}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div class="card-title" style="margin-bottom:0">🔬 Fáza 1 — Metabolický reset</div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent)">Deň ${elapsed} / 120</div>
+      </div>
+      <div style="height:8px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-bottom:4px">
+        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--teal),var(--accent));border-radius:99px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:14px">
+        <span>Štart: ${new Date(st.phaseStart).toLocaleDateString('sk-SK')}</span>
+        <span>${remaining>0?`Zostáva ${remaining} dní`:'✅ Čas splnený'}</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:13px">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <span>${ci(cond1)}</span>
+          <div><div style="color:${cc(cond1)};font-weight:500">120 dní od štartu</div>
+          <div style="color:var(--text3);font-size:11px">Obnova krviniek — životnosť erytrocytu je 120 dní</div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <span>${ci(cond2)}</span>
+          <div><div style="color:${cc(cond2)};font-weight:500">KM &lt; 450 μmol/l — 2× s odstupom 1 mesiaca</div>
+          <div style="color:var(--text3);font-size:11px">${lastKm?`Aktuálne: ${lastKm} μmol/l`:'Zatiaľ žiadne meranie (štart: 518)'}</div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <span>${ci(cond3)}</span>
+          <div><div style="color:${cc(cond3)};font-weight:500">pH ≥ 5,5 — priemer posledných 14 dní</div>
+          <div style="color:var(--text3);font-size:11px">${avgPh?`Aktuálny priemer: ${avgPh.toFixed(2)}`:'Zatiaľ málo meraní pH'}</div></div>
+        </div>
+      </div>
+      ${allDone?`
+        <div class="alert alert-green" style="margin-top:14px;margin-bottom:0">
+          🎉 Všetky podmienky splnené! Môžeš prejsť do <strong>Fázy 2</strong>. Konzultuj s mamou.
+        </div>`:`
+        <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:var(--radius-sm);font-size:12px;color:var(--text3)">
+          📅 <strong style="color:var(--text2)">Míľniky:</strong> August 2026 — 1. odber KM · September 2026 — 2. odber KM
+        </div>`}
+      <button onclick="resetPhase1()" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;text-decoration:underline;padding:0">Resetovať štart protokolu</button>
+    </div>`;
+}
+
+function resetPhase1(){
+  if(!confirm('Naozaj resetovať štart protokolu? Dáta meraní zostanú.'))return;
+  delete st.phaseStart;
+  delete st.programStart;
+  save();
+  renderPhaseCard();
+  renderTeaRotation();
+}
+
+function startPhase1(){
+  if(st.phaseStart)return;
+  const today=new Date().toISOString().split('T')[0];
+  st.phaseStart=today;
+  st.programStart=today;
+  save();
+  renderPhaseCard();
+  renderTeaRotation();
+}
+
+function tkey(){const d=new Date();return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;}
+function td(){if(!st[tkey()])st[tkey()]={};return st[tkey()];}
+
+function init(){
+  const now=new Date();
+  document.getElementById('todayDate').textContent=now.toLocaleDateString('sk-SK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  cd=(now.getDay()+6)%7;
+  renderPhaseCard();
+  renderMorning();renderSuppl();renderTeaRotation();
+  renderDayTabs();renderMeals();renderTraffic();
+  renderRecipes();renderMonitorHistory();renderShopList();
+  updateKPIs();restoreDailyChecks();
+}
+
+function showScreen(n,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+n).classList.add('active');
+  btn.classList.add('active');
+}
+
+function addWater(dl){
+  const t=td();t.water=Math.max(0,(t.water||0)+dl);
+  save();updateWaterUI();updateKPIs();
+}
+
+function updateWaterUI(){
+  const t=td();const w=t.water||0;
+  const pct=Math.min(100,(w/40)*100);
+  ['hydration-bar','hydration-bar2'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.width=pct+'%';});
+  ['water-label','water-label2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=w.toFixed(1)+' dl';});
+  const gl=document.getElementById('water-glasses');
+  if(gl){
+    const cnt=Math.min(14,Math.floor(w/2.5));
+    gl.innerHTML='';
+    for(let i=0;i<14;i++){
+      const g=document.createElement('div');g.className='glass'+(i<cnt?' filled':'');g.textContent='🥛';gl.appendChild(g);
+    }
+  }
+}
+
+function savePh(){
+  const v=parseFloat(document.getElementById('ph-input').value);
+  if(!v||v<4||v>9)return;
+  const t=td();t.ph=v;
+  // Ukladaj aj do histórie pre graf
+  if(!st.phHistory)st.phHistory=[];
+  const today=new Date().toLocaleDateString('sk-SK');
+  // Ak dnes už existuje záznam, prepíš ho
+  const idx=st.phHistory.findIndex(e=>e.d===today);
+  if(idx>=0)st.phHistory[idx].v=v;
+  else st.phHistory.push({v,d:today});
+  if(st.phHistory.length>30)st.phHistory.shift();
+  save();updatePhUI(v);updateKPIs();renderMonitorHistory();
+}
+
+function updatePhUI(v){
+  const msg=document.getElementById('ph-message');
+  const ab=document.getElementById('ph-alert-box');
+  if(!v)return;
+  if(v<5.5){
+    if(msg){msg.textContent='🚨 pH '+v+' — kriticky kyslé! Citrátová bomba + zdvojnásob vodu.';msg.style.color='var(--red)';}
+    if(ab)ab.innerHTML='<div class="alert alert-red">🚨 pH moču: '+v+' — kriticky kyslé! Kryštály sa hromadia. Vypi citrátovú bombu a zdvojnásob pitný režim.</div>';
+  }else if(v<6.5){
+    if(msg){msg.textContent='⚠️ pH '+v+' — pod cieľom. Pokračuj v protokole.';msg.style.color='var(--orange)';}
+    if(ab)ab.innerHTML='<div class="alert alert-orange">pH moču: '+v+' — pod cieľom (&gt;6,5). Drž pitný protokol s citrónom.</div>';
+  }else{
+    if(msg){msg.textContent='✅ pH '+v+' — výborne! Kryštály sa rozpúšťajú.';msg.style.color='var(--green)';}
+    if(ab)ab.innerHTML='<div class="alert alert-green">pH moču: '+v+' — výborne! Pokračuj tak ďalej.</div>';
+  }
+}
+
+function toggleDailyCheck(key){
+  const t=td();if(!t.dc)t.dc={};
+  t.dc[key]=!t.dc[key];save();
+  const el=document.getElementById('check-'+key);
+  if(el)el.classList.toggle('checked',t.dc[key]);
+}
+
+function restoreDailyChecks(){
+  const t=td();if(!t.dc)return;
+  ['citrat','urea','spine','caj'].forEach(k=>{
+    const el=document.getElementById('check-'+k);
+    if(el&&t.dc[k])el.classList.add('checked');
+  });
+}
+
+function renderMorning(){
+  const t=td();if(!t.morning)t.morning={};
+  const c=document.getElementById('morning-checks');c.innerHTML='';
+  MORNING.forEach((item,i)=>{
+    const d=document.createElement('div');d.className='check-item';
+    d.onclick=()=>{t.morning[i]=!t.morning[i];save();renderMorning();};
+    d.innerHTML=`<div class="check-box ${t.morning[i]?'checked':''}"></div>
+      <div style="flex:1"><div class="check-label">${item.l}</div>
+      <div class="check-sub">${item.s}</div>
+      <div class="check-why">${item.w}</div></div>`;
+    c.appendChild(d);
+  });
+}
+
+function renderSuppl(){
+  const t=td();if(!t.suppl)t.suppl={};
+  const c=document.getElementById('suppl-list');c.innerHTML='';
+  SUPPL.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='check-item';
+    d.onclick=()=>{t.suppl[i]=!t.suppl[i];save();renderSuppl();};
+    d.innerHTML=`<div class="check-box ${t.suppl[i]?'checked':''}"></div>
+      <div style="flex:1"><div class="check-label">${s.l}</div>
+      <div class="check-sub">${s.t}</div>
+      <div class="check-why">${s.w}</div></div>`;
+    c.appendChild(d);
+  });
+}
+
+function setWeek(w){
+  cw=w;cd=0;
+  ['wt1','wt2','wt3'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',i+1===w));
+  renderDayTabs();renderMeals();
+}
+
+function renderDayTabs(){
+  const meals=cw===3?WHCY:cw===1?W1:W2;
+  const c=document.getElementById('day-tabs');c.innerHTML='';
+  meals.forEach((m,i)=>{
+    const b=document.createElement('button');b.className='day-tab'+(i===cd?' active':'');
+    b.textContent=m.day;
+    b.onclick=()=>{cd=i;renderDayTabs();renderMeals();};
+    c.appendChild(b);
+  });
+}
+
+function renderMeals(){
+  const meals=cw===3?WHCY:cw===1?W1:W2;
+  const m=meals[cd]||meals[0];
+  const t=td();if(!t.meals)t.meals={};
+  const totalKcal=(m.bkcal||0)+(m.lkcal||0)+(m.dkcal||0);
+  document.getElementById('meal-content').innerHTML=`
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)">JEDLÁ DŇA</span>
+        <span style="font-size:12px;color:var(--orange)">~${totalKcal} kcal celkom</span>
+      </div>
+      <div class="meal-time"><span>🌅 Raňajky (09:30 — v práci)</span>${m.bkcal?`<span class="meal-kcal">~${m.bkcal} kcal</span>`:''}</div>
+      <div class="meal-content">${m.b}</div>
+      ${m.bw?`<div class="meal-why">💡 ${m.bw}</div>`:''}
+      ${m.brid?`<button class="recipe-link" onclick="openRecipe('${m.brid}')">📋 Zobraziť recept →</button>`:''}
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer;margin-top:8px">
+        <input type="checkbox" ${t.meals.b?'checked':''} onchange="toggleMeal('b')" style="width:16px;height:16px;accent-color:var(--accent)"> Zjedené ✓
+      </label>
+      <div class="section-div"></div>
+      <div class="meal-time"><span>☀️ Obed (11:30 — jedáleň)</span>${m.lkcal?`<span class="meal-kcal">~${m.lkcal} kcal</span>`:''}</div>
+      <div class="meal-content"><strong>Hľadaj v jedálni:</strong> ${m.l}</div>
+      ${m.lw?`<div class="meal-why">💡 ${m.lw}</div>`:''}
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer;margin-top:8px">
+        <input type="checkbox" ${t.meals.l?'checked':''} onchange="toggleMeal('l')" style="width:16px;height:16px;accent-color:var(--accent)"> Zjedené ✓
+      </label>
+      <div class="section-div"></div>
+      <div class="meal-time"><span>🌙 Večera (17:30 — doma)</span>${m.dkcal?`<span class="meal-kcal">~${m.dkcal} kcal</span>`:''}</div>
+      <div class="meal-content">${m.d}</div>
+      ${m.dw?`<div class="meal-why">💡 ${m.dw}</div>`:''}
+      ${m.drid?`<button class="recipe-link" onclick="openRecipe('${m.drid}')">📋 Zobraziť recept →</button>`:''}
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer;margin-top:8px">
+        <input type="checkbox" ${t.meals.d?'checked':''} onchange="toggleMeal('d')" style="width:16px;height:16px;accent-color:var(--accent)"> Zjedené ✓
+      </label>
+    </div>`;
+}
+
+function toggleMeal(w){const t=td();if(!t.meals)t.meals={};t.meals[w]=!t.meals[w];save();}
+
+function openRecipe(id){
+  showScreen('recipes',document.querySelectorAll('.nav-btn')[3]);
+  setTimeout(()=>{
+    const el=document.getElementById('recipe-'+id);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function renderTraffic(){
+  ['green','orange','red'].forEach(col=>{
+    const c=document.getElementById('traffic-'+col);c.innerHTML='';
+    TRAFFIC[col].forEach(item=>{
+      const d=document.createElement('div');d.className='traffic-item';
+      d.innerHTML=`<div class="traffic-dot ${col[0]}"></div>
+        <div><div class="traffic-name">${item.n}</div>${item.r?`<div class="traffic-reason">${item.r}</div>`:''}</div>`;
+      c.appendChild(d);
+    });
+  });
+}
+
+function filterRecipes(f){
+  recipeFilter=f;
+  document.querySelectorAll('.rf-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('rf-'+f).classList.add('active');
+  renderRecipes();
+}
+
+function searchRecipes(q){recipeSearch=q.toLowerCase();renderRecipes();}
+
+function renderRecipes(){
+  const c=document.getElementById('recipes-list');c.innerHTML='';
+  const typeLabel={b:'🌅 Raňajky',l:'☀️ Obed',d:'🌙 Večera',drink:'🥤 Šťavy & Shoty'};
+  const filtered=RECIPES.filter(r=>{
+    const matchFilter=recipeFilter==='all'||r.type===recipeFilter;
+    const matchSearch=!recipeSearch||r.name.toLowerCase().includes(recipeSearch);
+    return matchFilter&&matchSearch;
+  });
+  if(!filtered.length){c.innerHTML='<div style="color:var(--text3);text-align:center;padding:20px">Žiadne recepty</div>';return;}
+  filtered.forEach(r=>{
+    const div=document.createElement('div');div.className='recipe-card';div.id='recipe-'+r.id;
+    div.innerHTML=`
+      <div class="recipe-card-title">${r.name}</div>
+      <div class="recipe-card-meta">
+        <span class="recipe-badge meal">${typeLabel[r.type]||r.type}</span>
+        <span class="recipe-badge kcal">~${r.kcal} kcal</span>
+        <span class="recipe-badge time">⏱ ${r.time}</span>
+      </div>
+      <div class="recipe-section-title">🧺 Ingrediencie (1 porcia)</div>
+      ${r.ingredients.map(i=>`<div class="ingredient-row"><span class="ingredient-name">${i.n}</span><span class="ingredient-amount">${i.a}</span></div>`).join('')}
+      <div class="recipe-section-title">👨‍🍳 Postup</div>
+      ${r.steps.map((s,i)=>`<div class="step-row"><span class="step-num">${i+1}.</span><span>${s}</span></div>`).join('')}
+      ${r.tip?`<div class="recipe-tip">💡 ${r.tip}</div>`:''}`;
+    c.appendChild(div);
+  });
+}
+
+function saveWeight(){
+  const v=parseFloat(document.getElementById('weight-input').value);if(!v)return;
+  if(!st.weight)st.weight=[];
+  st.weight.push({v,d:new Date().toLocaleDateString('sk-SK')});
+  if(st.weight.length>30)st.weight.shift();
+  save();renderMonitorHistory();updateKPIs();
+}
+
+function saveKm(){
+  const v=parseInt(document.getElementById('km-input').value);if(!v)return;
+  if(!st.km)st.km=[];
+  st.km.push({v,d:new Date().toLocaleDateString('sk-SK')});
+  if(st.km.length>20)st.km.shift();
+  save();renderMonitorHistory();updateKPIs();
+}
+
+function saveBp(){
+  const v=parseInt(document.getElementById('bp-input').value);if(!v)return;
+  if(!st.bp)st.bp=[];
+  st.bp.push({v,d:new Date().toLocaleDateString('sk-SK')});
+  if(st.bp.length>20)st.bp.shift();
+  save();renderMonitorHistory();
+}
+
+function thinData(data){
+  // Redukuj body podľa množstva aby bol graf čitateľný
+  const n=data.length;
+  if(n<=14)return data;
+  if(n<=30){
+    // každé druhé
+    return data.filter((_,i)=>i%2===0||i===n-1);
+  }
+  // týždenný priemer
+  const weeks={};
+  data.forEach(d=>{
+    try{
+      const parts=d.d.split('.');
+      const date=new Date(parts[2],parts[1]-1,parts[0]);
+      const weekNum=Math.floor(date.getTime()/(7*24*60*60*1000));
+      if(!weeks[weekNum])weeks[weekNum]={sum:0,count:0,d:d.d};
+      weeks[weekNum].sum+=d.v;
+      weeks[weekNum].count++;
+    }catch(e){}
+  });
+  return Object.values(weeks).map(w=>({v:Math.round(w.sum/w.count*10)/10,d:w.d}));
+}
+
+function calcWeightPrediction(weights){
+  // Potrebujeme aspoň 7 meraní na spoľahlivú predikciu
+  if(!weights||weights.length<7)return null;
+  // Lineárna regresia na posledných 30 meraniach
+  const data=weights.slice(-30);
+  const n=data.length;
+  // X = index dňa od prvého merania
+  const parseDate=(str)=>{
+    try{const p=str.split('.');return new Date(p[2],p[1]-1,p[0]).getTime();}catch(e){return 0;}
+  };
+  const t0=parseDate(data[0].d);
+  const xs=data.map(d=>(parseDate(d.d)-t0)/(1000*60*60*24));
+  const ys=data.map(d=>d.v);
+  const xMean=xs.reduce((a,b)=>a+b,0)/n;
+  const yMean=ys.reduce((a,b)=>a+b,0)/n;
+  const slope=xs.reduce((s,x,i)=>s+(x-xMean)*(ys[i]-yMean),0)/xs.reduce((s,x)=>s+(x-xMean)**2,0);
+  if(slope>=0)return null; // nerastie v správnom smere
+  const intercept=yMean-slope*xMean;
+  const currentWeight=ys[ys.length-1];
+  // Cieľová váha = aktuálna - 10.4 (alebo konkrétna)
+  const targetWeight=currentWeight-10.4;
+  const daysToGoal=(targetWeight-intercept)/slope;
+  const goalDate=new Date(t0+(daysToGoal*24*60*60*1000));
+  const daysRemaining=Math.round(daysToGoal-xs[xs.length-1]);
+  const weeklyLoss=Math.abs(slope*7);
+  return {goalDate, daysRemaining, weeklyLoss, targetWeight};
+}
+
+function makeSvgChart(data, targetMin, targetMax, color, unit, invertGood){
+  if(!data||data.length<2) return '<div style="color:var(--text3);font-size:12px;padding:20px 0;text-align:center">Zatiaľ málo dát — zadaj aspoň 2 merania</div>';
+  const reduced=thinData(data);
+  const W=300, H=80, PL=8, PR=8, PT=8, PB=8;
+  const vals=reduced.map(d=>d.v);
+  const minV=Math.min(...vals, targetMin!=null?targetMin:Math.min(...vals));
+  const maxV=Math.max(...vals, targetMax!=null?targetMax:Math.max(...vals));
+  const range=maxV-minV||1;
+  const scaleX=(i)=>PL+(i/(reduced.length-1))*(W-PL-PR);
+  const scaleY=(v)=>PT+(H-PT-PB)*(1-(v-minV)/range);
+  const points=reduced.map((d,i)=>`${scaleX(i)},${scaleY(d.v)}`).join(' ');
+  let targetZone='';
+  if(targetMin!=null&&targetMax!=null){
+    const y1=scaleY(targetMax);const y2=scaleY(targetMin);
+    targetZone=`<rect x="${PL}" y="${y1}" width="${W-PL-PR}" height="${y2-y1}" fill="rgba(74,222,128,0.1)" rx="2"/>`;
+  }else if(targetMax!=null){
+    const y1=PT;const y2=scaleY(targetMax);
+    targetZone=`<rect x="${PL}" y="${y1}" width="${W-PL-PR}" height="${y2-y1}" fill="rgba(74,222,128,0.1)" rx="2"/>`;
+  }
+  const last=data[data.length-1];
+  const prev=data.length>1?data[data.length-2]:null;
+  const diff=prev?(last.v-prev.v):null;
+  const isGood=diff===null?null:(invertGood?diff<0:diff>0);
+  const diffStr=diff===null?'':(diff>0?`+${diff.toFixed(1)}`:diff.toFixed(1));
+  const diffColor=isGood===null?'var(--text3)':isGood?'var(--green)':'var(--red)';
+  const countNote=data.length>14?`<span style="font-size:10px;color:var(--text3)"> (${data.length} meraní, zobrazený priemer)</span>`:'';
+  return `
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px">
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:${color}">${last.v}<span style="font-size:11px;color:var(--text2)"> ${unit}</span></div>
+        <div style="font-size:11px;color:var(--text3)">${last.d}${countNote}</div>
+      </div>
+      ${diff!==null?`<div style="font-size:13px;font-weight:600;color:${diffColor}">${diffStr} ${unit}</div>`:''}
+    </div>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:60px;overflow:visible">
+      ${targetZone}
+      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      ${reduced.map((d,i)=>`<circle cx="${scaleX(i)}" cy="${scaleY(d.v)}" r="3" fill="${color}"/>`).join('')}
+    </svg>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:2px">
+      <span>${data[0].d}</span><span>${data[data.length-1].d}</span>
+    </div>`;
+}
+
+function renderMonitorHistory(){
+  const c=document.getElementById('monitor-history');if(!c)return;
+  const weights=(st.weight||[]).slice(-90);
+  const kms=(st.km||[]).slice(-30);
+  const bps=(st.bp||[]).slice(-30);
+  const phs=(st.phHistory||[]).slice(-90);
+
+  let h='';
+
+  // Váha + predikcia
+  const pred=calcWeightPrediction(weights);
+  h+=`<div style="margin-bottom:16px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">📉 Váha (cieľ –10,4 kg)</div>
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
+      ${weights.length?makeSvgChart(weights,null,null,'var(--teal)','kg',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta</div>'}
+    </div>
+    ${pred?`
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px;margin-top:8px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🎯 Predikcia cieľa</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+        <div style="display:flex;justify-content:space-between">
+          <span style="color:var(--text2)">Tempo chudnutia</span>
+          <span style="color:var(--teal);font-weight:600">–${pred.weeklyLoss.toFixed(2)} kg/týždeň</span>
+        </div>
+        <div style="display:flex;justify-content:space-between">
+          <span style="color:var(--text2)">Odhadovaný cieľ</span>
+          <span style="color:var(--accent);font-weight:600">${pred.goalDate.toLocaleDateString('sk-SK',{day:'numeric',month:'long',year:'numeric'})}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between">
+          <span style="color:var(--text2)">Zostáva</span>
+          <span style="color:var(--text);font-weight:600">${pred.daysRemaining} dní</span>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--text3);margin-top:8px">Predikcia na základe posledných ${Math.min(weights.length,30)} meraní. Aktualizuje sa automaticky.</div>
+    </div>`:''}
+  </div>`;
+
+  // pH
+  h+=`<div style="margin-bottom:16px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🧪 pH moču (cieľ 6,5–7,0)</div>
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
+      ${phs.length?makeSvgChart(phs,6.5,7.0,'var(--green)','pH',false):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta — zadaj pH v sekcii Voda & pH</div>'}
+    </div>
+  </div>`;
+
+  // KM
+  h+=`<div style="margin-bottom:16px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🔬 Kyselina močová (cieľ &lt;450 μmol/l)</div>
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
+      ${kms.length?makeSvgChart(kms,null,450,'var(--orange)','μmol/l',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta (štart: 518)</div>'}
+    </div>
+  </div>`;
+
+  // TK
+  h+=`<div style="margin-bottom:8px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">❤️ Krvný tlak (cieľ &lt;130 mmHg)</div>
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
+      ${bps.length?makeSvgChart(bps,null,130,'var(--red)','mmHg',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta</div>'}
+    </div>
+  </div>`;
+
+  c.innerHTML=h;
+}
+
+function updateKPIs(){
+  const t=td();const w=t.water||0;
+  document.getElementById('kpi-water').innerHTML=w.toFixed(1)+'<span class="kpi-unit"> dl</span>';
+  const ws=document.getElementById('kpi-water-status');
+  if(w>=35){ws.textContent='✅ Cieľ splnený';ws.className='kpi-status good';}
+  else if(w>=20){ws.textContent='⚠️ Zostatok: '+(35-w).toFixed(1)+' dl';ws.className='kpi-status warn';}
+  else{ws.textContent='Cieľ: 35–40 dl denne';ws.className='kpi-status';}
+  const ph=t.ph;
+  if(ph){
+    document.getElementById('kpi-ph').innerHTML=ph;
+    const ps=document.getElementById('kpi-ph-status');
+    if(ph>=6.5){ps.textContent='✅ V cieli';ps.className='kpi-status good';}
+    else if(ph>=5.5){ps.textContent='⚠️ Pod cieľom';ps.className='kpi-status warn';}
+    else{ps.textContent='❌ Kriticky nízke!';ps.className='kpi-status bad';}
+    updatePhUI(ph);
+  }
+  const wts=st.weight||[];
+  if(wts.length)document.getElementById('kpi-weight').innerHTML=wts[wts.length-1].v+'<span class="kpi-unit"> kg</span>';
+  const kms=st.km||[];
+  if(kms.length){
+    const last=kms[kms.length-1].v;
+    document.getElementById('kpi-km').innerHTML=last;
+    const ks=document.getElementById('kpi-km-status');
+    if(last<450){ks.textContent='✅ Pod cieľom!';ks.className='kpi-status good';}
+    else if(last<518){ks.textContent='📉 Klesá (−'+(518-last)+')';ks.className='kpi-status warn';}
+    else{ks.textContent='Cieľ: <450 μmol/l';ks.className='kpi-status bad';}
+  }
+  updateWaterUI();
+}
+
+function setShopWeek(w){
+  csw=w;
+  ['swt1','swt2'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',i+1===w));
+  renderShopList();
+}
+
+function renderShopList(){
+  const data=csw===1?SHOP1:SHOP2;const key='shop_w'+csw;
+  if(!st[key])st[key]={};
+  const c=document.getElementById('shop-list');c.innerHTML='';
+  Object.entries(data).forEach(([cat,items])=>{
+    const cd2=document.createElement('div');cd2.className='shop-category';
+    cd2.innerHTML=`<div class="shop-category-title">${cat}</div>`;
+    const id2=document.createElement('div');
+    items.forEach((item,i)=>{
+      const ik=cat+'_'+i;const chk=st[key][ik]||false;
+      const d=document.createElement('div');d.className='shop-item';
+      d.onclick=()=>{st[key][ik]=!st[key][ik];save();renderShopList();};
+      d.innerHTML=`<div class="shop-check ${chk?'checked':''}"></div>
+        <div style="flex:1"><div class="shop-name ${chk?'checked':''}">${item.n}</div>
+        ${item.o?`<div class="shop-note">${item.o}</div>`:''}</div>`;
+      id2.appendChild(d);
+    });
+    cd2.appendChild(id2);c.appendChild(cd2);
+  });
+}
+
+function checkAllShop(){
+  const data=csw===1?SHOP1:SHOP2;const key='shop_w'+csw;
+  if(!st[key])st[key]={};
+  Object.entries(data).forEach(([cat,items])=>items.forEach((_,i)=>st[key][cat+'_'+i]=true));
+  save();renderShopList();
+}
+
+function resetShop(){st['shop_w'+csw]={};save();renderShopList();}
+function toggleCheck(el){el.querySelector('.check-box').classList.toggle('checked');}
+
+init();
+</script>
+</body>
+</html>
