@@ -175,35 +175,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div id="ph-alert-box"></div>
 
   <div class="card">
-    <div class="card-title">⏰ Dnešný harmonogram</div>
-    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">06:00</span><span>Vstávanie — citrátová bomba + kolagén nalačno</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">07:00</span><span>Voda + suplementy ráno (Serapeptáza)</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">08:00</span><span>Voda</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">09:30</span><span>Raňajky (v práci) — štart jedálenského okna</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">10:30</span><span>BioMineral pastilka + voda</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">11:00</span><span>Urea-Detox šťava</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">11:30</span><span>Obed v jedálni</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">12:00</span><span>Q10 + Vit E po obede</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">13:00</span><span>B9 folát + voda</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">14:00</span><span>Bylinkový čaj + voda</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">16:00</span><span>Zinok + voda</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">17:00</span><span>Krilový olej + príchod domov</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--accent);font-weight:600;width:50px">17:30</span><span style="color:var(--accent);font-weight:500">Večera doma — koniec jedálenského okna</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">19:00</span><span>BioMineral 2. pastilka + voda</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">20:30</span><span>Spine-Shot + bylinkový čaj</span></div>
-      <div style="display:flex;gap:10px"><span style="color:var(--blue);font-weight:600;width:50px">22:00</span><span>Mg taurát + B6 pred spaním</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="card-title" style="margin-bottom:0">⏰ Dnešný plán</div>
+      <button onclick="resetDayChecks()" style="background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;text-decoration:underline">Reset dňa</button>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--text3)">⏱ Pôst: 17:30 — 09:30 = 16 hodín presne (16/8)</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">✅ Ranné záväzky</div>
-    <div id="morning-checks"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">💊 Suplementy & čaje dnes</div>
-    <div id="suppl-list"></div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:12px">⏱ Pôst: 17:30 — 09:30 = 16 hodín · 🎒 Do tašky: Urea-Detox šťava, suplementy 10:30/12:00/13:00/16:00, Bylinkový čaj</div>
+    <div id="daily-checklist"></div>
   </div>
 
   <div class="card">
@@ -777,6 +754,87 @@ function renderTeaRotation(){
     </div>`;
   }).join('');
 }
+const DAILY_PLAN=[
+  {time:'06:00',icon:'🍋',label:'Citrátová bomba',sub:'1 citrón + ½ limetky + 300ml vody — IHNEĎ po vstávaní, nalačno',why:'Neutralizuje nočnú acidózu — ráno máš pH najkyslé',tag:'dom'},
+  {time:'06:00',icon:'💊',label:'Kurací kolagén typ II + Vit C 500mg',sub:'Nalačno — pred jedlom aj kávou',why:'Stavba platničiek L3–S1. Nalačno = najlepšie vstrebávanie. MAX 500mg Vit C!',tag:'dom'},
+  {time:'06:00',icon:'📏',label:'Zmeral som váhu',sub:'Po toalete, pred jedlom — zapiš do Monitoringu',why:'Každý deň rovnaké podmienky = porovnateľný trend',tag:'dom'},
+  {time:'06:00',icon:'🧪',label:'Zmeral som pH moču',sub:'pH papierikom alebo digitálnym metrom — zapiš do Voda & pH',why:'Ranné pH je najdôležitejší denný indikátor stavu obličiek',tag:'dom'},
+  {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút na bruchu, čelo na dlaniach, päty von — nádych do dolnej časti chrbta',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
+  {time:'06:30',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (fľaša), suplementy 10:30/12:00/13:00/16:00, bylinkový čaj',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci',tag:'dom'},
+  {time:'07:00',icon:'💊',label:'Serapeptáza 120k',sub:'Nalačno — aspoň 30 minút pred raňajkami',why:'Biologický upratovač: rozkladá fibrín a biofilmy v platničkách',tag:'dom'},
+  {time:'07:00',icon:'💧',label:'Voda — 2 dl',sub:'Rajec alebo Dobrá voda v skle + kvapka citróna',why:'Spusti hydratáciu po nočnej pauze',tag:'dom'},
+  {time:'08:00',icon:'💧',label:'Voda — 2 dl',sub:'Rajec alebo Dobrá voda v skle',why:'',tag:'dom'},
+  {time:'08:30',icon:'🚶',label:'Lymfatická prechádzka',sub:'Aspoň 10 minút pred odchodom do práce',why:'Aktivácia panvy a lymfatického odtoku pred sedením v aute',tag:'dom'},
+  {time:'09:30',icon:'🌅',label:'Raňajky — štart jedálenského okna',sub:'Pozri Jedálniček → dnešný deň',why:'Pôst 16 hodín: 17:30 — 09:30',tag:'praca'},
+  {time:'10:30',icon:'💊',label:'BioMineral Biokomplex — 1. pastilka',sub:'Nechaj ROZPUSTIŤ v ústach — 10 min nič nepiť/nejiesť pred aj po',why:'Vstrebáva sa cez sliznicu ústnu, nie cez žalúdok',tag:'praca'},
+  {time:'10:30',icon:'💧',label:'Voda — 2.5 dl',sub:'',why:'',tag:'praca'},
+  {time:'11:00',icon:'🥤',label:'Urea-Detox šťava',sub:'Fľaša z domu — 250g uhorky + 125g zeleru (odšťavené ráno)',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami — vyplavuje KM',tag:'praca'},
+  {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy — BEZ omáčok',tag:'praca'},
+  {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'S obedom — nie nalačno',why:'Mitochondrie v pečeni. Rozpustný v tukoch = musí byť s jedlom',tag:'praca'},
+  {time:'12:00',icon:'💧',label:'Voda — 3 dl',sub:'',why:'',tag:'praca'},
+  {time:'13:00',icon:'💊',label:'Methylfolát B9',sub:'Po obede',why:'Znižuje homocysteín (HCY) — vaskulárne riziko pri Leidene',tag:'praca'},
+  {time:'13:00',icon:'💧',label:'Voda — 2 dl',sub:'',why:'',tag:'praca'},
+  {time:'14:00',icon:'🍵',label:'Bylinkový čaj — rotácia',sub:'Pozri Voda & pH → aktuálna týždenná skupina',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj!',tag:'praca'},
+  {time:'14:00',icon:'💧',label:'Voda — 2.5 dl',sub:'',why:'',tag:'praca'},
+  {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — nádych do brucha, nie do hrudníka',why:'V práci nemôžeš ľahnúť — aspoň sed. Každé 2 hodiny.',tag:'praca'},
+  {time:'16:00',icon:'💊',label:'Zinok 15mg',sub:'Samostatne — NIE naraz s horčíkom!',why:'Imunita a hojenie tkanív. Telo si zinok neukladá — treba denne',tag:'praca'},
+  {time:'16:00',icon:'💧',label:'Voda — 2.5 dl',sub:'',why:'',tag:'praca'},
+  {time:'17:00',icon:'💊',label:'Krilový olej',sub:'Pred večerou',why:'Omega-3 pre cievy pri Leidenovej mutácii',tag:'dom'},
+  {time:'17:30',icon:'🌙',label:'Večera — KONIEC jedálenského okna',sub:'Pozri Jedálniček → dnešná večera. Po 17:30 už len voda a čaje.',why:'Pôst 16 hodín začína teraz',tag:'dom',highlight:true},
+  {time:'18:00',icon:'🚶',label:'Lymfatická prechádzka po večeri',sub:'30–45 minút, pomalé tempo',why:'Aktivácia lymfy + prevencia trombózy (Leiden) po celodennom sedení',tag:'dom'},
+  {time:'19:00',icon:'💊',label:'BioMineral Biokomplex — 2. pastilka',sub:'Nechaj ROZPUSTIŤ v ústach — 10 min nič nepiť/nejiesť pred aj po',why:'Udržanie bunkovej hladiny minerálov počas noci',tag:'dom'},
+  {time:'19:00',icon:'💧',label:'Voda — 2 dl',sub:'',why:'',tag:'dom'},
+  {time:'20:30',icon:'⚡',label:'Spine-Shot',sub:'20g zázvoru + 10g kurkumy + 5ml ľanového oleja',why:'Protizápal pre L4/5. Ľanový olej je nosič — bez neho sa kurkumín nevstrebe',tag:'dom'},
+  {time:'20:30',icon:'🍵',label:'Bylinkový čaj — večerná porcia',sub:'Pozri Voda & pH → aktuálna skupina',why:'',tag:'dom'},
+  {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu pred spaním',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou',tag:'dom'},
+  {time:'22:00',icon:'💊',label:'Mg taurát + B6',sub:'Pred spaním — nie naraz so zinkom (ten bol o 16:00)!',why:'B6 odbúrava homocysteín. Horčík uvoľňuje chrbtové svaly pre nočnú regeneráciu',tag:'dom'}
+];
+
+function renderDailyChecklist(){
+  const t=td();if(!t.day)t.day={};
+  const c=document.getElementById('daily-checklist');if(!c)return;
+  const now=new Date();
+  const currentMinutes=now.getHours()*60+now.getMinutes();
+
+  let html='';
+  DAILY_PLAN.forEach((item,i)=>{
+    const checked=t.day[i]||false;
+    const [h,m]=item.time.split(':').map(Number);
+    const itemMinutes=h*60+m;
+    const isPast=itemMinutes<currentMinutes;
+    const isCurrent=Math.abs(itemMinutes-currentMinutes)<=30;
+    const tagColor=item.tag==='praca'?'var(--orange)':'var(--teal)';
+    const tagLabel=item.tag==='praca'?'🏢':'🏠';
+
+    html+=`<div onclick="toggleDayItem(${i})" style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;opacity:${checked?0.5:1};${item.highlight?'background:rgba(74,222,128,0.05);margin:0 -16px;padding:10px 16px;':''}" >
+      <div style="width:22px;height:22px;border-radius:6px;border:2px solid ${checked?'var(--green)':isCurrent?'var(--accent)':'var(--border)'};flex-shrink:0;display:flex;align-items:center;justify-content:center;background:${checked?'var(--green)':'transparent'};margin-top:1px">
+        ${checked?'<span style="color:#000;font-size:13px;font-weight:700">✓</span>':''}
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="color:${isCurrent&&!checked?'var(--accent)':'var(--blue)'};font-weight:700;font-size:12px;flex-shrink:0">${item.time}</span>
+          <span style="font-size:11px">${item.icon}</span>
+          <span style="font-size:14px;font-weight:${isCurrent&&!checked?600:400};color:${checked?'var(--text3)':item.highlight?'var(--accent)':'var(--text)'};text-decoration:${checked?'line-through':''}">${item.label}</span>
+          <span style="font-size:10px;color:${tagColor};flex-shrink:0">${tagLabel}</span>
+        </div>
+        ${item.sub?`<div style="font-size:12px;color:var(--text2);margin-top:2px">${item.sub}</div>`:''}
+        ${item.why?`<div style="font-size:11px;color:var(--text3);margin-top:2px;font-style:italic">${item.why}</div>`:''}
+      </div>
+    </div>`;
+  });
+  c.innerHTML=html;
+}
+
+function toggleDayItem(i){
+  const t=td();if(!t.day)t.day={};
+  t.day[i]=!t.day[i];
+  save();renderDailyChecklist();
+}
+
+function resetDayChecks(){
+  const t=td();t.day={};save();renderDailyChecklist();
+}
+
 const MORNING=[
   {l:'Kurací kolagén nalačno',s:'Pred jedlom a kávou — s lipozomálnym Vitamínom C',w:'Kolagén typ II = stavebný materiál platničiek L3–S1. Nalačno = najlepšie vstrebávanie.'},
   {l:'Citrátová bomba',s:'1 citrón + ½ limetky + 300ml vody — ihneď po vstávaní',w:'Neutralizuje nočnú acidózu. Ráno máš pH najkyslé.'},
@@ -802,47 +860,40 @@ const SUPPL=[
 
 const SHOP1={
   '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~2,5 kg — 250g denne do Urea-Detox šťavy + šaláty (cca 7–8 ks)'},
-    {n:'Stonkový zeler',o:'~900g — 125g denne do Urea-Detox šťavy (nie listový!)'},
-    {n:'Cuketa',o:'~600g — 2 ks stredné (SO obed dusená + rezerva)'},
-    {n:'Biela reďkovka',o:'1 väčšia (~300g) — ŠT obed príloha'},
+    {n:'Šalátová uhorka',o:'~2,5 kg — 250g denne Urea-Detox šťava + šaláty'},
+    {n:'Stonkový zeler',o:'~900g — 125g denne Urea-Detox šťava (nie listový!)'},
+    {n:'Cuketa',o:'1 ks (~300g) — SO obed dusená'},
     {n:'Fenikel',o:'1 ks (~200g) — PO večera s lososom'},
     {n:'Čakanka',o:'1 hlávka — SO obed šalát'},
-    {n:'Poľníček alebo rukola',o:'1 balenie (100g) — ST obed šalát'},
-    {n:'Kapusta biela alebo čínska',o:'~200g — PI obed šalát'},
-    {n:'Mrkva',o:'3 ks (~300g) — do vývaru SO + NE'},
-    {n:'Petržlen koreňový',o:'2 ks (~160g) — do vývaru'},
-    {n:'Zeler koreňový',o:'kus (~150g) — do vývaru'},
-    {n:'Zelené jablká',o:'5 ks — PI raňajky + do smoothie UT večera'},
-    {n:'Čučoriedky',o:'~500g — PO kaša 80g, ŠT puding 60g, ŠT smoothie 80g, zvyšok rezerva'},
-    {n:'Citróny',o:'10 ks — 1 denne do citrátovej bomby + do vody + do receptov'},
+    {n:'Mrkva',o:'3 ks (~300g) — do vývaru SO'},
+    {n:'Petržlen koreňový',o:'2 ks (~160g) — do vývaru SO'},
+    {n:'Zeler koreňový',o:'kus (~150g) — do vývaru SO'},
+    {n:'Zelené jablká',o:'5 ks — PI raňajky + UT večera smoothie'},
+    {n:'Čučoriedky',o:'~500g — PO kaša 80g, ŠT puding 60g, ŠT večera 80g, rezerva'},
+    {n:'Citróny',o:'10 ks — denne citrátová bomba + voda + recepty'},
     {n:'Limetky',o:'4 ks — ½ denne do citrátovej bomby'},
     {n:'Avokádo',o:'2 ks — SO raňajky 75g, NE večera 75g'},
     {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
     {n:'Cesnak',o:'2 hlavičky — každý deň 1–2 strúčiky'},
-    {n:'Zázvor čerstvý',o:'~200g — 20g denne do Spine-Shotu (7 dní)'},
-    {n:'Kurkuma čerstvá',o:'~100g — 10g denne do Spine-Shotu (alebo 1 balenie prášku)'}
+    {n:'Zázvor čerstvý',o:'~200g — 20g denne do Spine-Shotu'},
+    {n:'Kurkuma čerstvá',o:'~100g — 10g denne do Spine-Shotu (alebo prášok)'}
   ],
   '🍗 Mäso & ryby':[
-    {n:'Kuracie prsia',o:'~450g — ST obed 150g, SO obed 150g, NE vývar + mäso 150g'},
-    {n:'Kuracie stehno bez kože',o:'2 ks (~300g) — ŠT obed'},
-    {n:'Morčacie mäso',o:'150g — ST obed'},
+    {n:'Kuracie prsia',o:'~300g — SO obed 150g + NE vývar mäso 150g'},
     {n:'Kuracie kosti a chrupavky',o:'~800g — SO vývar (víkend, zmraz na celý týždeň)'},
-    {n:'Treska filé',o:'150g — UT obed'},
-    {n:'Losos filé',o:'300g — PO večera 150g, NE obed 150g'},
-    {n:'Zubáč filé',o:'150g — PI obed'}
+    {n:'Losos filé',o:'300g — PO večera 150g + NE obed 150g'}
   ],
   '🥜 Orechy & semená':[
-    {n:'Vlašské orechy',o:'~200g — PI raňajky 25g, NE raňajky 20g, ŠT večera 15g, PO kaša 20g'},
+    {n:'Vlašské orechy',o:'~200g — PO kaša 20g, PI raňajky 25g, NE raňajky 20g, ŠT večera 15g'},
     {n:'Makadamiové orechy',o:'~100g — PI raňajky 20g'},
-    {n:'Para orechy',o:'14 ks — presne 2 ks denne, 7 dní (NE raňajky a rezerva)'},
-    {n:'Tekvicové semiačka',o:'~100g — UT raňajky 15g + SO raňajky 10g'}
+    {n:'Para orechy',o:'14 ks — presne 2 ks denne (NE raňajky + rezerva)'},
+    {n:'Tekvicové semiačka',o:'~50g — UT raňajky 15g + SO raňajky 10g'}
   ],
   '🌾 Obilniny & pečivo':[
     {n:'Quinoa',o:'180g — PO raňajky 60g + SO raňajky 60g + rezerva'},
     {n:'Pohánkové vločky',o:'60g — UT raňajky'},
     {n:'Chia semienka',o:'35g — ŠT puding'},
-    {n:'Kváskový chlieb',o:'1 bochník — SO raňajky 80g, ST večera nátierka 80g'}
+    {n:'Kváskový chlieb',o:'1 bochník — SO raňajky 80g + ST večera nátierka 80g'}
   ],
   '🥛 Mliečne':[
     {n:'Cottage syr BEZLAKTÓZOVÝ',o:'1 balenie 250g — ST raňajky 150g'},
@@ -850,27 +901,25 @@ const SHOP1={
     {n:'Tvaroh',o:'150g — ST večera nátierka'}
   ],
   '🥥 Tuky & kokos':[
-    {n:'Kokosové mlieko plnotučné',o:'2 plechovky × 400ml — UT raňajky 150ml + ŠT puding 200ml + ŠT večera 150ml = 500ml'},
-    {n:'Kokosová dužina strúhaná nesladená',o:'50g — PI večera detox smoothie 40g + rezerva (ak nedostupná: nahraď 50ml kokosového mlieka)'},
-    {n:'Olivový olej extra virgin',o:'1 fľaša — na varenie a šaláty celý týždeň'},
-    {n:'Ľanový olej',o:'malá fľaška — 5ml denne do Spine-Shotu (7 dní = 35ml)'}
+    {n:'Kokosové mlieko plnotučné',o:'2 plechovky × 400ml — UT raňajky 150ml + ŠT puding 200ml + ŠT večera 150ml'},
+    {n:'Kokosová dužina strúhaná nesladená',o:'50g — PI večera smoothie 40g (ak nedostupná: 50ml kokosového mlieka)'},
+    {n:'Olivový olej extra virgin',o:'1 fľaša — varenie a šaláty'},
+    {n:'Ľanový olej',o:'malá fľaška — 5ml denne Spine-Shot (35ml/týždeň)'}
   ],
-  '💊 Suplementy (jednorázový nákup, nie týždenný)':[
-    {n:'Kurací kolagén typ II',o:'balenie na mesiac — ráno nalačno'},
-    {n:'Lipozomálny Vitamín C 500mg',o:'balenie na mesiac — s kolagénom (MAX 500mg!)'},
-    {n:'Methylfolát — aktívna B9',o:'NIE kyselina listová! Len methylfolát.'},
-    {n:'Vitamín B6',o:'súčasť Mg taurátu — večer 22:00'},
-    {n:'Koenzým Q10 + Vitamín E',o:'balenie na mesiac — s obedom'},
-    {n:'Zinok 15mg',o:'balenie na mesiac — 16:00, NIE s horčíkom!'},
-    {n:'Krilový olej',o:'balenie na mesiac — 17:00 pred večerou'},
-    {n:'Mg taurát + B6',o:'balenie na mesiac — 22:00 pred spaním'},
+  '💊 Suplementy (jednorázový nákup)':[
     {n:'Serapeptáza 120k',o:'balenie — 08:00 nalačno'},
-    {n:'BioMineral Biokomplex pastilky',o:'balenie — 10:00 + 19:00, nechaj rozpustiť v ústach!'},
-    {n:'Inulín prášok z čakanky',o:'~250g balenie — 5g (1 čl) denne = ~50 porcií'}
+    {n:'Kurací kolagén typ II + Micro Vit C 500mg',o:'balenie — 09:00 nalačno'},
+    {n:'BioMineral Biokomplex pastilky',o:'balenie — 10:00 + 19:00, rozpustiť v ústach!'},
+    {n:'Koenzým Q10 + Vitamín E',o:'balenie — 12:00 s obedom'},
+    {n:'Methylfolát — aktívna B9',o:'NIE kyselina listová! — 13:00'},
+    {n:'Zinok 15mg',o:'balenie — 16:00, NIE naraz s horčíkom!'},
+    {n:'Krilový olej',o:'balenie — 17:00 pred večerou'},
+    {n:'Mg taurát + B6',o:'balenie — 22:00 pred spaním'},
+    {n:'Inulín prášok z čakanky',o:'~250g — 5g denne do smoothie'}
   ],
   '💧 Voda & čaje':[
     {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne (nie plast, nie barel!)'},
-    {n:'Dobrá voda v SKLE',o:'záloha ak Rajec nie je — rovnaké množstvo'},
+    {n:'Dobrá voda v SKLE',o:'záloha ak Rajec nie je'},
     {n:'Čaj breza',o:'1 balenie'},
     {n:'Čaj zlatobyľ',o:'1 balenie'},
     {n:'Čaj praslička',o:'1 balenie'}
@@ -879,16 +928,14 @@ const SHOP1={
 
 const SHOP2={
   '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~2 kg — 250g denne do Urea-Detox šťavy + šaláty (cca 6–7 ks)'},
-    {n:'Stonkový zeler',o:'~900g — 125g denne do Urea-Detox šťavy'},
-    {n:'Cuketa',o:'~500g — 2 ks (ŠT obed + NE obed)'},
-    {n:'Biela reďkovka',o:'~600g — ST obed dvojitá porcia + UT obed'},
+    {n:'Šalátová uhorka',o:'~2 kg — 250g denne Urea-Detox šťava + šaláty'},
+    {n:'Stonkový zeler',o:'~900g — 125g denne Urea-Detox šťava (nie listový!)'},
+    {n:'Cuketa',o:'1 ks (~300g) — NE obed dusená'},
     {n:'Fenikel',o:'1 ks (~200g) — ŠT raňajky + SO obed varený'},
-    {n:'Čínska kapusta',o:'½ hlávky (~200g) — PO obed šalát'},
     {n:'Poľníček',o:'1 balenie (100g) — NE obed šalát'},
     {n:'Zelené jablká',o:'4 ks — PI raňajky + do smoothie'},
-    {n:'Čučoriedky',o:'~340g — UT puding 60g, ŠT smoothie 80g, zvyšok rezerva'},
-    {n:'Citróny',o:'10 ks — 1 denne citrátová bomba + do vody + recepty'},
+    {n:'Čučoriedky',o:'~340g — UT puding 60g, ŠT smoothie 80g, rezerva'},
+    {n:'Citróny',o:'10 ks — denne citrátová bomba + voda + recepty'},
     {n:'Avokádo',o:'3 ks — UT večera 150g, ST raňajky 75g, NE večera 150g'},
     {n:'Pažítka',o:'1 zväzok — PI večera nátierka'},
     {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
@@ -897,13 +944,9 @@ const SHOP2={
     {n:'Kurkuma',o:'doplniť ak chýba'}
   ],
   '🍗 Mäso & ryby':[
-    {n:'Kuracie prsia',o:'~200g — PI obed 150g + rezerva'},
-    {n:'Kuracie stehno bez kože',o:'2 ks (~300g) — ST obed na pare'},
-    {n:'Morčací rezeň',o:'150g — PO obed na prírodno'},
     {n:'Kuracie kosti a chrupavky',o:'~1 kg — vývar SO (víkend, zmraz na celý týždeň)'},
     {n:'Losos filé',o:'150g — ŠT večera'},
-    {n:'Treska filé',o:'150g — UT obed'},
-    {n:'Zubáč filé',o:'150g — SO obed'}
+    {n:'Zubáč filé',o:'150g — SO obed (doma)'}
   ],
   '🥜 Orechy & semená':[
     {n:'Vlašské orechy',o:'~150g — PO kaša 20g, ŠT raňajky 20g, ŠT smoothie 15g'},
@@ -1048,7 +1091,8 @@ function init(){
   document.getElementById('todayDate').textContent=now.toLocaleDateString('sk-SK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   cd=(now.getDay()+6)%7;
   renderPhaseCard();
-  renderMorning();renderSuppl();renderTeaRotation();
+  renderDailyChecklist();
+  renderTeaRotation();
   renderDayTabs();renderMeals();renderTraffic();
   renderRecipes();renderMonitorHistory();renderShopList();
   updateKPIs();restoreDailyChecks();
