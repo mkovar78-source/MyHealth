@@ -179,7 +179,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="card-title" style="margin-bottom:0">⏰ Dnešný plán</div>
       <button onclick="resetDayChecks()" style="background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;text-decoration:underline">Reset dňa</button>
     </div>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:12px">⏱ Pôst: 17:30 — 09:30 = 16 hodín · 🎒 Do tašky: Urea-Detox šťava, suplementy 10:30/12:00/13:00/16:00, Bylinkový čaj</div>
+
     <div id="daily-checklist"></div>
   </div>
 
@@ -759,13 +759,15 @@ const DAILY_PLAN=[
   {time:'06:00',icon:'💊',label:'Kurací kolagén typ II + Vit C 500mg',sub:'Nalačno — pred jedlom aj kávou',why:'Stavba platničiek L3–S1. Nalačno = najlepšie vstrebávanie. MAX 500mg Vit C!',tag:'dom'},
   {time:'06:00',icon:'📏',label:'Zmeral som váhu',sub:'Po toalete, pred jedlom — zapiš do Monitoringu',why:'Každý deň rovnaké podmienky = porovnateľný trend',tag:'dom'},
   {time:'06:00',icon:'🧪',label:'Zmeral som pH moču',sub:'pH papierikom alebo digitálnym metrom — zapiš do Voda & pH',why:'Ranné pH je najdôležitejší denný indikátor stavu obličiek',tag:'dom'},
-  {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút na bruchu, čelo na dlaniach, päty von — nádych do dolnej časti chrbta',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
-  {time:'06:30',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (fľaša), suplementy 10:30/12:00/13:00/16:00, bylinkový čaj',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci',tag:'dom'},
+  {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút — postup: Rehab appka → Dýchanie → Krokodílie',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
+  {time:'06:20',icon:'🏋️',label:'SM systém',sub:'15 minút — postup: Rehab appka → aktuálny deň',why:'Trakcia chrbtice, uvoľnenie psoasu, stabilizácia L4/5',tag:'dom'},
+  {time:'06:40',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (fľaša), suplementy 10:30/12:00/13:00/16:00, bylinkový čaj',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci',tag:'dom'},
   {time:'07:00',icon:'💊',label:'Serapeptáza 120k',sub:'Nalačno — aspoň 30 minút pred raňajkami',why:'Biologický upratovač: rozkladá fibrín a biofilmy v platničkách',tag:'dom'},
   {time:'07:00',icon:'💧',label:'Voda — 2 dl',sub:'Rajec alebo Dobrá voda v skle + kvapka citróna',why:'Spusti hydratáciu po nočnej pauze',tag:'dom'},
   {time:'08:00',icon:'💧',label:'Voda — 2 dl',sub:'Rajec alebo Dobrá voda v skle',why:'',tag:'dom'},
   {time:'08:30',icon:'🚶',label:'Lymfatická prechádzka',sub:'Aspoň 10 minút pred odchodom do práce',why:'Aktivácia panvy a lymfatického odtoku pred sedením v aute',tag:'dom'},
   {time:'09:30',icon:'🌅',label:'Raňajky — štart jedálenského okna',sub:'Pozri Jedálniček → dnešný deň',why:'Pôst 16 hodín: 17:30 — 09:30',tag:'praca'},
+  {time:'10:00',icon:'🥜',label:'Makadamiové orechy',sub:'5–8 ks — cielený zdroj selénu, zapiť vodou',why:'Selén kompenzuje 25% nižšiu enzýmovú aktivitu antioxidantov. Energeticky bohaté — len ako doplnok, nie hlavný zdroj kalórií.',tag:'praca'},
   {time:'10:30',icon:'💊',label:'BioMineral Biokomplex — 1. pastilka',sub:'Nechaj ROZPUSTIŤ v ústach — 10 min nič nepiť/nejiesť pred aj po',why:'Vstrebáva sa cez sliznicu ústnu, nie cez žalúdok',tag:'praca'},
   {time:'10:30',icon:'💧',label:'Voda — 2.5 dl',sub:'',why:'',tag:'praca'},
   {time:'11:00',icon:'🥤',label:'Urea-Detox šťava',sub:'Fľaša z domu — 250g uhorky + 125g zeleru (odšťavené ráno)',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami — vyplavuje KM',tag:'praca'},
@@ -776,7 +778,8 @@ const DAILY_PLAN=[
   {time:'13:00',icon:'💧',label:'Voda — 2 dl',sub:'',why:'',tag:'praca'},
   {time:'14:00',icon:'🍵',label:'Bylinkový čaj — rotácia',sub:'Pozri Voda & pH → aktuálna týždenná skupina',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj!',tag:'praca'},
   {time:'14:00',icon:'💧',label:'Voda — 2.5 dl',sub:'',why:'',tag:'praca'},
-  {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — nádych do brucha, nie do hrudníka',why:'V práci nemôžeš ľahnúť — aspoň sed. Každé 2 hodiny.',tag:'praca'},
+  {time:'14:30',icon:'🌱',label:'Tekvicové semiačka',sub:'Max 1 hrsť (20–30g) — zapiť vodou. Odstup min. 4h od makadamiových orechov.',why:'Serín a železo pre fascie. Obsahujú arginín — prísny limit kvôli HCY. Vždy zapiť — oxaláty nesmú tvoriť piesok v obličkách.',tag:'praca'},
+  {time:'14:45',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — postup: Rehab appka → Dýchanie → Bránicové',why:'V práci nemôžeš ľahnúť — aspoň sed. Každé 2 hodiny.',tag:'praca'},
   {time:'16:00',icon:'💊',label:'Zinok 15mg',sub:'Samostatne — NIE naraz s horčíkom!',why:'Imunita a hojenie tkanív. Telo si zinok neukladá — treba denne',tag:'praca'},
   {time:'16:00',icon:'💧',label:'Voda — 2.5 dl',sub:'',why:'',tag:'praca'},
   {time:'17:00',icon:'💊',label:'Krilový olej',sub:'Pred večerou',why:'Omega-3 pre cievy pri Leidenovej mutácii',tag:'dom'},
@@ -784,9 +787,11 @@ const DAILY_PLAN=[
   {time:'18:00',icon:'🚶',label:'Lymfatická prechádzka po večeri',sub:'30–45 minút, pomalé tempo',why:'Aktivácia lymfy + prevencia trombózy (Leiden) po celodennom sedení',tag:'dom'},
   {time:'19:00',icon:'💊',label:'BioMineral Biokomplex — 2. pastilka',sub:'Nechaj ROZPUSTIŤ v ústach — 10 min nič nepiť/nejiesť pred aj po',why:'Udržanie bunkovej hladiny minerálov počas noci',tag:'dom'},
   {time:'19:00',icon:'💧',label:'Voda — 2 dl',sub:'',why:'',tag:'dom'},
+  {time:'20:00',icon:'⚗️',label:'Graphites CH15 — každý 2. deň',sub:'5 globúl — nechaj rozpustiť v ústach. 10 min nič nejesť/nepiť pred aj po. Sezónne (leto).',why:'Stabilizátor kožnej bariéry pri detoxe cez pokožku. Bezpečný pre obličky — nevstrebáva sa cez tráviaci trakt.',tag:'dom'},
   {time:'20:30',icon:'⚡',label:'Spine-Shot',sub:'20g zázvoru + 10g kurkumy + 5ml ľanového oleja',why:'Protizápal pre L4/5. Ľanový olej je nosič — bez neho sa kurkumín nevstrebe',tag:'dom'},
   {time:'20:30',icon:'🍵',label:'Bylinkový čaj — večerná porcia',sub:'Pozri Voda & pH → aktuálna skupina',why:'',tag:'dom'},
-  {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu pred spaním',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou',tag:'dom'},
+  {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút — postup: Rehab appka → Dýchanie → Krokodílie',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou',tag:'dom'},
+  {time:'21:10',icon:'🌬️',label:'Dych 4-7-8',sub:'4 cykly — postup: Rehab appka → Dýchanie → 4-7-8',why:'Alkalizačný efekt + upokojenie nervového systému pred spaním',tag:'dom'},
   {time:'22:00',icon:'💊',label:'Mg taurát + B6',sub:'Pred spaním — nie naraz so zinkom (ten bol o 16:00)!',why:'B6 odbúrava homocysteín. Horčík uvoľňuje chrbtové svaly pre nočnú regeneráciu',tag:'dom'}
 ];
 
@@ -977,6 +982,7 @@ const SHOP2={
 };
 
 let st=JSON.parse(localStorage.getItem('mh4')||'{}');
+if(!st.weight||st.weight.length===0){st.weight=[{v:85,d:new Date().toLocaleDateString('sk-SK')}];save();}
 let cw=1,cd=0,csw=1,recipeFilter='all',recipeSearch='';
 
 function save(){localStorage.setItem('mh4',JSON.stringify(st));}
