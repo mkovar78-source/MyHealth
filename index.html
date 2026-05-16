@@ -262,6 +262,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 
   <div class="card">
+    <div class="card-title">💧 Voda dnes</div>
+    <div class="info-box"><strong>Čo piť:</strong> Rajec alebo Dobrá voda v sklenej fľaši. Min. 2 fľaše (3 litre) + čaje a šťavy = celkom 35–40 dl.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
+    <div class="hydration-bar-bg"><div class="hydration-bar-fill" id="hydration-bar2" style="width:0%"></div></div>
+    <div class="hydration-label"><span id="water-label2">0 dl</span><span>Cieľ 35–40 dl</span></div>
+    <div class="water-btns" style="margin-top:10px">
+      <button class="water-btn" onclick="addWater(2)">+2 dl</button>
+      <button class="water-btn" onclick="addWater(2.5)">+2.5 dl</button>
+      <button class="water-btn" onclick="addWater(3)">+3 dl</button>
+      <button class="water-btn" onclick="addWater(-2)" style="color:var(--red)">–2 dl</button>
+    </div>
+  </div>
+
+  <div class="card">
     <div class="card-title">💧 pH moču dnes ráno</div>
     <div class="info-box">Meriavaš pH papierikom alebo digitálnym pH metrom. Tvoje štartové pH je 5,0 — veľmi kyslé. Cieľ je nad 6,5 kde sa kryštály rozpúšťajú namiesto hromadenia.</div>
     <div class="input-row">
@@ -281,19 +294,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="ph-labels"><span>4 (kritické)</span><span>6,5 (cieľ)</span><span>9</span></div>
     </div>
     <div id="ph-message" style="margin-top:8px;font-size:13px;color:var(--text2)"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">💧 Voda dnes</div>
-    <div class="info-box"><strong>Čo piť:</strong> Rajec alebo Dobrá voda v sklenej fľaši. Min. 2 fľaše (3 litre) + čaje a šťavy = celkom 35–40 dl.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
-    <div class="hydration-bar-bg"><div class="hydration-bar-fill" id="hydration-bar2" style="width:0%"></div></div>
-    <div class="hydration-label"><span id="water-label2">0 dl</span><span>Cieľ 35–40 dl</span></div>
-    <div class="water-btns" style="margin-top:10px">
-      <button class="water-btn" onclick="addWater(2)">+2 dl</button>
-      <button class="water-btn" onclick="addWater(2.5)">+2.5 dl</button>
-      <button class="water-btn" onclick="addWater(3)">+3 dl</button>
-      <button class="water-btn" onclick="addWater(-2)" style="color:var(--red)">–2 dl</button>
-    </div>
   </div>
 
   <div class="card">
@@ -499,7 +499,7 @@ const RECIPES=[
    steps:['Quinoa uvar podľa postupu (opláchni, 180ml vody, 12–15 min).','Daj do misky.','Posyp kokosovou dužinou.','Pridaj pistácie — presne 15 kusov.'],
    tip:'Pistácie sú ORANŽOVÁ zóna — dodržuj limit 15 kusov.'
   },
-  {id:'kuraci-vyvar',name:'Kurací vývar z kostí a chrupaviek',type:'d',time:'3–4 hod',kcal:280,
+  {id:'kuraci-vyvar',name:'Kurací vývar',type:'d',time:'3–4 hod',kcal:280,
    ingredients:[{n:'Kuracie kosti a chrupavky',a:'500g'},{n:'Mrkva',a:'1 väčšia (100g)'},{n:'Petržlen koreňový',a:'1 ks (80g)'},{n:'Zeler koreňový',a:'kus (60g)'},{n:'Cibuľa',a:'1 ks'},{n:'Cesnak',a:'3 strúčiky'},{n:'Voda',a:'2 litre'},{n:'Kuracie mäso',a:'200g (stehno alebo prsia)'}],
    steps:['Kosti daj do hrnca, zalej studenou vodou.','Priveď do varu, prvú vodu zlej (zbavíš vývar peny).','Znova zalej 2 litrami čistej vody.','Pridaj nakrájanú zeleninu, cesnak, cibuľu.','Var na veľmi miernom ohni 3–4 hodiny bez pokrývky.','Pridaj kuracie mäso v poslednej hodine varenia.','Preceď cez sitko.','Podávaj s mäsom a zeleninou.'],
    tip:'Čím dlhšie vár, tým viac kolagénu. Môžeš vyrobiť viac a zmraziť na ďalšie dni.'
