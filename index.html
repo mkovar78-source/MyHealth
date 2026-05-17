@@ -31,7 +31,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .header h1{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text)}
 .today-date{font-size:12px;color:var(--text3);margin-bottom:16px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.card-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.card-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:12px}
 .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
 .kpi-label{font-size:11px;color:var(--text3);margin-bottom:4px}
@@ -189,8 +189,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Merať každé ráno po vstávaní — pred jedlom, po toalete.</div>
     <div class="input-row"><span class="inp-label">KM (μmol/l)</span><input class="inp-sm" type="number" id="km-input" placeholder="490"><button class="save-btn" onclick="saveKm()">Uložiť</button></div>
     <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Meria mama každé 2 týždne. Zadaj po každom meraní.</div>
-    <div class="input-row"><span class="inp-label">Tlak (mmHg)</span><input class="inp-sm" type="number" id="bp-input" placeholder="125"><button class="save-btn" onclick="saveBp()">Uložiť</button></div>
-    <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Meria mama každé 2 týždne. Zadaj po každom meraní.</div>
+    <div class="input-row">
+      <span class="inp-label">Tlak</span>
+      <input class="inp-sm" type="number" id="bp-sys-input" placeholder="120" style="width:70px">
+      <span style="color:var(--text2);font-size:14px">/</span>
+      <input class="inp-sm" type="number" id="bp-dia-input" placeholder="80" style="width:70px">
+      <button class="save-btn" onclick="saveBp()">Uložiť</button>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Horný / Dolný tlak (mmHg). Meria mama každé 2 týždne.</div>
     <div style="margin-top:14px" id="monitor-history"></div>
   </div>
 
@@ -252,15 +258,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 <!-- VODA & pH -->
 <div class="screen" id="screen-water">
-  <div class="card">
-    <div class="card-title">🍋 Citrátová bomba – každé ráno</div>
-    <div class="info-box">1 citrón + ½ limetky + 300ml Rajec/Dobrá voda — ihneď po vstávaní nalačno. Citrón sa v tele premení na bikarbonát a neutralizuje nočnú acidózu. <strong>Recept nájdeš v sekcii Recepty → Šťavy & Shoty.</strong></div>
-    <div class="check-item" onclick="toggleDailyCheck('citrat')">
-      <div class="check-box" id="check-citrat"></div>
-      <div><div class="check-label">Citrátová bomba dnes splnená ✓</div></div>
-    </div>
-  </div>
 
+  <!-- 1. VODA -->
   <div class="card">
     <div class="card-title">💧 Voda dnes</div>
     <div class="info-box"><strong>Čo piť:</strong> Rajec alebo Dobrá voda v sklenej fľaši. Min. 2 fľaše (3 litre) + čaje a šťavy = celkom 35–40 dl.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
@@ -274,6 +273,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
+  <!-- 2. pH -->
   <div class="card">
     <div class="card-title">💧 pH moču dnes ráno</div>
     <div class="info-box">Meriavaš pH papierikom alebo digitálnym pH metrom. Tvoje štartové pH je 5,0 — veľmi kyslé. Cieľ je nad 6,5 kde sa kryštály rozpúšťajú namiesto hromadenia.</div>
@@ -296,39 +296,50 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div id="ph-message" style="margin-top:8px;font-size:13px;color:var(--text2)"></div>
   </div>
 
+  <!-- 3. CITRÁTOVÁ BOMBA - info -->
+  <div class="card">
+    <div class="card-title">🍋 Citrátová bomba – každé ráno</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6">
+      <strong>1 citrón + ½ limetky + 300ml Rajec/Dobrá voda</strong> — ihneď po vstávaní nalačno.<br><br>
+      Citrón je kyslý, ale v tele sa premení na bikarbonát ktorý <strong>neutralizuje nočnú acidózu</strong>. Ráno máš pH najkyslé — toto je najdôležitejšia vec ktorú môžeš urobiť pre obličky.<br><br>
+      <span style="color:var(--text3);font-size:12px">📋 Recept → záložka Recepty → Šťavy & Shoty</span>
+    </div>
+  </div>
+
+  <!-- 4. UREA-DETOX - info -->
   <div class="card">
     <div class="card-title">🥤 Urea-Detox šťava – ~11:00</div>
-    <div class="info-box">250g šalátovej uhorky + 125g stonkového zeleru — odšťavuj ráno, fľaša do tašky. Uhorka = diuretikum, zeler = zlepšuje prietok krvi obličkami. <strong>Recept nájdeš v sekcii Recepty → Šťavy & Shoty.</strong></div>
-    <div style="font-size:11px;color:var(--text3);margin-top:8px">💡 Bez odšťavovača: zjedz uhorku a zeler ako súčasť jedla.</div>
-    <div class="check-item" onclick="toggleDailyCheck('urea')">
-      <div class="check-box" id="check-urea"></div>
-      <div><div class="check-label">Urea-Detox šťava dnes hotová ✓</div></div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6">
+      <strong>250g šalátovej uhorky + 125g stonkového zeleru</strong> — odšťavuj ráno, fľaša do tašky.<br><br>
+      Uhorka = diuretikum, vyplavuje kyselinu močovú. Ftalidy zo zeleru <strong>zlepšujú prietok krvi obličkami</strong> — kombinácia týchto dvoch je silnejšia ako každá zvlášť.<br><br>
+      <span style="color:var(--text3);font-size:12px">💡 Bez odšťavovača: zjedz uhorku a zeler ako súčasť jedla — účinok je podobný.</span><br>
+      <span style="color:var(--text3);font-size:12px">📋 Recept → záložka Recepty → Šťavy & Shoty</span>
     </div>
   </div>
 
+  <!-- 5. SPINE-SHOT - info -->
   <div class="card">
     <div class="card-title">⚡ Spine-Shot – každý večer ~20:30</div>
-    <div class="info-box">20g zázvoru + 10g kurkumy + 5ml ľanového oleja. Zázvor + kurkuma tlmia zápal okolo L4/5. Ľanový olej je nosič — bez tuku sa kurkumín skoro vôbec nevstrebe. <strong>Recept nájdeš v sekcii Recepty → Šťavy & Shoty.</strong></div>
-    <div class="check-item" onclick="toggleDailyCheck('spine')">
-      <div class="check-box" id="check-spine"></div>
-      <div><div class="check-label">Spine-Shot dnes hotový ✓</div></div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.6">
+      <strong>20g zázvoru + 10g kurkumy + 5ml ľanového oleja</strong><br><br>
+      Zázvor a kurkuma tlmia zápal okolo <strong>L4/5</strong>. Ľanový olej je nosič — kurkumín je rozpustný v tukoch, bez oleja sa skoro vôbec nevstrebe. Vypi ihneď po príprave.<br><br>
+      <span style="color:var(--text3);font-size:12px">📋 Recept → záložka Recepty → Šťavy & Shoty</span>
     </div>
   </div>
 
+  <!-- 6. ČAJE - rotácia ostáva celá -->
   <div class="card">
     <div class="card-title">🍵 Bylinková rotácia – aktuálny týždeň</div>
     <div class="info-box">Každý týždeň iná skupina čajov — telo si nezvykne na jednu látku. Na varenie použi vodu z vodovodu. <strong>NIE čierny ani zelený čaj</strong> — oxaláty!</div>
     <div id="tea-rotation-display"></div>
-    <div class="check-item" onclick="toggleDailyCheck('caj')" style="margin-top:8px">
-      <div class="check-box" id="check-caj"></div>
-      <div><div class="check-label">Bylinkový čaj dnes vypitý ✓ (2–3 šálky)</div></div>
-    </div>
   </div>
 
+  <!-- 7. PREHĽAD SKUPÍN -->
   <div class="card">
     <div class="card-title">🔄 Prehľad všetkých 4 skupín</div>
     <div style="display:flex;flex-direction:column;gap:8px" id="tea-all-groups"></div>
   </div>
+
 </div>
 
 <!-- RECEPTY -->
@@ -344,28 +355,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <button class="rf-tab" id="rf-drink" onclick="filterRecipes('drink')">🥤 Šťavy & Shoty</button>
   </div>
   <div class="card" style="margin-bottom:12px">
-  <div class="card-title">🔥 Whirlpool 6th Sense — stupne indukcie</div>
-  <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
-    <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <span style="color:var(--text2)">Privedenie do varu</span><strong style="color:var(--orange)">7–8</strong>
-    </div>
-    <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <span style="color:var(--text2)">Kurací vývar — dlhé varenie</span><strong style="color:var(--accent)">2–3</strong>
-    </div>
-    <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <span style="color:var(--text2)">Quinoa / pohánka po vare</span><strong style="color:var(--accent)">3</strong>
-    </div>
-    <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <span style="color:var(--text2)">Dusenie zeleniny pod pokrievkou</span><strong style="color:var(--accent)">3–4</strong>
-    </div>
-    <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <span style="color:var(--text2)">Opraženie cibule / cesnaku</span><strong style="color:var(--accent)">5</strong>
-    </div>
-    <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <span style="color:var(--text2)">Opečenie mäsa / ryby na panvici</span><strong style="color:var(--accent)">6–7</strong>
-    </div>
-    <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <span style="color:var(--text2)">Udržanie teploty (nezovrie)</span><strong style="color:var(--accent)">1–2</strong>
+  <div onclick="toggleInduction()" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer">
+    <div class="card-title" style="margin-bottom:0">🔥 Whirlpool 6th Sense — stupne indukcie</div>
+    <span id="induction-arrow" style="color:var(--text3);font-size:16px;transition:transform .2s">▼</span>
+  </div>
+  <div id="induction-table" style="display:none;margin-top:12px;display:none">
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+      <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
+        <span style="color:var(--text2)">Privedenie do varu</span><strong style="color:var(--orange)">7–8</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
+        <span style="color:var(--text2)">Kurací vývar — dlhé varenie</span><strong style="color:var(--accent)">2–3</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
+        <span style="color:var(--text2)">Quinoa / pohánka po vare</span><strong style="color:var(--accent)">3</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
+        <span style="color:var(--text2)">Dusenie zeleniny pod pokrievkou</span><strong style="color:var(--accent)">3–4</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
+        <span style="color:var(--text2)">Opraženie cibule / cesnaku</span><strong style="color:var(--accent)">5</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
+        <span style="color:var(--text2)">Opečenie mäsa / ryby na panvici</span><strong style="color:var(--accent)">6–7</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
+        <span style="color:var(--text2)">Udržanie teploty (nezovrie)</span><strong style="color:var(--accent)">1–2</strong>
+      </div>
     </div>
   </div>
 </div>
@@ -1201,7 +1217,7 @@ const DAILY_PLAN=[
   {time:'06:00',icon:'🧪',label:'Zmeral som pH moču',sub:'pH papierikom alebo digitálnym metrom — zapiš do Voda & pH',why:'Ranné pH je najdôležitejší denný indikátor stavu obličiek',tag:'dom'},
   {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút — postup: Rehab appka → Dýchanie → Krokodílie',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
   {time:'06:20',icon:'🏋️',label:'SM systém',sub:'15 minút — postup: Rehab appka → aktuálny deň',why:'Trakcia chrbtice, uvoľnenie psoasu, stabilizácia L4/5',tag:'dom'},
-  {time:'06:40',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (fľaša), suplementy 10:30/12:00/13:00/16:00, bylinkový čaj',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci',tag:'dom'},
+  {time:'06:40',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (fľaša), suplementy 10:30/12:00/13:00/16:00, bylinkový čaj',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci',tag:'dom',weekdayOnly:true},
   {time:'07:00',icon:'💊',label:'Serapeptáza 120k',sub:'Nalačno — aspoň 30 minút pred raňajkami',why:'Biologický upratovač: rozkladá fibrín a biofilmy v platničkách',tag:'dom'},
   {time:'07:00',icon:'💧',label:'Voda — 2 dl',sub:'Rajec alebo Dobrá voda v skle + kvapka citróna',why:'Spusti hydratáciu po nočnej pauze',tag:'dom'},
   {time:'08:00',icon:'💧',label:'Voda — 2 dl',sub:'Rajec alebo Dobrá voda v skle',why:'',tag:'dom'},
@@ -1210,8 +1226,10 @@ const DAILY_PLAN=[
   {time:'10:00',icon:'🥜',label:'Makadamiové orechy',sub:'5–8 ks — cielený zdroj selénu, zapiť vodou',why:'Selén kompenzuje 25% nižšiu enzýmovú aktivitu antioxidantov. Energeticky bohaté — len ako doplnok, nie hlavný zdroj kalórií.',tag:'praca'},
   {time:'10:00',icon:'💊',label:'A-Z Multivitamín',sub:'1 tableta s vodou',why:'Komplex vitamínov a minerálov vrátane draslíka a elektrolytov',tag:'praca'},
   {time:'10:30',icon:'💧',label:'Voda — 2.5 dl',sub:'',why:'',tag:'praca'},
-  {time:'11:00',icon:'🥤',label:'Urea-Detox šťava',sub:'Fľaša z domu — 250g uhorky + 125g zeleru (odšťavené ráno)',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami — vyplavuje KM',tag:'praca'},
-  {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy — BEZ omáčok',tag:'praca'},
+  {time:'11:00',icon:'🥤',label:'Urea-Detox šťava',sub:'Fľaša z domu — 250g uhorky + 125g zeleru (odšťavené ráno)',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami — vyplavuje KM',tag:'praca',weekdayOnly:true},
+  {time:'11:00',icon:'🥤',label:'Urea-Detox šťava',sub:'Čerstvá — 250g uhorky + 125g zeleru, odšťavuj priamo doma',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami — vyplavuje KM',tag:'dom',weekendOnly:true},
+  {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy — BEZ omáčok',tag:'praca',weekdayOnly:true},
+  {time:'11:30',icon:'🍳',label:'Varenie obeda doma',sub:'Pozri Jedálniček → dnešný deň → Priprav doma',why:'Víkend = doma varené, plná kontrola nad ingredienciami.',tag:'dom',weekendOnly:true},
   {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'S obedom — nie nalačno',why:'Mitochondrie v pečeni. Rozpustný v tukoch = musí byť s jedlom',tag:'praca'},
   {time:'12:00',icon:'💧',label:'Voda — 3 dl',sub:'',why:'',tag:'praca'},
   {time:'13:00',icon:'💊',label:'Methylfolát B9',sub:'Po obede',why:'Znižuje homocysteín (HCY) — vaskulárne riziko pri Leidene',tag:'praca'},
@@ -1238,12 +1256,15 @@ const DAILY_PLAN=[
 
 function renderDailyChecklist(){
   const t=td();if(!t.day)t.day={};
+  const todayIsWeekend=(new Date().getDay()===0||new Date().getDay()===6);
   const c=document.getElementById('daily-checklist');if(!c)return;
   const now=new Date();
   const currentMinutes=now.getHours()*60+now.getMinutes();
 
   let html='';
   DAILY_PLAN.forEach((item,i)=>{
+    if(item.weekdayOnly && todayIsWeekend) return;
+    if(item.weekendOnly && !todayIsWeekend) return;
     const checked=t.day[i]||false;
     const [h,m]=item.time.split(':').map(Number);
     const itemMinutes=h*60+m;
@@ -1534,9 +1555,16 @@ const SHOP4={
   ]
 };
 let st=JSON.parse(localStorage.getItem('mh4')||'{}');
-if(!st.weight||st.weight.length===0){st.weight=[{v:85,d:new Date().toLocaleDateString('sk-SK')}];save();}
+if(!st.weight||st.weight.length===0){st.weight=[{v:85,d:'10. 5. 2026',start:true}];save();}
 let cw=1,cd=0,csw=1,recipeFilter='all',recipeSearch='';
 
+function toggleInduction(){
+  const t=document.getElementById('induction-table');
+  const a=document.getElementById('induction-arrow');
+  const open=t.style.display==='block';
+  t.style.display=open?'none':'block';
+  a.style.transform=open?'':'rotate(180deg)';
+}
 function save(){localStorage.setItem('mh4',JSON.stringify(st));}
 function renderPhaseCard(){
   const c=document.getElementById('phase-card');if(!c)return;
@@ -1776,10 +1804,13 @@ function updatePhUI(v){
     if(ab)ab.innerHTML='<div class="alert alert-red">🚨 pH moču: '+v+' — kriticky kyslé! Kryštály sa hromadia. Vypi citrátovú bombu a zdvojnásob pitný režim.</div>';
   }else if(v<6.5){
     if(msg){msg.textContent='⚠️ pH '+v+' — pod cieľom. Pokračuj v protokole.';msg.style.color='var(--orange)';}
-    if(ab)ab.innerHTML='<div class="alert alert-orange">pH moču: '+v+' — pod cieľom (&gt;6,5). Drž pitný protokol s citrónom.</div>';
+    if(ab)ab.innerHTML='<div class="alert alert-orange">pH moču: '+v+' — pod cieľom (6,5–7,5). Drž pitný protokol s citrónom.</div>';
+  }else if(v>7.5){
+    if(msg){msg.textContent='⚠️ pH '+v+' — príliš alkalické! Vynechaj citrátovú bombu.';msg.style.color='var(--orange)';}
+    if(ab)ab.innerHTML='<div class="alert alert-orange">⚠️ pH moču: '+v+' — nad 7,5. Príliš alkalické = riziko fosforečnanov. Vynechaj citrátovú bombu a bylinkové čaje.</div>';
   }else{
-    if(msg){msg.textContent='✅ pH '+v+' — výborne! Kryštály sa rozpúšťajú.';msg.style.color='var(--green)';}
-    if(ab)ab.innerHTML='<div class="alert alert-green">pH moču: '+v+' — výborne! Pokračuj tak ďalej.</div>';
+    if(msg){msg.textContent='✅ pH '+v+' — výborne! Zelená zóna 6,5–7,5.';msg.style.color='var(--green)';}
+    if(ab)ab.innerHTML='<div class="alert alert-green">pH moču: '+v+' — výborne! Zelená zóna.</div>';
   }
 }
 
@@ -1845,6 +1876,7 @@ function renderDayTabs(){
 }
 
 function renderMeals(){
+  const isWeekend=(new Date().getDay()===0||new Date().getDay()===6);
   const meals=getWeekData(cw);
   const m=meals[cd]||meals[0];
   const t=td();if(!t.meals)t.meals={};
@@ -1863,8 +1895,8 @@ function renderMeals(){
         <input type="checkbox" ${t.meals.b?'checked':''} onchange="toggleMeal('b')" style="width:16px;height:16px;accent-color:var(--accent)"> Zjedené ✓
       </label>
       <div class="section-div"></div>
-      <div class="meal-time"><span>☀️ Obed (11:30 — jedáleň)</span>${m.lkcal?`<span class="meal-kcal">~${m.lkcal} kcal</span>`:''}</div>
-      <div class="meal-content"><strong>Hľadaj v jedálni:</strong> ${m.l}</div>
+      <div class="meal-time"><span>${isWeekend?'☀️ Obed (11:30 — doma)':'☀️ Obed (11:30 — jedáleň)'}</span>${m.lkcal?`<span class="meal-kcal">~${m.lkcal} kcal</span>`:''}</div>
+      <div class="meal-content"><strong>${isWeekend?'Priprav doma:':'Hľadaj v jedálni:'}</strong> ${m.l}</div>
       ${m.lw?`<div class="meal-why">💡 ${m.lw}</div>`:''}
       ${m.lrid?`<button class="recipe-link" onclick="openRecipe('${m.lrid}')">📋 Zobraziť recept →</button>`:''}
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer;margin-top:8px">
@@ -1956,9 +1988,11 @@ function saveKm(){
 }
 
 function saveBp(){
-  const v=parseInt(document.getElementById('bp-input').value);if(!v)return;
+  const sys=parseInt(document.getElementById('bp-sys-input').value);
+  const dia=parseInt(document.getElementById('bp-dia-input').value);
+  if(!sys||!dia)return;
   if(!st.bp)st.bp=[];
-  st.bp.push({v,d:new Date().toLocaleDateString('sk-SK')});
+  st.bp.push({sys,dia,v:sys,d:new Date().toLocaleDateString('sk-SK')});
   if(st.bp.length>20)st.bp.shift();
   save();renderMonitorHistory();
 }
@@ -2069,8 +2103,12 @@ function renderMonitorHistory(){
 
   // Váha + predikcia
   const pred=calcWeightPrediction(weights);
+  // Štartovacia váha badge
+  const startWeight=weights.find(w=>w.start);
+  const startBadge=startWeight?`<div style="font-size:11px;color:var(--text3);margin-bottom:6px">📌 Štart: <strong style="color:var(--text2)">${startWeight.v} kg</strong> — ${startWeight.d}</div>`:'';
   h+=`<div style="margin-bottom:16px">
     <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">📉 Váha (cieľ –10,4 kg)</div>
+    ${startBadge}
     <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
       ${weights.length?makeSvgChart(weights,null,null,'var(--teal)','kg',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta</div>'}
     </div>
@@ -2095,28 +2133,58 @@ function renderMonitorHistory(){
     </div>`:''}
   </div>`;
 
-  // pH
+  // pH varovania
+  const phLast5=phs.slice(-5);
+  const phOver75=phLast5.length>=5&&phLast5.every(p=>p.v>7.5);
+  const phAlert=phOver75?`<div class="alert alert-red" style="margin-bottom:8px">⚠️ pH nad 7,5 počas 5 dní — <strong>zastav alkalizáciu!</strong> Vynechaj citrátovú bombu a bylinkové čaje.</div>`:'';
+  const phLastVal=phs.length?phs[phs.length-1].v:null;
+  const phZone=phLastVal?phLastVal<6.5?'<span style="color:var(--red)">❌ Pod cieľom</span>':phLastVal>7.5?'<span style="color:var(--red)">⚠️ Príliš alkalické</span>':'<span style="color:var(--green)">✅ Zelená zóna</span>':'';
   h+=`<div style="margin-bottom:16px">
-    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🧪 pH moču (cieľ 6,5–7,0)</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🧪 pH moču — zelená zóna: 6,5–7,5 ${phZone}</div>
+    ${phAlert}
     <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
-      ${phs.length?makeSvgChart(phs,6.5,7.0,'var(--green)','pH',false):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta — zadaj pH v sekcii Voda & pH</div>'}
+      ${phs.length?makeSvgChart(phs,6.5,7.5,'var(--green)','pH',false):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta — zadaj pH v sekcii Voda & pH</div>'}
     </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:6px;padding:0 4px">Zelená zóna: 6,5–7,5 · Nad 7,5 po 5 dňoch = zastav alkalizáciu · Pod 6,5 = pridaj citrón</div>
   </div>`;
 
-  // KM
+  // KM - limity 210-450, ideál 300
+  const kmLastVal=kms.length?kms[kms.length-1].v:null;
+  const kmAlert=kmLastVal?kmLastVal<210?`<div class="alert alert-orange" style="margin-bottom:8px">⬇️ KM pod 210 — pridaj bielkoviny alebo kúsok tmavej čokolády</div>`:kmLastVal>450?`<div class="alert alert-red" style="margin-bottom:8px">⬆️ KM nad 450 — pokračuj v protokole</div>`:kmLastVal<=300?`<div class="alert alert-green" style="margin-bottom:8px">✅ KM okolo ideálu (300 μmol/l)</div>`:''  :'';
   h+=`<div style="margin-bottom:16px">
-    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🔬 Kyselina močová (cieľ &lt;450 μmol/l)</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🔬 Kyselina močová — zelená zóna: 210–450 μmol/l (ideál ~300)</div>
+    ${kmAlert}
     <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
-      ${kms.length?makeSvgChart(kms,null,450,'var(--orange)','μmol/l',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta (štart: 518)</div>'}
+      ${kms.length?makeSvgChart(kms,210,450,'var(--orange)','μmol/l',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta (štart: 518)</div>'}
     </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:6px;padding:0 4px">Zelená zóna: 210–450 · Ideál: ~300 · Pod 210 = pridaj bielkoviny/tmavú čokoládu</div>
   </div>`;
 
-  // TK
+  // TK - systolický + diastolický, trend
+  const bpSys=bps.map(b=>({v:b.sys||b.v,d:b.d}));
+  const bpDia=bps.filter(b=>b.dia).map(b=>({v:b.dia,d:b.d}));
+  // Trend tlaku - posledné 3 dni
+  const bpLast3Sys=bpSys.slice(-3);
+  const bpLow=bpLast3Sys.length>=3&&bpLast3Sys.every(b=>b.v<100);
+  const bpDiaLast3=bpDia.slice(-3);
+  const bpDiaLow=bpDiaLast3.length>=3&&bpDiaLast3.every(b=>b.v<60);
+  const bpAlert=(bpLow||bpDiaLow)?`<div class="alert alert-orange" style="margin-bottom:8px">⬇️ Nízky tlak 3 dni za sebou — doplň elektrolyty. Zjedz banán, trochu viac sol jedlo, vypij minerálku.</div>`:'';
+  const bpLastSys=bpSys.length?bpSys[bpSys.length-1].v:null;
+  const bpLastDia=bpDia.length?bpDia[bpDia.length-1].v:null;
+  const bpDisplay=bpLastSys?`${bpLastSys}${bpLastDia?'/'+bpLastDia:''} mmHg`:'';
   h+=`<div style="margin-bottom:8px">
-    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">❤️ Krvný tlak (cieľ &lt;130 mmHg)</div>
-    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
-      ${bps.length?makeSvgChart(bps,null,130,'var(--red)','mmHg',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta</div>'}
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">❤️ Krvný tlak — cieľ &lt;130/80 · Min: 100/60 ${bpDisplay?`<span style="color:var(--text2)">(${bpDisplay})</span>`:''}
     </div>
+    ${bpAlert}
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px;margin-bottom:6px">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Horný (systolický)</div>
+      ${bpSys.length?makeSvgChart(bpSys,100,130,'var(--red)','mmHg',true):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:8px 0">Zatiaľ žiadne dáta</div>'}
+    </div>
+    ${bpDia.length?`<div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Dolný (diastolický)</div>
+      ${makeSvgChart(bpDia,60,80,'var(--blue)','mmHg',true)}
+    </div>`:''}
+    <div style="font-size:11px;color:var(--text3);margin-top:6px;padding:0 4px">Zelená zóna: 100–130 / 60–80 · Pod 100/60 po 3 dňoch = doplň elektrolyty</div>
   </div>`;
 
   c.innerHTML=h;
@@ -2145,9 +2213,11 @@ function updateKPIs(){
     const last=kms[kms.length-1].v;
     document.getElementById('kpi-km').innerHTML=last;
     const ks=document.getElementById('kpi-km-status');
-    if(last<450){ks.textContent='✅ Pod cieľom!';ks.className='kpi-status good';}
+    if(last<210){ks.textContent='⬇️ Pod min. (210)!';ks.className='kpi-status warn';}
+    else if(last<=300){ks.textContent='✅ Ideál (~300)';ks.className='kpi-status good';}
+    else if(last<450){ks.textContent='✅ V norme';ks.className='kpi-status good';}
     else if(last<518){ks.textContent='📉 Klesá (−'+(518-last)+')';ks.className='kpi-status warn';}
-    else{ks.textContent='Cieľ: <450 μmol/l';ks.className='kpi-status bad';}
+    else{ks.textContent='Cieľ: 210–450 μmol/l';ks.className='kpi-status bad';}
   }
   updateWaterUI();
 }
