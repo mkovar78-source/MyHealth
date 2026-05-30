@@ -157,7 +157,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div id="phase-card"></div>
 
   <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-label">pH moču (ráno)</div><div class="kpi-value" id="kpi-ph" style="font-size:24px;font-weight:300">–</div><div class="kpi-status" id="kpi-ph-status">Cieľ: 6,5 – 7,5</div></div>
+    <div class="kpi"><div class="kpi-label">pH moču (ráno)</div><div class="kpi-value" id="kpi-ph" style="font-size:24px;font-weight:300">–</div><div class="kpi-status" id="kpi-ph-status">Cieľ: 6,5–7,0 (zelená: 6,0–7,0)</div></div>
     <div class="kpi"><div class="kpi-label" style="color:var(--teal)">Voda dnes</div><div class="kpi-value" id="kpi-water" style="color:var(--teal)">0<span class="kpi-unit">dl</span></div><div class="kpi-status" id="kpi-water-status">Cieľ: 35–40 dl</div></div>
     <div class="kpi"><div class="kpi-label">Váha</div><div class="kpi-value" id="kpi-weight" style="font-size:24px;font-weight:300">–<span class="kpi-unit">kg</span></div><div class="kpi-status" id="kpi-weight-status">Cieľ: –10,4 kg</div></div>
     <div class="kpi"><div class="kpi-label">Kys. močová</div><div class="kpi-value" id="kpi-km" style="font-size:24px;font-weight:300">–</div><div class="kpi-status" id="kpi-km-status">Cieľ: 210–450 μmol/l</div></div>
@@ -209,6 +209,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
     <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Horný / Dolný tlak (mmHg). Meria mama každé 2 týždne.</div>
     <div style="margin-top:14px" id="monitor-history"></div>
+  <div class="card" style="margin-top:12px">
+    <div class="card-title">📋 Protokol štandardizácie merania</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:10px">Trendy sú dôležitejšie ako izolované hodnoty. Porovnateľné výsledky dostaneš len za rovnakých podmienok.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:10px;border-left:3px solid var(--teal)">
+        <strong style="color:var(--text)">🧪 pH moču</strong><br>
+        <span style="color:var(--text2)">Vždy z <strong>prvého ranného moču</strong>. Vzorkovnica sa nesmie dotýkať pokožky. Odber zo stredného prúdu. pH metrom merať pri teplote moču ~25°C (kalibrovaný na 25°C!). PO–PI prúžkom, SO+NE pH metrom.</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:10px;border-left:3px solid var(--blue)">
+        <strong style="color:var(--text)">⚖️ Váha</strong><br>
+        <span style="color:var(--text2)">Každé ráno po vstávaní — po toalete, pred jedlom, pred pitím. Vždy rovnaká váha, rovnaké miesto.</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:10px;border-left:3px solid var(--orange)">
+        <strong style="color:var(--text)">🩺 Krvný tlak</strong><br>
+        <span style="color:var(--text2)">Vždy v rovnakom čase. <strong>5 minút pokoja v sede</strong> pred meraním. Manžeta v úrovni srdca. Pred kofeínom, pred jedlom.</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:10px;border-left:3px solid var(--red)">
+        <strong style="color:var(--text)">⚠️ Bezpečnostné koridory pH</strong><br>
+        <span style="color:var(--text2)">Nad 7,0 po 5 dňoch → zastav alkalizáciu (vynechaj zázvorovú vodu, nahraď vodou z vodovodu)<br>Pod 6,0 → pridaj citrón do Rajca<br>Pod 5,5 → vysaď kurací kolagén II</span>
+      </div>
+    </div>
+  </div>
   </div>
 
   <div class="card">
@@ -792,7 +814,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
         <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
           <div style="font-weight:600;color:var(--teal);margin-bottom:4px">Hygiena — KAWAR sírové mydlo</div>
-          <div style="color:var(--text2)">Striedaj dva druhy: so sírou a s olivovým olejom. Každý deň pri sprche.</div>
+          <div style="color:var(--text2)">Striedaj deň-deň: 1. deň síra, 2. deň olivový olej. Každý deň pri sprche.</div>
         </div>
         <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
           <div style="font-weight:600;color:var(--teal);margin-bottom:4px">Po sprche — krém</div>
@@ -1340,7 +1362,7 @@ const TRAFFIC={
     {n:'Sója a sójové produkty <span class="traffic-badge hit">⚗️ HIT</span>',r:'Vysoký histamín (SIGHI 3) + puríny. Aj sójová omáčka, tofu, tempeh.'},
     {n:'Kvasená kapusta, kimchi <span class="traffic-badge hit">⚗️ HIT</span>',r:'Fermentácia = extrémne vysoký histamín (SIGHI 3).'},
     {n:'Ančovičky, sardiny v oleji <span class="traffic-badge hit">⚗️ HIT</span>',r:'Konzervy + fermentácia = SIGHI 3. Extrémne vysoký histamín.'},
-    {n:'Ocot (všetky druhy) <span class="traffic-badge hit">⚗️ HIT</span>',r:'Fermentovaný produkt = vysoký histamín (SIGHI 3).'},
+    {n:'Ocot (všetky druhy okrem jablčného) <span class="traffic-badge hit">⚗️ HIT</span>',r:'Fermentovaný produkt = vysoký histamín (SIGHI 3). Výnimka: jablčný ocot má histamín = 0.'},
     {n:'Kešu, mandle',r:'Vysoký obsah oxalátov.'},
     {n:'MED, cukor, sladené limonády',r:'Fruktóza priamo zvyšuje tvorbu KM v pečeni.'},
     {n:'Alkohol, pivo, víno <span class="traffic-badge dao">🚫 DAO</span>',r:'Blokátor DAO enzýmu + extrémne puríny (pivo). Alkohol blokuje vylučovanie KM.'},
@@ -1547,7 +1569,7 @@ function getWaterEmoji(){return getWaterType()==='dobra'?'💧':'🫙';}
 
 const DAILY_PLAN=[
   // POHÁR 1 — Citrátová bomba
-  {time:'06:00',icon:'🍋',label:'POHÁR 1 — Citrátová bomba',sub:'1 citrón + ½ limetky + 300ml DOBREJ VODY vlažnej (30–35°C) — IHNEĎ po vstávaní, nalačno. Táto voda = prázdny vysávač, nemiešaj so zázvorom!',why:'Neutralizuje nočnú acidózu. Dobrá voda = nízke TDS = hladná voda. Vždy z DOBREJ VODY — nie Rajec!',tag:'dom',cup:1,dl:3,waterType:'citratova'},
+  {time:'06:00',icon:'🍋',label:'POHÁR 1 — Citrátová bomba',sub:'1 citrón + ½ limetky + 300ml DOBREJ VODY vlažnej (30–35°C) — IHNEĎ po vstávaní, nalačno. Táto voda = prázdny vysávač, nemiešaj so zázvorom!',why:'Neutralizuje nočnú acidózu. Dobrá voda = nízke TDS = hladná voda. Vždy z DOBREJ VODY — nie Rajec! Alternatívy: TOMA NATURA, Horský prameň (všetko neperlivé).',tag:'dom',cup:1,dl:3,waterType:'citratova'},
   {time:'06:00',icon:'📏',label:'Zmeral som váhu',sub:'Po toalete, pred jedlom — zapiš do Monitoringu',why:'Každý deň rovnaké podmienky = porovnateľný trend',tag:'dom'},
   {time:'06:00',icon:'🧪',label:'Zmeral som pH moču',sub:'PO–PI: prúžkom | SO+NE: pH metrom pri teplote moču ~25°C — zapiš do Voda & pH',why:'Ranné pH je najdôležitejší denný indikátor stavu obličiek',tag:'dom'},
   {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
@@ -1567,40 +1589,38 @@ const DAILY_PLAN=[
   // POHÁR 4
   {time:'10:00',icon:'💧',label:'POHÁR 4',sub:'300ml vlažnej',why:'',tag:'praca',cup:4,dl:3,waterType:'striedanie'},
   {time:'10:00',icon:'💊',label:'A-Z Multivitamín',sub:'1 tableta s vodou',why:'Komplex vitamínov a minerálov vrátane draslíka a elektrolytov',tag:'praca'},
-  {time:'10:00',icon:'🥜',label:'Makadamiové orechy',sub:'5–8 ks — cielený zdroj selénu',why:'Selén kompenzuje 25% nižšiu enzýmovú aktivitu antioxidantov.',tag:'praca'},
+  {time:'10:00',icon:'🥜',label:'Makadamiové orechy',sub:'5 ks (veľké) alebo 8 ks (malé) — jedz pomaly, po jednom, dobre požuj. >70% dobrých tukov, bez cholesterolu.',why:'Zdroj omega-3 a zdravých tukov. Selén = para orechy (max 2 ks/deň).',tag:'praca'},
   // POHÁR 5 — Urea-Detox
   {time:'11:00',icon:'🥤',label:'POHÁR 5 — Urea-Detox šťava',sub:'250g uhorky + 125g zeleru + šťava z ½ limetky + 1čl inulínu — fľaša z domu',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami. Limetka = alkalizácia. Inulín = oxalátová bariéra.',tag:'praca',weekdayOnly:true,cup:5,dl:3,waterType:'urea'},
   {time:'11:00',icon:'🥤',label:'POHÁR 5 — Urea-Detox šťava',sub:'250g uhorky + 125g zeleru + šťava z ½ limetky + 1čl inulínu — čerstvé doma',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami. Limetka = alkalizácia. Inulín = oxalátová bariéra.',tag:'dom',weekendOnly:true,cup:5,dl:3,waterType:'urea'},
-  {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie — BEZ omáčok. Tesne po jedle nepiť, počkaj 15 min.',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy',tag:'praca',weekdayOnly:true},
+  {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie — BEZ omáčok. ⚠️ Po jedle NECHAJ 15 MIN PAUZU pred pitím — nezrieď žalúdočnú kyselinu! Jedz pomaly, dobre požuj.',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy',tag:'praca',weekdayOnly:true},
   {time:'11:30',icon:'🍳',label:'Varenie obeda doma',sub:'Pozri Jedálniček → dnešný deň',why:'Víkend = doma varené, plná kontrola nad ingredienciami.',tag:'dom',weekendOnly:true},
   // POHÁR 6
   {time:'12:00',icon:'💧',label:'POHÁR 6',sub:'300ml vlažnej — pi postupne, nie naraz (kvôli žalúdočnej kyseline po obede)',why:'',tag:'praca',cup:6,dl:3,waterType:'striedanie'},
   {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'Po obede — nie nalačno',why:'Motor mitochondrií. Rozpustný v tukoch = musí byť s jedlom.',tag:'praca'},
   // POHÁR 7 — Bylinkový čaj
-  {time:'13:00',icon:'🍵',label:'POHÁR 7 — Bylinkový čaj',sub:'300ml bylinného čaju podľa aktuálnej rotácie (Voda & pH)',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj!',tag:'praca',cup:7,dl:3,waterType:'caj'},
-  {time:'13:00',icon:'💊',label:'Methylfolát B9',sub:'Po obede',why:'Znižuje homocysteín (HCY) — vaskulárne riziko pri Leidene',tag:'praca'},
+  {time:'13:00',icon:'💧',label:'POHÁR 7',sub:'300ml vlažnej vody + Methylfolát B9 1 tbl — zapiť vodou, nie čajom! Čaj po obede zníži žalúdočnú kyselinu, jedlo sa nestrávi.',why:'Príliš blízko obeda — čaj by prealkalizoval a zhoršil trávenie. B9 znižuje HCY pri Leidene.',tag:'praca',cup:7,dl:3,waterType:'striedanie'},
   {time:'14:30',icon:'🌱',label:'Tekvicové semiačka',sub:'Max 1 hrsť (20–30g) — zapiť vodou. Odstup min. 3–4h od makadamiových.',why:'Zinok + magnézium. Vždy zapiť — oxaláty nesmú tvoriť piesok.',tag:'praca'},
   {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — záložka Telo → Dýchanie. Každé 2 hodiny vstať a pohybovať sa (Leiden!).',why:'V práci nemôžeš ľahnúť — aspoň sed.',tag:'praca'},
   // POHÁR 8
-  {time:'16:00',icon:'💧',label:'POHÁR 8',sub:'Fľaša DOPITÁ do tohto pohára!',why:'Skontroluj — celkový denný objem by mal byť 35–40 dl',tag:'praca',cup:8,dl:3,waterType:'striedanie'},
-  {time:'16:00',icon:'💊',label:'Zinok 15mg',sub:'Samostatne — NIE naraz s horčíkom (22:00)!',why:'Imunita a hojenie tkanív.',tag:'praca'},
+  {time:'14:00',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'300ml bylinného čaju podľa aktuálnej rotácie (Voda & pH) — bez cukru',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! Aspoň 1 hodinu po obede.',tag:'praca',cup:8,dl:3,waterType:'caj'},
+  {time:'16:00',icon:'💧',label:'POHÁR 9',sub:'300ml vlažnej vody + Zinok 15mg — zapiť vodou. Fľaša DOPITÁ! NIE naraz s horčíkom (22:00).',why:'Zinok — imunita a hojenie tkanív.',tag:'praca',cup:9,dl:3,waterType:'striedanie'},
   {time:'17:00',icon:'💊',label:'Krilový olej',sub:'Pred večerou — zapiť trochou vody',why:'Omega-3 pre cievy pri Leidenovej mutácii.',tag:'dom'},
   {time:'17:15',icon:'🌙',label:'Večera — KONIEC jedálenského okna do 17:30',sub:'Pozri Jedálniček → dnešná večera. Po 17:30 už len voda a čaje.',why:'Pôst 16 hodín začína teraz. Ľanový/makový olej pridaj do večere — za studena!',tag:'dom',highlight:true},
   // POHÁR 9 — Zázvorová voda pred prechádzkou
-  {time:'18:00',icon:'🫚',label:'POHÁR 9 — Zázvorová voda',sub:'300ml zázvorovej vody (vlažná) — pred prechádzkou. Na slabinu: tenkú vrstvu Anti-stres emulzie.',why:'Zázvor zahrieva pred pohybom. Anti-stres na jazvu = pohyb ako vnútorná masáž.',tag:'dom',cup:9,dl:3,waterType:'zazvorova'},
+  {time:'18:00',icon:'🫚',label:'POHÁR 10 — Zázvorová voda',sub:'300ml zázvorovej vody (vlažná) — pred prechádzkou. Na slabinu: tenkú vrstvu Anti-stres emulzie.',why:'Zázvor zahrieva pred pohybom. Anti-stres na jazvu = pohyb ako vnútorná masáž.',tag:'dom',cup:10,dl:3,waterType:'zazvorova'},
   {time:'18:00',icon:'🚶',label:'Lymfatická prechádzka po večeri',sub:'30–45 minút, pomalé tempo',why:'Aktivácia lymfy + prevencia trombózy (Leiden) po celodennom sedení',tag:'dom'},
   {time:'19:00',icon:'💊',label:'BioMineral Biokomplex — pastilka',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť.',why:'Udržanie bunkovej hladiny minerálov počas noci.',tag:'dom'},
   // POHÁR 10 — Bylinkový čaj večer
-  {time:'19:10',icon:'🍵',label:'POHÁR 10 — Bylinkový čaj večerný',sub:'300ml bylinného čaju podľa rotácie — bez cukru',why:'Večerná podpora detoxu.',tag:'dom',cup:10,dl:3,waterType:'caj'},
+  {time:'19:10',icon:'🍵',label:'POHÁR 11 — Bylinkový čaj večerný',sub:'300ml bylinného čaju podľa rotácie — bez cukru',why:'Večerná podpora detoxu.',tag:'dom',cup:11,dl:3,waterType:'caj'},
   {time:'20:00',icon:'⚗️',label:'Graphites CH15',sub:'5 globúl — nechaj rozpustiť v ústach. 10 min nič nejesť/nepiť. Sezónne (júl–august).',why:'Prevencia sebopsoriázy v lete. Nevstrebáva sa cez tráviaci trakt.',tag:'dom',everyOtherDay:true},
   // POHÁR 11 — Zázvorová voda večer
-  {time:'20:30',icon:'🫚',label:'POHÁR 11 — Zázvorová voda',sub:'300ml zázvorovej vody — POSLEDNÁ dávka, dopiť do 21:00!',why:'Poslepná dávka protizápalového nápoja. Po 21:00 už len voda z vodovodu.',tag:'dom',cup:11,dl:3,waterType:'zazvorova'},
+  {time:'20:30',icon:'🫚',label:'POHÁR 12 — Zázvorová voda',sub:'300ml zázvorovej vody — POSLEDNÁ dávka, dopiť do 21:00!',why:'Zázvorová voda nahradila Spine-Shot. Po 21:00 už len voda z vodovodu.',tag:'dom',cup:12,dl:3,waterType:'zazvorova'},
   {time:'20:30',icon:'🧴',label:'Večerná emulzia + infralampa',sub:'',why:'Nočná oprava platničiek. Bez emulzie infralampa stráca účinok.',tag:'dom',massageInfo:true,massageType:'evening'},
-  {time:'20:30',icon:'⚡',label:'Spine-Shot',sub:'20g zázvoru + 10g kurkumy + 5ml ľanového oleja — vypi ihneď po príprave',why:'Protizápal pre L4/5. Ľanový olej je nosič — bez neho sa kurkumín nevstrebe.',tag:'dom'},
   {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou.',tag:'dom'},
   {time:'21:10',icon:'🌬️',label:'Dych 4-7-8',sub:'4 cykly — záložka Telo → Dýchanie',why:'Alkalizuje krv, upokojuje CNS pred spaním.',tag:'dom'},
   // POHÁR 12 — Voda z vodovodu pred spaním
-  {time:'22:00',icon:'🚰',label:'POHÁR 12 — Voda z vodovodu',sub:'300ml vlažnej vody z vodovodu — mineralizácia, nie varená',why:'Nočná mineralizácia. Voda z vodovodu = správna minerálna bilancia. Pohár pri posteli pre prípad nočného smädu.',tag:'dom',cup:12,dl:3,waterType:'vodovod'},
+  {time:'22:00',icon:'🚰',label:'POHÁR 13 — Voda z vodovodu',sub:'300ml vlažnej vody z vodovodu — zapiť Mg taurát + B6. Nemusíš vypiť celý, nechaj pol pohára pri posteli pre prípad smädu. Na noc sa pije menej ako cez deň!',why:'Nočná mineralizácia. Bez varenia!',tag:'dom',cup:13,dl:3,waterType:'vodovod'},
   {time:'22:00',icon:'💊',label:'Mg taurát + B6',sub:'Pred spaním — nie naraz so zinkom (bol o 16:00)!',why:'B6 odbúrava homocysteín. Horčík uvoľňuje chrbtové svaly pre nočnú regeneráciu.',tag:'dom'}
 ];
 
@@ -2377,12 +2397,12 @@ function updatePhUI(v){
     if(ab)ab.innerHTML='<div class="alert alert-red">🚨 pH moču: '+v+' — kriticky kyslé! Kryštály sa hromadia. Vypi citrátovú bombu a zdvojnásob pitný režim.</div>';
   }else if(v<6.5){
     if(msg){msg.textContent='⚠️ pH '+v+' — pod cieľom. Pokračuj v protokole.';msg.style.color='var(--orange)';}
-    if(ab)ab.innerHTML='<div class="alert alert-orange">pH moču: '+v+' — pod cieľom (6,5–7,5). Drž pitný protokol s citrónom.</div>';
+    if(ab)ab.innerHTML='<div class="alert alert-orange">pH moču: '+v+' — pod cieľom (6,5–7,0). Drž pitný protokol s citrónom.</div>';
   }else if(v>7.5){
     if(msg){msg.textContent='⚠️ pH '+v+' — príliš alkalické! Vynechaj citrátovú bombu.';msg.style.color='var(--orange)';}
     if(ab)ab.innerHTML='<div class="alert alert-orange">⚠️ pH moču: '+v+' — nad 7,5. Príliš alkalické = riziko fosforečnanov. Vynechaj citrátovú bombu a bylinkové čaje.</div>';
   }else{
-    if(msg){msg.textContent='✅ pH '+v+' — výborne! Zelená zóna 6,5–7,5.';msg.style.color='var(--green)';}
+    if(msg){msg.textContent='✅ pH '+v+' — výborne! Zelená zóna 6,0–7,0.';msg.style.color='var(--green)';}
     if(ab)ab.innerHTML='<div class="alert alert-green">pH moču: '+v+' — výborne! Zelená zóna.</div>';
   }
 }
@@ -2724,17 +2744,17 @@ function renderMonitorHistory(){
 
   // pH varovania
   const phLast5=phs.slice(-5);
-  const phOver75=phLast5.length>=5&&phLast5.every(p=>p.v>7.5);
-  const phAlert=phOver75?`<div class="alert alert-red" style="margin-bottom:8px">⚠️ pH nad 7,5 počas 5 dní — <strong>zastav alkalizáciu!</strong> Vynechaj citrátovú bombu a bylinkové čaje.</div>`:'';
+  const phOver70=phLast5.length>=5&&phLast5.every(p=>p.v>7.5);
+  const phAlert=phOver70?`<div class="alert alert-red" style="margin-bottom:8px">⚠️ pH nad 7,0 počas 5 dní — <strong>zastav alkalizáciu!</strong> Vynechaj zázvorovú vodu, nahraď vodou z vodovodu.</div>`:'';
   const phLastVal=phs.length?phs[phs.length-1].v:null;
-  const phZone=phLastVal?phLastVal<6.5?'<span style="color:var(--red)">❌ Pod cieľom</span>':phLastVal>7.5?'<span style="color:var(--red)">⚠️ Príliš alkalické</span>':'<span style="color:var(--green)">✅ Zelená zóna</span>':'';
+  const phZone=phLastVal?phLastVal<6.0?'<span style="color:var(--orange)">⚠️ Pod zelenou zónou</span>':phLastVal<6.5?'<span style="color:var(--orange)">⚠️ Pod cieľom</span>':phLastVal>7.0?'<span style="color:var(--red)">⚠️ Príliš alkalické — zastav alkalizáciu!</span>':'<span style="color:var(--green)">✅ Zelená zóna</span>':'';
   h+=`<div style="margin-bottom:16px">
-    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🧪 pH moču — zelená zóna: 6,5–7,5 ${phZone}</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">🧪 pH moču — zelená zóna: 6,0–7,0 ${phZone}</div>
     ${phAlert}
     <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
       ${phs.length?makeSvgChart(phs,6.5,7.5,'var(--green)','pH',false):'<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px 0">Zatiaľ žiadne dáta — zadaj pH v sekcii Voda & pH</div>'}
     </div>
-    <div style="font-size:11px;color:var(--text3);margin-top:6px;padding:0 4px">Zelená zóna: 6,5–7,5 · Nad 7,5 po 5 dňoch = zastav alkalizáciu · Pod 6,5 = pridaj citrón</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:6px;padding:0 4px">Zelená zóna: 6,0–7,0 · Cieľ: 6,5–7,0 · Nad 7,0 po 5 dňoch = zastav alkalizáciu (vynechaj zázvrovú vodu) · Pod 6,0 = pridaj citrón do Rajca · Pod 5,5 = vysaď kurací kolagén II</div>
   </div>`;
 
   // KM - limity 210-450, ideál 300
