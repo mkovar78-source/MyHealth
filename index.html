@@ -1465,6 +1465,13 @@ function getCurrentTeaWeek(){
   return weekNum;
 }
 
+function getTeaSub(){
+  const weekNum=getCurrentTeaWeek();
+  const group=TEA_GROUPS[weekNum-1];
+  if(!group)return '300ml bylinného čaju podľa aktuálnej rotácie';
+  return `300ml · <strong style="color:${group.color}">${group.emoji} ${group.name}</strong> (týždeň ${weekNum})`;
+}
+
 function isSlimUnlocked(){
   const kms=st.km||[];
   const lastKm=kms.length?kms[kms.length-1].v:999;
@@ -1603,7 +1610,7 @@ const DAILY_PLAN=[
   {time:'14:30',icon:'🌱',label:'Tekvicové semiačka',sub:'Max 1 hrsť (20–30g) — zapiť vodou. Odstup min. 3–4h od makadamiových.',why:'Zinok + magnézium. Vždy zapiť — oxaláty nesmú tvoriť piesok.',tag:'praca'},
   {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — záložka Telo → Dýchanie. Každé 2 hodiny vstať a pohybovať sa (Leiden!).',why:'V práci nemôžeš ľahnúť — aspoň sed.',tag:'praca'},
   // POHÁR 8
-  {time:'14:00',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'300ml bylinného čaju podľa aktuálnej rotácie (Voda & pH) — bez cukru',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! Aspoň 1 hodinu po obede.',tag:'praca',cup:8,dl:3,waterType:'caj'},
+  {time:'14:00',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! Aspoň 1 hodinu po obede.',tag:'praca',cup:8,dl:3,waterType:'caj',teaType:true},
   {time:'16:00',icon:'💧',label:'POHÁR 9',sub:'300ml vlažnej vody + Zinok 15mg — zapiť vodou. Fľaša DOPITÁ! NIE naraz s horčíkom (22:00).',why:'Zinok — imunita a hojenie tkanív.',tag:'praca',cup:9,dl:3,waterType:'striedanie'},
   {time:'17:00',icon:'💊',label:'Krilový olej',sub:'Pred večerou — zapiť trochou vody',why:'Omega-3 pre cievy pri Leidenovej mutácii.',tag:'dom'},
   {time:'17:15',icon:'🌙',label:'Večera — KONIEC jedálenského okna do 17:30',sub:'Pozri Jedálniček → dnešná večera. Po 17:30 už len voda a čaje.',why:'Pôst 16 hodín začína teraz. Ľanový/makový olej pridaj do večere — za studena!',tag:'dom',highlight:true},
@@ -1612,7 +1619,7 @@ const DAILY_PLAN=[
   {time:'18:00',icon:'🚶',label:'Lymfatická prechádzka po večeri',sub:'30–45 minút, pomalé tempo',why:'Aktivácia lymfy + prevencia trombózy (Leiden) po celodennom sedení',tag:'dom'},
   {time:'19:00',icon:'💊',label:'BioMineral Biokomplex — pastilka',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť.',why:'Udržanie bunkovej hladiny minerálov počas noci.',tag:'dom'},
   // POHÁR 10 — Bylinkový čaj večer
-  {time:'19:10',icon:'🍵',label:'POHÁR 11 — Bylinkový čaj večerný',sub:'300ml bylinného čaju podľa rotácie — bez cukru',why:'Večerná podpora detoxu.',tag:'dom',cup:11,dl:3,waterType:'caj'},
+  {time:'19:10',icon:'🍵',label:'POHÁR 11 — Bylinkový čaj večerný',sub:'',why:'Večerná podpora detoxu.',tag:'dom',cup:11,dl:3,teaType:true,waterType:'caj'},
   {time:'20:00',icon:'⚗️',label:'Graphites CH15',sub:'5 globúl — nechaj rozpustiť v ústach. 10 min nič nejesť/nepiť. Sezónne (júl–august).',why:'Prevencia sebopsoriázy v lete. Nevstrebáva sa cez tráviaci trakt.',tag:'dom',everyOtherDay:true},
   // POHÁR 11 — Zázvorová voda večer
   {time:'20:30',icon:'🫚',label:'POHÁR 12 — Zázvorová voda',sub:'300ml zázvorovej vody (vlažná) — 3. a posledná dávka. Dopiť do 21:00!',why:'ANTI FLAME nápoj — rozložený v čase: ráno (pohár 2), pred prechádzkou (pohár 10), večer (pohár 12).',tag:'dom',cup:12,dl:3,waterType:'zazvorova'},
@@ -1621,7 +1628,7 @@ const DAILY_PLAN=[
   {time:'21:10',icon:'🌬️',label:'Dych 4-7-8',sub:'4 cykly — záložka Telo → Dýchanie',why:'Alkalizuje krv, upokojuje CNS pred spaním.',tag:'dom'},
   // POHÁR 12 — Voda z vodovodu pred spaním
   {time:'22:00',icon:'🚰',label:'POHÁR 13 — Voda z vodovodu',sub:'300ml vlažnej vody z vodovodu — zapiť Mg taurát + B6. Nemusíš vypiť celý, nechaj pol pohára pri posteli pre prípad smädu. Na noc sa pije menej ako cez deň!',why:'Nočná mineralizácia. Bez varenia!',tag:'dom',cup:13,dl:3,waterType:'vodovod'},
-  {time:'22:00',icon:'💊',label:'Mg taurát + B6',sub:'Pred spaním — nie naraz so zinkom (bol o 16:00)!',why:'B6 odbúrava homocysteín. Horčík uvoľňuje chrbtové svaly pre nočnú regeneráciu.',tag:'dom'}
+  {time:'22:00',icon:'💊',label:'Mg taurát + B6',sub:'Zapiť pohárom 13 (voda z vodovodu) — nie naraz so zinkom (bol o 16:00)!',why:'B6 odbúrava homocysteín. Horčík uvoľňuje chrbtové svaly pre nočnú regeneráciu.',tag:'dom'}
 ];
 
 // Farby pre typy nápojov
@@ -1696,7 +1703,7 @@ function renderDailyChecklist(){
     const massageBadge=item.massageType?`<span style="font-size:10px;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(251,146,60,.12);color:var(--orange);border:1px solid rgba(251,146,60,.3);flex-shrink:0">🧴 Mesiac ${getMassageMonth()}</span>`:'';
 
     // Sub text — pre striedanie vôd ukáž aktuálny typ
-    let subText=item.massageType?getMassageSub(item.massageType):(item.sub||'');
+    let subText=item.massageType?getMassageSub(item.massageType):item.teaType?getTeaSub():(item.sub||'');
     // pre striedanie je typ vody uz v labeli — subText nechaj bez duplikacie
 
     html+=`<div onclick="toggleDayItem(${i})" style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;opacity:${checked?0.5:1};${item.highlight?'background:rgba(74,222,128,0.05);margin:0 -16px;padding:10px 16px;':''}">
