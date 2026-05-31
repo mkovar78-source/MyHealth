@@ -1070,10 +1070,10 @@ const W4=[
 
 
 const RECIPES=[
-  {id:'quinoa-kasa',name:'Quinoa kaša s čučoriedkami',type:'b',time:'10 min',kcal:460,
-   ingredients:[{n:'Quinoa',a:'70g (suché)'},{n:'Voda alebo Rajec',a:'210ml'},{n:'Čučoriedky',a:'80g'},{n:'Vlašské orechy',a:'20g (asi 4 ks)'},{n:'Škorica',a:'štipka'}],
-   steps:['Quinoa opláchni pod tečúcou vodou (zbavíš ju horkosti).','Daj do hrnca s 180ml vody z vodovodu (nie minerálna — minerály sa vyvaria), priveď do varu na stupni 7.','Zníž na stupeň 3, var 12–15 minút kým quinoa nevsiakne vodu.','Daj do misky, prihoď čučoriedky a nasekané vlašské orechy.','Posyp škoricou.'],
-   tip:'Quinoa môžeš uvariť večer a ráno len ohriať — šetrí čas.'
+  {id:'quinoa-kasa',name:'Quinoa kaša s čučoriedkami',type:'b',time:'20 min',kcal:490,
+   ingredients:[{n:'Quinoa',a:'70g (suché)'},{n:'Voda z vodovodu',a:'140ml (2× objem quinoy)'},{n:'Kokosové mlieko',a:'80–100ml (zahriaté)'},{n:'Čučoriedky',a:'80g'},{n:'Vlašské orechy',a:'20g (asi 4 ks)'},{n:'Škorica',a:'štipka'}],
+   steps:['Quinoa opláchni pod tečúcou vodou (zbavíš ju horkosti).','Daj do hrnca so 140ml vody z vodovodu, priveď do varu na stupni 7.','Zníž na stupeň 3, var 12–15 minút kým quinoa nevsiakne vodu.','Odstavy z ohňa. Zahrej kokosové mlieko (nie variť — len ohriať).','Pridaj 80–100ml kokosového mlieka do quinoy, dobre premiešaj — teraz je to kaša!','Presyp do misky, prihoď čučoriedky a nasekané vlašské orechy.','Posyp škoricou.'],
+   tip:'Priprav večer — ráno len ohrej a pridaj čerstvé čučoriedky. Kokosové mlieko pridávaj vždy až na konci, nie počas varenia.'
   },
   {id:'pohankove-vlocky',name:'Pohánkové vločky s kokosovým mliekom',type:'b',time:'5 min',kcal:490,
    ingredients:[{n:'Pohánkové vločky',a:'60g'},{n:'Kokosové mlieko',a:'150ml'},{n:'Tekvicové semiačka',a:'15g'},{n:'Čučoriedky',a:'50g'},{n:'Vlašské orechy',a:'20g'}],
@@ -1307,11 +1307,7 @@ const RECIPES=[
    steps:['Rúru predhrej na 190°C.','Kuracie stehno polož na plech, polej olejom, pridaj bylinky.','Peč 35–40 minút kým koža nezlatnie.','Zemiaky uvár vopred — priveď na 7, zníž na 4, var 15 minút. Nechaj vychladnúť.','Zemiaky nakrájaj na kocky, cibuľu nadrobno.','Dresing: olivový olej + citrón + horčica + kôpor. Zmiešaj so zemiakmi a cibuľou.','Podávaj stehno so zemiakovým šalátom.'],
    tip:'🔥 Indukcia: zemiaky stupeň 7 → 4. Rúra na kura. Zemiakový šalát BEZ majonézy — olivový olej + citrón = ľahší, zdravší, alkalický.'
   },
-  {id:'zazvorova-voda',name:'Zázvorová voda (0,9 litra)',type:'drink',time:'20 min',kcal:10,
-   ingredients:[{n:'Voda z vodovodu',a:'0,9 litra'},{n:'Zázvor čerstvý',a:'2–3 tenké plátky (nie viac!)'},{n:'Citrón',a:'1 ks (šťava)'},{n:'Stévia',a:'podľa chuti (voliteľné)'}],
-   steps:['Priveď 0,9l vody z vodovodu do varu.','Pridaj 2–3 tenké plátky zázvoru — menej je viac!','Zníž na stupeň 3, lúhuj 10–15 minút.','Odstav a nechaj vychladnúť na izbovú teplotu.','Do vlažnej vody pridaj šťavu z 1 citróna.','Prelej do sklenenej fľaše. Skladuj v skle, nie v plastovej fľaši.','Pi vlažnú počas dňa — pohár 2, 9, 11 v harmonograme.'],
-   tip:'Na prípravu použi vodu z vodovodu — prevarením sa eliminujú nežiaduce látky. Rajec/Dobrou vodou v skle doplňuješ priamo bez varenia. Citrón NEPRIDÁVAJ do čajov ani do zázvorovej vody — je tam už zahrnutý v recepte. Vždy len Dobrá voda alebo TOMA NATURA (nízke TDS). NIE Rajec — ten má príliš vysoké TDS!'
-  },
+
   {id:'citratova-bomba',name:'Citrátová bomba',type:'drink',time:'2 min',kcal:30,
    ingredients:[{n:'Citrón',a:'1 celý'},{n:'Limetka',a:'½ ks'},{n:'Dobrá voda alebo TOMA NATURA (NIE Rajec!)',a:'300ml vlažná 30–35°C'}],
    steps:['Vytlač šťavu z 1 celého citróna.','Vytlač šťavu z ½ limetky.','Zmiešaj s 300ml vody.','Vypi IHNEĎ PO VSTÁVANÍ — pred jedlom, kávou, čímkoľvek.'],
@@ -1323,9 +1319,9 @@ const RECIPES=[
    tip:'Limetka = alkalizácia. Inulín = ochrana pred oxalátmi (kŕmi baktérie Oxalobacter formigenes). Bez odšťavovača: zjedz uhorku a zeler ako súčasť jedla — účinok je podobný.'
   },
   {id:'spine-shot',name:'Zázvorová voda — ANTI FLAME nápoj',type:'drink',time:'20 min',kcal:10,
-   ingredients:[{n:'Zázvor čerstvý',a:'2–3 tenké plátky (nie viac!)'},{n:'Voda z vodovodu',a:'0,9 litra'},{n:'Citrón šťava',a:'1 ks'}],
-   steps:['Priveď 0,9l vody z vodovodu do varu na stupni 7.','Pridaj 2–3 tenké plátky zázvoru — menej je viac!','Zníž na stupeň 3, lúhuj 10–15 minút.','Odstavy a nechaj vychladnúť na izbovú teplotu.','Do vlažnej vody pridaj šťavu z 1 citróna.','Prelej do sklenenej fľaše. Pi vlažnú počas dňa — pohár 2, 10, 12.'],
-   tip:'Na varenie použi vodu z vodovodu — minerály sa aj tak vyvaria. Uchovávaš v skle, nie v plastovej fľaši. Priprav ráno na celý deň.'
+   ingredients:[{n:'Voda z vodovodu',a:'0,9 litra'},{n:'Zázvor čerstvý',a:'2–3 tenké plátky (nie viac!)'},{n:'Citrón (šťava)',a:'1 ks — PRIDAJ AŽ PO VYCHLADNUTÍ!'}],
+   steps:['Priveď 0,9l vody z vodovodu do varu na stupni 7.','Pridaj 2–3 tenké plátky zázvoru — menej je viac!','Zníž na stupeň 3, lúhuj 10–15 minút.','Odstavy a nechaj vychladnúť na izbovú teplotu (pod 40°C).','⚠️ Až keď je vlažná — pridaj šťavu z 1 citróna. Nie skôr — teplo zničí vitamín C!','Prelej do sklenenej fľaše (nie plast!). Priprav ráno na celý deň.','Pi vlažnú — pohár 2 (07:00), pohár 10 (18:00), pohár 12 (20:30).'],
+   tip:'Citrón VŽDY až po vychladnutí — nie do horúcej vody! Na varenie použij vodu z vodovodu. Uchovávaš v skle.'
   }
 ];
 
