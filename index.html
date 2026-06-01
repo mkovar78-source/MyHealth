@@ -1624,12 +1624,12 @@ const DAILY_PLAN=[
   {time:'12:00',icon:'💧',label:'POHÁR 6',sub:'300ml vlažnej — pi postupne, nie naraz (kvôli žalúdočnej kyseline po obede)',why:'',tag:'praca',cup:6,dl:3,waterType:'striedanie'},
   {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'Po obede — nie nalačno',why:'Motor mitochondrií. Rozpustný v tukoch = musí byť s jedlom.',tag:'praca'},
   // POHÁR 7 — Bylinkový čaj
-  {time:'13:00',icon:'💧',label:'POHÁR 7',sub:'300ml vlažnej vody + Methylfolát B9 1 tbl — zapiť vodou, nie čajom! Čaj po obede zníži žalúdočnú kyselinu, jedlo sa nestrávi.',why:'Príliš blízko obeda — čaj by prealkalizoval a zhoršil trávenie. B9 znižuje HCY pri Leidene.',tag:'praca',cup:7,dl:3,waterType:'striedanie'},
+  {time:'13:00',icon:'💧',label:'POHÁR 7 + B9',sub:'300ml vlažnej vody. Methylfolát B9 1 tbl — zapiť vodou, nie čajom! Čaj po obede zníži žalúdočnú kyselinu.',why:'Príliš blízko obeda — čaj by prealkalizoval a zhoršil trávenie. B9 znižuje HCY pri Leidene.',tag:'praca',cup:7,dl:3,waterType:'striedanie'},
   {time:'14:00',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! Aspoň 1 hodinu po obede.',tag:'praca',cup:8,dl:3,waterType:'caj',teaType:true},
   {time:'14:30',icon:'🌱',label:'Tekvicové semiačka',sub:'Max 1 hrsť (20–30g) — zapiť vodou. Odstup min. 3–4h od makadamiových.',why:'Zinok + magnézium. Vždy zapiť — oxaláty nesmú tvoriť piesok.',tag:'praca'},
   {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — záložka Telo → Dýchanie. Každých 60 minút vstať a pohybovať sa (Leiden!).',why:'V práci nemôžeš ľahnúť — aspoň sed.',tag:'praca'},
   // POHÁR 8
-  {time:'16:00',icon:'💧',label:'POHÁR 9',sub:'300ml vlažnej vody + Zinok 15mg — zapiť vodou. Fľaša DOPITÁ! NIE naraz s horčíkom (22:00).',why:'Zinok — imunita a hojenie tkanív.',tag:'praca',cup:9,dl:3,waterType:'striedanie'},
+  {time:'16:00',icon:'💧',label:'POHÁR 9 + Zinok',sub:'300ml vlažnej vody. Zinok 15mg — zapiť vodou. Fľaša DOPITÁ! NIE naraz s horčíkom (22:00).',why:'Zinok — imunita a hojenie tkanív.',tag:'praca',cup:9,dl:3,waterType:'striedanie'},
   {time:'17:00',icon:'💊',label:'Krilový olej',sub:'Pred večerou — zapiť trochou vody',why:'Omega-3 pre cievy pri Leidenovej mutácii.',tag:'dom'},
   {time:'17:15',icon:'🌙',label:'Večera — KONIEC jedálenského okna do 17:30',sub:'Pozri Jedálniček → dnešná večera. Po 17:30 už len voda a čaje.',why:'Pôst 16 hodín začína teraz. Ľanový/makový olej pridaj do večere — za studena!',tag:'dom',highlight:true},
   // POHÁR 9 — Zázvorová voda pred prechádzkou
@@ -1645,8 +1645,7 @@ const DAILY_PLAN=[
   {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou.',tag:'dom'},
   {time:'21:10',icon:'🌬️',label:'Dych 4-7-8',sub:'4 cykly — záložka Telo → Dýchanie',why:'Alkalizuje krv, upokojuje CNS pred spaním.',tag:'dom'},
   // POHÁR 12 — Voda z vodovodu pred spaním
-  {time:'22:00',icon:'🚰',label:'POHÁR 13 — Voda z vodovodu',sub:'300ml vlažnej vody z vodovodu — zapiť Mg taurát + B6. Nemusíš vypiť celý, nechaj pol pohára pri posteli pre prípad smädu. Na noc sa pije menej ako cez deň!',why:'Nočná mineralizácia. Bez varenia!',tag:'dom',cup:13,dl:3,waterType:'vodovod'},
-  {time:'22:00',icon:'💊',label:'Mg taurát + B6',sub:'Zapiť pohárom 13 (voda z vodovodu) — nie naraz so zinkom (bol o 16:00)!',why:'B6 odbúrava homocysteín. Horčík uvoľňuje chrbtové svaly pre nočnú regeneráciu.',tag:'dom'}
+  {time:'22:00',icon:'🚰',label:'POHÁR 13 + Mg taurát + B6',sub:'300ml vody z vodovodu. Mg taurát + B6 — zapiť týmto pohárom, NIE naraz so zinkom! Nemusíš vypiť celý, nechaj pol pohára pri posteli.',why:'Nočná mineralizácia. Bez varenia!',tag:'dom',cup:13,dl:3,waterType:'vodovod'},
 ];
 
 // Farby pre typy nápojov
@@ -1733,7 +1732,7 @@ function renderDailyChecklist(){
           <span style="color:${isCurrent&&!checked?'var(--accent)':'var(--text3)'};font-weight:400;font-size:12px;flex-shrink:0;min-width:38px">${item.time}</span>
           <span style="font-size:11px">${item.icon}</span>
           <span style="font-size:14px;font-weight:${isCurrent&&!checked?600:400};color:${checked?'var(--text3)':item.highlight?'var(--accent)':item.cup?cupColor:'var(--text)'};text-decoration:${checked?'line-through':''}">
-            ${item.cup?`🥛 ${item.cup}. pohár · ${item.dl}dl — ${item.waterType==='striedanie'?getWaterLabel():item.label.replace(/^POHÁR \d+ — /,'')}`:item.label}
+            ${item.cup?`🥛 ${item.cup}. pohár · ${item.dl}dl — ${item.waterType==='striedanie'?getWaterLabel()+(item.label.replace(/^POHÁR \d+/,'').trim()?' '+item.label.replace(/^POHÁR \d+/,'').trim():''):item.label.replace(/^POHÁR \d+ — /,'')}`:item.label}
           </span>
           <span style="font-size:10px;color:${tagColor};flex-shrink:0">${tagLabel}</span>
           ${massageBadge}
@@ -2101,7 +2100,7 @@ function renderPhaseCard(){
   }
   const start=new Date(st.phaseStart);
   const now=new Date();
-  const elapsed=Math.floor((now-start)/(1000*60*60*24));
+  const elapsed=Math.floor((now-start)/(1000*60*60*24))+1;
   const remaining=Math.max(0,120-elapsed);
   const pct=Math.min(100,(elapsed/120)*100);
   const cond1=elapsed>=120;
