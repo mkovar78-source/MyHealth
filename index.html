@@ -208,7 +208,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="save-btn" onclick="saveBp()">Uložiť</button>
     </div>
     <div style="font-size:11px;color:var(--text3);margin:4px 0 10px">Horný / Dolný tlak (mmHg). Meria mama každé 2 týždne.</div>
-    <div id="bp-low-alert" style="display:none"></div>
     <div style="margin-top:14px" id="monitor-history"></div>
   <div class="card" style="margin-top:12px">
     <div class="card-title">📋 Protokol štandardizácie merania</div>
@@ -228,7 +227,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       </div>
       <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:10px;border-left:3px solid var(--red)">
         <strong style="color:var(--text)">⚠️ Bezpečnostné koridory pH</strong><br>
-        <span style="color:var(--text2)">Nad 7,0 po 5 dňoch → zastav alkalizáciu (vynechaj citrón z pohárov, pi čistý Rajec)<br>Pod 6,0 → pridaj citrón do Rajca<br>Pod 5,5 → vysaď kurací kolagén II</span>
+        <span style="color:var(--text2)">Nad 7,0 po 5 dňoch → zastav alkalizáciu (vynechaj citrón z pohárov Rajca, pi čistý Rajec)<br>Pod 6,0 → pridaj citrón do Rajca<br>Pod 5,5 → vysaď kurací kolagén II</span>
       </div>
     </div>
   </div>
@@ -258,8 +257,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="alert alert-red" style="margin-bottom:8px">🚫 <strong>Kolagén VYSADIŤ</strong> ak pH klesne pod 5,5 — kyslé prostredie + dusíkatá záťaž = riziko kameňov v obličkách</div>
     <div class="alert alert-orange" style="margin-bottom:8px">⏱️ <strong>BioMineral pastilky (Biokomplex)</strong> — 10 minút pred aj po nič nejesť ani nepiť. Vstrebávajú sa cez sliznicu — NIKDY neprehltnúť!</div>
     <div class="alert alert-orange" style="margin-bottom:8px">🚫 <strong>Zinok (16:00) a Horčík (22:00)</strong> — NIKDY naraz! Navzájom blokujú vstrebávanie.</div>
-    <div class="alert alert-orange" style="margin-bottom:8px">🚫 <strong>Vitamín C MAX 500mg</strong> — viac sa premieňa na oxaláty (detegované v moči).</div>
-    <div class="alert alert-orange" style="margin-bottom:8px">🚫 <strong>Serapeptáza</strong> — IBA JARNÁ KÚRA (máj–jún). Nie celoročne! Ak krvácajú ďasná — ihneď vysadiť.</div>
+    <div class="alert alert-orange" style="margin-bottom:8px">✅ <strong>Vitamín C</strong> — VYSADENÝ (prebytok v moči → oxaláty). Prírodný zdroj: rakytník v ANTI-INFLAM čaji.</div>
+    <div class="alert alert-orange" style="margin-bottom:8px">✅ <strong>Serrapeptáza</strong> — VYSADENÁ (jarná kúra máj–jún ukončená).</div>
     <div class="alert alert-orange" style="margin-bottom:8px">🚫 <strong>Ľanový/makový olej</strong> — VÝLUČNE za studena. Nikdy na varenie. Zatvoriť pred 17:30 (jedálenské okno).</div>
     <div class="alert alert-red" style="margin-bottom:8px">🚫 <strong>Bezlaktózové kravské mlieko</strong> — STOPKA! Obsahuje srvátku = toxická záťaž obličiek. Nahraď kokosovým mliekom.</div>
     <div class="alert alert-red">🚫 <strong>NESUPLEMENTOVAŤ</strong>: B12, Vitamín D, Fosfor — DNA predispozícia k vysokým hladinám. Zaťažuje pečeň.</div>
@@ -274,10 +273,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <strong>Denný limit: ~2 000 kcal</strong>
   </div>
   <div class="week-tabs">
-    <button class="week-tab active" id="wt1" onclick="setWeek(1)">Týždeň 1</button>
-    <button class="week-tab" id="wt2" onclick="setWeek(2)">Týždeň 2</button>
-    <button class="week-tab" id="wt3" onclick="setWeek(3)">Týždeň 3</button>
-    <button class="week-tab" id="wt4" onclick="setWeek(4)">Týždeň 4</button>
+    <button class="week-tab active" id="wt4" onclick="setWeek(4)">T4 — Alkalizačný</button>
+    <button class="week-tab" id="wt5" onclick="setWeek(5)">T5 — Iniciačná fáza</button>
+    <button class="week-tab" id="wt6" onclick="setWeek(6)">T6 — Metabolická stabilizácia</button>
   </div>
   <div class="day-tabs" id="day-tabs"></div>
   <div id="meal-content"></div>
@@ -300,7 +298,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <!-- 1. VODA -->
   <div class="card">
     <div class="card-title">💧 Voda dnes</div>
-    <div class="info-box" id="water-type-info"><strong>Pitný režim T2:</strong> Pohár 1 = TOMA NATURA + citrón. Poháre 2,10,12 = vodovod + baza + NONA soľ. Poháre 3–9 = Rajec + ¼ citróna/limetky.<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
+    <div class="info-box" id="water-type-info"><strong>Pitný režim T4+:</strong> Pohár 1 = TOMA NATURA + citrón. Poháre 2,10,12 = TOMA NATURA + citrón + 1 tbl GymBeam elektrolytov. Poháre 3–9 = Rajec + ¼ citróna/limetky.<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
     <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:10px">
       <span id="water-label2" style="font-size:32px;font-weight:300;color:var(--teal);line-height:1">0</span>
       <span style="font-size:14px;color:var(--text2)">dl</span>
@@ -358,17 +356,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 
-    <!-- 5. ZÁZVOROVÁ VODA - info -->
+    <!-- 5. TOMA NATURA + ELEKTROLYTY - info -->
   <div class="card">
-    <div class="card-title">🫚 Zázvorová voda – ANTI FLAME nápoj</div>
+    <div class="card-title">🍋 TOMA NATURA + elektrolyty — stabilizácia tlaku</div>
     <div style="font-size:13px;color:var(--text2);line-height:1.6">
-      <strong>Recept: 2–3 plátky zázvoru + 0,9l vody z vodovodu</strong><br>
-      Variť 10–15 minút na stupni 3, odstaviť, vychladnúť, pridať šťavu z 1 citróna, prelej do sklenenej fľaše.<br><br>
-      <strong style="color:var(--orange)">Rozložené v čase — NIE naraz:</strong><br>
-      🫚 Pohár 2 — 07:00 ráno (pred prechádzkou)<br>
-      🫚 Pohár 10 — 18:00 pred večernou prechádzkou<br>
-      🫚 Pohár 12 — 20:30 posledná dávka<br><br>
-      <div class="alert alert-orange" style="margin-bottom:0">⚠️ Spine-Shot (zázvor + kurkuma + ľanový olej) bol <strong>nahradený protizápalovým čajom T2</strong>. Ľanový olej by zastavil autofágiu a zázvor naraz by dráždil žalúdok.</div>
+      <strong>Príprava: 300ml TOMA NATURA (vlažná) + šťava z ¼ citróna + 1 tbl GymBeam elektrolytov</strong><br>
+      Elektrolyty rozpustiť vo vode, pridať citrón. Piť postupne, nie naraz.<br><br>
+      <strong style="color:var(--orange)">Rozložené v čase — 3× denne:</strong><br>
+      🍋 Pohár 2 — 07:00 ráno<br>
+      🍋 Pohár 10 — 18:00 pred večernou prechádzkou<br>
+      🍋 Pohár 12 — 20:30 posledná dávka<br><br>
+      <div class="alert alert-orange" style="margin-bottom:0">⚠️ Ak tlak klesne pod 100 tri dni za sebou — vysaď TOMA NATURA a pi elektrolyty s vodou z vodovodu. Ak tlak pod 110 → striedaj Bonaqua + Albert Quality.</div>
     </div>
   </div>
 
@@ -438,10 +436,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- NÁKUP -->
 <div class="screen" id="screen-shop">
   <div class="week-tabs">
-    <button class="week-tab active" id="swt1" onclick="setShopWeek(1)">Týždeň 1</button>
-    <button class="week-tab" id="swt2" onclick="setShopWeek(2)">Týždeň 2</button>
-    <button class="week-tab" id="swt3" onclick="setShopWeek(3)">Týždeň 3</button>
-    <button class="week-tab" id="swt4" onclick="setShopWeek(4)">Týždeň 4</button>
+    <button class="week-tab active" id="swt4" onclick="setShopWeek(4)">T4 — Alkalizačný</button>
+    <button class="week-tab" id="swt5" onclick="setShopWeek(5)">T5 — Iniciačná fáza</button>
+    <button class="week-tab" id="swt6" onclick="setShopWeek(6)">T6 — Metabolická stabilizácia</button>
   </div>
   <div style="display:flex;gap:8px;margin-bottom:12px">
     <button class="btn" style="flex:1;margin-top:0" onclick="checkAllShop()">Odškrtnúť všetko</button>
@@ -712,7 +709,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         </div>
         <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
           <div style="font-weight:600;color:var(--orange);margin-bottom:4px">🌙 Po večeri — 18:00 (30–45 min)</div>
-          <div style="color:var(--text2)">Pomalé tempo. Pred prechádzkou: pohár s bazou a NONA soľou (pohár 10) + Anti-stres na ľavú slabinu. Po prechádzke: infralampa 10 min na kríže kým sú cievy zahriate.</div>
+          <div style="color:var(--text2)">Pomalé tempo. Pred prechádzkou: pohár 10 (TOMA NATURA + citrón + elektrolyty) + Anti-stres na ľavú slabinu. Po prechádzke: infralampa 10 min na kríže kým sú cievy zahriate.</div>
         </div>
       </div>
     </div>
@@ -1026,38 +1023,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <script>
-const W1=[
-  {day:'PO',b:'Quinoa kaša (70g) s čučoriedkami a vlašskými orechmi',bw:'Quinoa = kompletné aminokyseliny bez srvátky. Čučoriedky = antioxidanty. Priprav večer, ráno len ohrej.',bkcal:460,brid:'quinoa-kasa',l:'Kuracie prsia na prírodno + uhorkový šalát + ½ ryže',lw:'V jedálni: varené/pečené kura BEZ omáčky. Dvojitá porcia šalátu.',lkcal:550,d:'Pečený losos s feniklom a citrónovou šťavou + varené zemiaky 150g',dw:'Rúra 180°C, 18 minút. Losos = Omega-3 pre Leiden. Zemiaky uvariť vopred.',dkcal:480,drid:'peceny-losos'},
-  {day:'UT',b:'Pohánkové vločky s kokosovým mliekom a tekvicovými semiačkami',bw:'Pohánka = bezlepková, nízke puríny. Zalej večer, ráno hotové.',bkcal:490,brid:'pohankove-vlocky',l:'Pečená treska alebo zubáč + dusená zelenina + varené zemiaky',lw:'Biela ryba = najmenej purínov. Ideálna v jedálni.',lkcal:560,d:'Avokádová nátierka s cesnakom a cibuľkou + kváskový chlieb 2 plátky + uhorka',dw:'3 minúty prípravy. Avokádo + cesnak + cibuľka = ochrana ciev Leiden.',dkcal:380,drid:'avokado-natierka'},
-  {day:'ST',b:'Cottage syr 200g s cibuľkou, cesnakom, uhorkou + kváskový chlieb 1 plátok',bw:'Cesnak a cibuľa POVINNÉ každý deň. Cottage 200g = celé balenie. 5 minút prípravy.',bkcal:400,brid:'cottage-syr',l:'Morčacie na prírodno + listový šalát poľníček + ryža 80g suché',lw:'Poľníček = vysoký folát (B9) pre zníženie homocysteínu.',lkcal:580,d:'Praženica (3 vajcia) na masle + uhorka + kváskový chlieb 2 plátky',dw:'5 minút prípravy. Rýchla výdatná večera.',dkcal:420,drid:'prazenica'},
-  {day:'ŠT',b:'Chia puding z kokosového mlieka s čučoriedkami',bw:'Priprav večer, ráno vyber z chladničky. Nula minút ráno.',bkcal:470,brid:'chia-puding',l:'Kuracie stehno bez kože + dusená biela reďkovka + ½ zemiakov',lw:'Biela reďkovka = diuretikum, vyplavuje kyselinu močovú.',lkcal:560,d:'Smoothie Sila kokosu: kokosové mlieko + čučoriedky + inulín + vlašské orechy',dw:'5 minút mixovanie. Kyselina kaprylová z kokosu bojuje s kvasinkami.',dkcal:470,drid:'kokos-smoothie'},
-  {day:'PI',b:'Hrsť vlašských a makadamiových orechov + zelené jablko',bw:'Rýchle raňajky. Vlašské = B6, makadamiové = omega-3 a zdravé tuky.',bkcal:350,brid:'orechy-ranajky',l:'Zubáč na pare + kapustový šalát s citrónom + varené zemiaky 200g',lw:'Zubáč na pare = najjemnejšia príprava pre obličky.',lkcal:560,d:'Vajíčka do skla (2 ks) + šalát z poľníčka + knäckebrót',dw:'10 minút. Ľahká piatkova večera.',dkcal:350,drid:'vajicka-do-skla'},
-  {day:'SO',b:'Kváskový chlieb s avokádom, cesnakom a tekvicovými semiačkami',bw:'Víkend = pomalší začiatok. Avokádo = zdravé tuky.',bkcal:490,brid:'kvaskovy-avokado',l:'Pečené kuracie prsia s bylinkami + dusená cuketa + čakankový šalát',lrid:'kura-bylinky',lw:'Čakanka = prirodzený inulín. Cuketa = nízke oxaláty.',lkcal:610,d:'Dlho ťahaný kurací vývar so zeleninou (3–4 hodiny)',dw:'VÍKEND — uvar veľký hrniec (2–3 litre), zmraz po porciách na celý týždeň.',dkcal:420,drid:'kuraci-vyvar'},
-  {day:'NE',b:'Biely jogurt bezlaktózový s vlašskými orechmi a škoricou',bw:'Bezlaktózový — DNA predispozícia. Škorica = reguluje glykémiu. 🍌 1 banán po obede (odmena, draslík).',bkcal:430,brid:'jogurt-orechy',l:'Pečený losos + šalát z bielej reďkovky a uhorky + varené zemiaky',lrid:'peceny-losos',lw:'Druhý losos — Omega-3 zásobníček na ďalší týždeň.',lkcal:620,d:'Kurací vývar zo soboty ohriaty + nakrájané kuracie mäso',dw:'Vývar zo soboty — len ohreješ, 5 minút. Kolagén pre platničky.',dkcal:390,drid:'kuraci-vyvar'}
-];
-
-const W2=[
-  {day:'PO',b:'Pohánková kaša (70g) s vlašskými orechmi, škoricou a čučoriedkami',bw:'Pohánka = žiadne puríny. Čučoriedky = antioxidanty. Priprav večer, ráno len ohrej.',bkcal:470,brid:'pohankova-kasa',l:'Morčací rezeň na prírodno + šalát z čínskej kapusty a uhorky + ryža 80g suché',lw:'Čínska kapusta = nízke oxaláty, dobrý zdroj folátu.',lkcal:580,d:'Vajíčka do skla (2 ks) + šalát z poľníčka + knäckebrót',dw:'10 minút. Ľahká večera.',dkcal:350,drid:'vajicka-do-skla'},
-  {day:'UT',b:'Chia puding z kokosového mlieka s čučoriedkami',bw:'Priprav večer, ráno vyber z chladničky. Nula minút ráno.',bkcal:470,brid:'chia-puding',l:'Pečený zubáč alebo biela ryba + dusená biela reďkovka + varené zemiaky 200g',lw:'Biela ryba = ideálna pre obličky.',lkcal:560,d:'Avokádová nátierka s cesnakom a cibuľou + kváskový chlieb 2 plátky + uhorka',dw:'5 minút prípravy. Avokádo + cesnak + cibuľa = ochrana ciev Leiden.',dkcal:380,drid:'avokado-natierka'},
-  {day:'ST',b:'Kváskový chlieb s avokádom, cibuľkou a štipkou soli',bw:'Avokádo = zdravé tuky. Cibuľka povinná. 5 minút prípravy.',bkcal:420,brid:'kvaskovy-avokado',l:'Kuracie stehno na pare bez kože + dvojitý šalát z bielej reďkovky + varené zemiaky 200g',lw:'Dvojitý šalát z bielej reďkovky = double diuretikum.',lkcal:560,d:'Kurací vývar zo soboty ohriaty + kuracie mäso 150g + varené zemiaky 100g',dw:'Vývar zamrazený zo soboty — len ohreješ, 5 minút.',dkcal:420,drid:'kuraci-vyvar'},
-  {day:'ŠT',b:'Cottage syr 200g s nakrájaným feniklom, vlašskými orechmi + kváskový chlieb 1 plátok',bw:'Fenikel = diuretikum. Cottage 200g = celé balenie. 5 minút prípravy.',bkcal:430,brid:'cottage-fenikel',l:'Pečený losos s citrónom + dusená cuketa + ryža 80g suché',lw:'Losos = Omega-3.',lkcal:600,d:'Smoothie Sila kokosu: kokosové mlieko + čučoriedky + inulín + vlašské orechy + 2 vajcia natvrdo',dw:'5 minút mixovanie + uvariť vajcia vopred. Sýtejšia večera.',dkcal:470,drid:'kokos-smoothie'},
-  {day:'PI',b:'Hrsť tekvicových semiačok a makadamiových orechov + zelené jablko',bw:'Tekvicové semiačka = zinok + horčík. Makadamiové = omega-3. Zapiť vodou!',bkcal:350,brid:'orechy-ranajky',l:'Kuracie prsia na prírodno + listový šalát s citrónovou zálievkou + ryža 80g suché',lw:'Citrónová zálievka = alkalizácia aj v jedálni.',lkcal:590,d:'Tvarohová nátierka s cesnakom a pažítkou + knäckebrót + uhorka',dw:'5 minút prípravy. Cesnak + cibuľa = Leiden ochrana.',dkcal:320,drid:'tvarohova-natierka'},
-  {day:'SO',b:'Quinoa nasladko s kokosovou dužinou a pistáciami (max 15 ks!)',bw:'Pistácie = ORANŽOVÁ zóna, max 15 kusov.',bkcal:440,brid:'quinoa-kokos',l:'Pečená treska + varený fenikel + uhorkový šalát',lrid:'treska-fenikel',lw:'Treska = najmenej purínov zo všetkých rýb.',lkcal:490,d:'Dlho ťahaný kurací vývar so zeleninou (3–4 hodiny)',dw:'VÍKEND — uvar veľký hrniec (2–3 litre), zmraz po porciách na celý týždeň.',dkcal:280,drid:'kuraci-vyvar'},
-  {day:'NE',b:'Biely jogurt bezlaktózový so škoricou a 2 para orechmi (MAX 2 KS!)',bw:'Para orechy = selén. MAX 2 KS DENNE! 🍌 1 banán po obede (odmena, draslík).',bkcal:290,brid:'jogurt-para',l:'Morčacie na prírodno + dusená cuketa + šalát z poľníčka + varené zemiaky',lrid:'morc-prirodno',lw:'Nedela = ľahký záver týždňa.',lkcal:510,d:'Nátierka z avokáda, cibule a cesnaku',dw:'5 minút prípravy. Avokádo + cesnak + cibuľa = ochrana ciev Leiden.',dkcal:280,drid:'avokado-natierka'}
-];
-
-
-
-const W3=[
-  {day:'PO',b:'Mozzarella s paradajkami a bazalkou + knäckebrót 2 ks',bw:'Paradajky povolené od T3. Mozzarella = vápnik bez laktózy.',bkcal:430,brid:'mozzarella-salat',l:'Morčacie prsia na bylinkách + ryža 80g suché pokvapkaná makovým olejom',lw:'Makový olej = vápnik. Pokvapkaj po uvarení, nie na varenie.',lkcal:580,d:'Hustá cuketová polievka s tekvicovými semiačkami + kváskový chlieb 1 plátok',dw:'Rýchla večera: 20 minút. Cuketa = nízke oxaláty.',dkcal:380,drid:'cuketova-polievka'},
-  {day:'UT',b:'Biely jogurt bezlaktózový s vlašskými orechmi',bw:'Jogurt = probiotikum. Vlašské = B6.',bkcal:380,brid:'jogurt-orechy',l:'Pečený pstruh 200g + varené zemiaky 200g pokvapkané makovým olejom',lw:'Pstruh 200g = Omega-3. Makový olej po uvarení.',lkcal:580,d:'Praženica na masle (2 vajcia) + uhorka + kváskový chlieb 2 plátky',dw:'Rýchla večera 5 minút.',dkcal:380,drid:'prazenica'},
-  {day:'ST',b:'Avokádová nátierka (1 celé avokádo) s cibuľkou + ryžové chlebíky',bw:'Celé avokádo = zdravé tuky. Cibuľa = Leiden ochrana.',bkcal:460,brid:'avokado-natierka',l:'Krémové rizoto s hlivou ustricovou (ryža 80g suché)',lw:'Hliva = imunita. Rizoto v jedálni alebo priprav doma.',lkcal:560,d:'Miešaný listový šalát s vajíčkom natvrdo + 5 ks makadamiové orechy + knäckebrót + olivový olej',dw:'10 minút prípravy. Olivový olej = zdravé tuky.',dkcal:400,drid:'salat-s-vajcom'},
-  {day:'ŠT',b:'Chia puding s mandľovým mliekom, čučoriedkami a pár pistáciami (max 15 ks!)',bw:'Mandľové mlieko = bezlaktózová alternatíva. Vlašské = B6. Pistácie = oranžová zóna, max 15 ks! Priprav večer.',bkcal:470,brid:'chia-puding-mandlove',l:'Kuracie stehno bez kože na pare + brokolica + varené zemiaky 200g pokvapkané makovým olejom',lw:'Brokolica = folát a vitamín C. Makový olej po uvarení.',lkcal:560,d:'Tuniakový šalát (vo vlastnej šťave) + olivy + knäckebrót + avokádo ½',dw:'5 minút prípravy. Avokádo = zdravé tuky.',dkcal:390,drid:'tuniak-salat'},
-  {day:'PI',b:'Tvaroh 200g s pažítkou, paprikou + knäckebrót 2 ks',bw:'Tvaroh 200g = výdatné raňajky. Paprika = vitamín C.',bkcal:380,brid:'tvaroh-pazitka',l:'Hovädzie zadné (len 100g!) + ryža 80g suché pokvapkaná makovým olejom',lw:'POZOR: max 100g červeného mäsa raz za týždeň! Ak nie je v jedálni, nahraď morčacím.',lkcal:580,d:'Pohánková kaša (80g suché) so škoricou, vlašskými orechmi + biely jogurt bezlaktózový',dw:'Pohánka = žiadne puríny. Jogurt = probiotikum.',dkcal:450,drid:'pohankova-kasa'},
-  {day:'SO',b:'Zeleninové smoothie s inulínom + 5 ks makadamiové orechy',bw:'Inulín = črevné baktérie. Makadamiové = zdravé tuky.',bkcal:480,brid:'zelene-smoothie',l:'Pečený losos + pečené zemiaky v šupke s bylinkovým dresingom',lrid:'losos-zemiaky',lw:'Losos = Omega-3. Zemiaky v šupke = draslík.',lkcal:620,d:'Omeleta s cuketou a strúhanou mozzarelou + knäckebrót',dw:'15 minút prípravy. Omeleta = rýchla plnohodnotná večera.',dkcal:430,drid:'omeleta-cuketa'},
-  {day:'NE',b:'Cottage syr s reďkovkou + knäckebrót + 2 para orechy (MAX 2!)',bw:'Para orechy MAX 2 ks — selén je pri viac toxický.',bkcal:420,brid:'cottage-redkovka',l:'Kuracie prsia na tymiáne + cuketové rezance s olivovým olejom, citrónom a bazalkou + varené zemiaky 200g',lrid:'kura-tymian-cuketa',lw:'Olivový olej + citrón + bazalka = bez oxalátov a laktózy. Pesto vynechaj.',lkcal:610,d:'Krémová tekvicová polievka (Hokkaido) s tekvicovými semiačkami',dw:'VÍKEND — uvar väčšie množstvo, zmraz. Tekvica = betakarotén.',dkcal:380,drid:'tekvicova-polievka'}
-];
-
 const W4=[
   {day:'PO',b:'Pohánková kaša (80g suché) s kokosovým mliekom, vlašskými orechmi a čučoriedkami',bw:'Pohánka = žiadne puríny. Kokosové mlieko = zdravé tuky.',bkcal:490,brid:'pohankova-kasa',l:'Pečená treska + zeleninový šalát s makovým olejom + varené zemiaky 200g',lw:'Treska = najmenej purínov. Zemiaky 200g = draslík.',lkcal:580,d:'Zapekaný karfiol 400g s vajíčkom a syrom',dw:'25 minút v rúre. Karfiol 400g = nízke oxaláty.',dkcal:420,drid:'zapekany-karfiol'},
   {day:'UT',b:'Čerstvý šalát: uhorka, kôpor, biely jogurt bezlaktózový + 2 para orechy (MAX 2!)',bw:'Para orechy MAX 2 ks! Jogurt = probiotikum.',bkcal:280,brid:'jogurt-uhorka-salat',l:'Morčacie soté s mladým hráškom + ryža 80g suché + šalát s makovým olejom',lw:'Hrášok = folát. Makový olej po uvarení.',lkcal:600,d:'Vajíčka do skla + šalát z poľníčka + knäckebrót + avokádo ½',dw:'10 minút. Avokádo = zdravé tuky.',dkcal:390,drid:'vajicka-do-skla'},
@@ -1068,258 +1033,110 @@ const W4=[
   {day:'NE',b:'Avokádo (1 celé) s cesnakom a vlašskými orechmi + knäckebrót',bw:'Celé avokádo = zdravé tuky. Cesnak = Leiden ochrana. Banán 1× týždenne — dnes po obede!',bkcal:460,brid:'avokado-natierka',l:'Pečené kuracie stehno + zemiakový šalát 250g bez majonézy s cibuľkou',lw:'Zemiaky 250g = väčšia porcia. Olivový olej + citrón — nie majonéza. 1 banán po obede.',lkcal:620,d:'Pečená maslová tekvica 500g s rozmarínom + feta syr + tekvicové semiačka',dw:'VÍKEND — 30 minút v rúre. Tekvica 500g = betakarotén a draslík.',dkcal:400,drid:'pec-tekvica-feta'}
 ];
 
+const W5=[
+  {day:'PO',b:'Tvaroh jemný s marhuľami/broskyňami + makový olej',bw:'Tvaroh = nízkopurínové bielkoviny. Marhule/broskyne = draslík pre tlak.',bkcal:380,l:'Kuracie prsia na pare + ryža 80g suché + zelenina',lw:'Para = najšetrnejšia úprava. Kura bez kože = minimum purínov.',lkcal:560,d:'3 vajcia na olivovom oleji + Knäckebrot 2 ks + tekvicové semienka',dw:'20 min. Vajcia = nízkopurínové bielkoviny. Tekvicové semienka = zinok.',dkcal:420},
+  {day:'UT',b:'Cottage syr + Knäckebrot 2 ks + makadamové orechy + paradajka/paprika',bw:'Cottage syr = vápnik bez purínov. Makadamy = zdravé tuky.',bkcal:420,l:'Pečený pstruh na olivovom oleji + zemiaková kaša',lw:'Pstruh piecť v papieri — zachová šťavnatosť. Ryba = Omega-3.',lkcal:580,d:'Hustá zeleninová polievka (mrkva + hokaido zmixované) + tekvicové semienka + makový olej',dw:'15 min. Hokaido = betakarotén. Makový olej do polievky za studena.',dkcal:320},
+  {day:'ST',b:'Kefír + banán + lyžica makového oleja',bw:'Kefír = probiotiká. Banán = draslík pre tlak. Makový olej = vápnik.',bkcal:360,l:'Kuracie rizoto s olivovým olejom + zelenina',lw:'Rizoto = pomalé sacharidy. Olivový olej = protizápalový.',lkcal:580,d:'Omeleta so syrom a zeleninou + Knäckebrot 2 ks + makadamové orechy',dw:'10 min. Omeleta = rýchle bielkoviny. Syr bezlaktózový.',dkcal:420},
+  {day:'ŠT',b:'Jogurt bezlaktózový + maliny/jahody/čučoriedky + makadamové orechy',bw:'Jogurt = probiotiká. Bobuľové ovocie s mierou — oxaláty. Makadamy = tuky.',bkcal:380,l:'Zubáč na bylinkách + varené zemiaky',lw:'Zubáč = najmenej purínov spomedzi rýb. 3 min z každej strany.',lkcal:540,d:'2 vajcia natvrdo + mozzarella syr + Knäckebrot + uhorka + tekvicové semienka',dw:'15 min. Mozzarella = vápnik. Uhorka = preplach obličiek.',dkcal:380},
+  {day:'PI',b:'Cottage syr + tekvicové semienka + Knäckebrot 2 ks + banán',bw:'Banán = draslík. Tekvicové semienka = zinok + horčík.',bkcal:420,l:'Pečené kuracie stehná (bez kože) + ryža 80g suché + zelenina',lw:'Stehná piecť bez kože. Ryža = bez purínov.',lkcal:580,d:'Grilovaný losos s cukinou + makový olej',dw:'Losos = Omega-3 pre Leiden. Cukina = nízke oxaláty. Makový olej za studena.',dkcal:420},
+  {day:'SO',b:'Praženica (3 vajcia) na olivovom oleji + Knäckebrot 2 ks + makadamové orechy',bw:'3 vajcia = výdatné raňajky. Olivový olej nie maslo.',bkcal:480,l:'Bravčová panenka + grilovaná zelenina + varené zemiaky',lw:'Panenka = povolené. Zelenina grilovať bez oleja, olejom pokvapkať po.',lkcal:580,d:'Kuracie prsia na prírodno + olivový olej + Knäckebrot + zeleninový šalát',dw:'Ľahká večera. Kura prírodno = minimum tuku.',dkcal:360},
+  {day:'NE',b:'Cottage syr + 1 vajíčko + makový olej + Knäckebrot + zelenina',bw:'Kombinácia bielkovín. Vajíčko natvrdo alebo mäkko.',bkcal:380,l:'Losos na kokosovom oleji + grilovaná cukina',lw:'Kokosový olej = MCT tuky. Losos = Omega-3. Cukina = nízke oxaláty.',lkcal:580,d:'Kuracie prsia + zemiakovo-mrkvové pyré + makadamové orechy',dw:'20 min. Pyré vyšľahať s kvapkou makového oleja. Mrkva = betakarotén.',dkcal:420}
+];
+
+const W6=[
+  {day:'PO',b:'Jogurt bezlaktózový + maliny/jahody/čučoriedky + makový olej',bw:'Jogurt = probiotiká. Makový olej = vápnik. Bobuľové ovocie s mierou.',bkcal:360,l:'Zubáč na pare + varené zemiaky s olivovým olejom',lw:'Zubáč na pare = minimum tuku. Zemiaky = draslík pre tlak.',lkcal:540,d:'Omeleta s tekvicovými semienkami na kokosovom oleji + zelenina',dw:'10 min. Kokosový olej = MCT. Tekvicové semienka = zinok.',dkcal:380},
+  {day:'UT',b:'Mozzarella syr + Knäckebrot 2 ks + uhorka + makadamové orechy',bw:'Mozzarella = vápnik. Uhorka = preplach obličiek. Makadamy = tuky.',bkcal:420,l:'Kuracie prsia na olivovom oleji + ryža 80g suché + zelenina',lw:'Kura restovať na drobné kocky 7 minút. Olivový olej = protizápalový.',lkcal:560,d:'3 vajíčka namäkko + Knäckebrot 2 ks + tekvicové semienka',dw:'20 min. Vajíčka namäkko = lepšie vstrebávanie bielkovín.',dkcal:380},
+  {day:'ST',b:'Jogurt bezlaktózový + tekvicové semienka + banán',bw:'Banán = draslík pre tlak. Jogurt = probiotiká. Semienka = zinok.',bkcal:360,l:'Bravčová panenka na bylinkách + zemiaky na masle + zelenina',lw:'Bylinky: tymián, rozmarín. Zemiaky na masle = chuť + energia.',lkcal:600,d:'Kuracie prsia + grilovaná cukina + makový olej',dw:'Ľahká večera. Cukina = nízke oxaláty. Makový olej za studena.',dkcal:360},
+  {day:'ŠT',b:'Cottage syr + Knäckebrot 2 ks + tekvicové semienka + paradajka/paprika',bw:'Cottage syr = nízkopurínové bielkoviny. Paradajka/paprika = vitamín C.',bkcal:380,l:'Kuracie stehno (bez kože) + zemiaková kaša + uhorka',lw:'Stehno bez kože. Zemiaková kaša bezlaktózová. Uhorka = preplach.',lkcal:560,d:'Rybie filé na kokosovom oleji + Knäckebrot + melón',dw:'Ľahká večera. Kokosový olej = MCT. Melón = hydratácia.',dkcal:360},
+  {day:'PI',b:'Tvaroh + banán + hrsť makadamových orechov',bw:'Tvaroh = vápnik bez purínov. Banán = draslík. Makadamy = tuky.',bkcal:420,l:'Kuracie prsia + ryža 80g suché + zelenina',lw:'Mäso ochutiť len čerstvými bylinkami. Jednoduché = ľahko stráviteľné.',lkcal:560,d:'Cottage syr + Knäckebrot + makový olej + tekvicové semienka',dw:'15 min. Ľahká večera pred víkendom.',dkcal:320},
+  {day:'SO',b:'2 vajcia natvrdo + Knäckebrot 2 ks + tekvicové semienka + listový šalát',bw:'Vajcia natvrdo = pomalé uvoľňovanie bielkovín. Listový šalát = kyselina listová.',bkcal:360,l:'Pstruh na olivovom oleji + pečené zemiaky',lw:'Pstruh pokvapkať citrónom pre chuť. Pečené zemiaky = draslík.',lkcal:580,d:'Kuracie rizoto + olivový olej + jablko',dw:'20 min. Rizoto = pomalé sacharidy. Jablko po večeri = vláknina.',dkcal:420},
+  {day:'NE',b:'Cottage syr + Knäckebrot 2 ks + tekvicové semienka + zelenina',bw:'Ľahké raňajky pred dlhším obedom. Cottage syr = bielkoviny.',bkcal:340,l:'Bravčová panenka + grilovaná cukina s makovým olejom + zelenina',lw:'Panenka = povolené. Makový olej na cukinu za studena.',lkcal:580,d:'Praženica so syrom (bezlaktózový) + makadamy + banán',dw:'15 min. Praženica = rýchle bielkoviny. Banán = draslík.',dkcal:420}
+];
+
 
 
 const RECIPES=[
-  {id:'quinoa-kasa',name:'Quinoa kaša s čučoriedkami',type:'b',time:'20 min',kcal:490,
-   ingredients:[{n:'Quinoa',a:'70g (suché)'},{n:'Voda z vodovodu',a:'140ml (2× objem quinoy)'},{n:'Kokosové mlieko',a:'80–100ml (zahriaté)'},{n:'Čučoriedky',a:'80g'},{n:'Vlašské orechy',a:'20g (asi 4 ks)'},{n:'Škorica',a:'štipka'}],
-   steps:['Quinoa opláchni pod tečúcou vodou (zbavíš ju horkosti).','Daj do hrnca so 140ml vody z vodovodu, priveď do varu na stupni 7.','Zníž na stupeň 3, var 12–15 minút kým quinoa nevsiakne vodu.','Odstavy z ohňa. Zahrej kokosové mlieko (nie variť — len ohriať).','Pridaj 80–100ml kokosového mlieka do quinoy, dobre premiešaj — teraz je to kaša!','Presyp do misky, prihoď čučoriedky a nasekané vlašské orechy.','Posyp škoricou.'],
-   tip:'Priprav večer — ráno len ohrej a pridaj čerstvé čučoriedky. Kokosové mlieko pridávaj vždy až na konci, nie počas varenia.'
-  },
-  {id:'pohankove-vlocky',name:'Pohánkové vločky s kokosovým mliekom',type:'b',time:'5 min',kcal:490,
-   ingredients:[{n:'Pohánkové vločky',a:'60g'},{n:'Kokosové mlieko',a:'150ml'},{n:'Tekvicové semiačka',a:'15g'},{n:'Čučoriedky',a:'50g'},{n:'Vlašské orechy',a:'20g'}],
-   steps:['Pohánkové vločky daj do misky.','Zahriej kokosové mlieko (nie variť, len ohriať).','Zalej vločky mliekom, premiešaj.','Počkaj 3–5 minút kým zmäknú.','Prihoď tekvicové semiačka a čučoriedky.'],
-   tip:'Studená verzia: zalej večer a nechaj v chladničke — ráno hotové.'
-  },
-  {id:'cottage-syr',name:'Cottage syr s cibuľkou a uhorkou',type:'b',time:'5 min',kcal:400,
-   ingredients:[{n:'Cottage syr bezlaktózový',a:'200g (celé balenie)'},{n:'Šalátová uhorka',a:'80g'},{n:'Cibuľa',a:'¼ malej (30g)'},{n:'Cesnak',a:'1 strúčik'},{n:'Olivový olej',a:'5ml (1 čl)'},{n:'Kváskový chlieb',a:'1 plátok (40g)'}],
-   steps:['Uhorku nakrájaj na drobno.','Cibuľu nadrobno, cesnak pretlač alebo nadrobno.','Zmiešaj všetko s cottage syrom.','Polej lyžičkou olivového oleja.','Môžeš jesť tak alebo natrieť na kváskový chlieb.'],
-   tip:'Cesnak a cibuľa sú POVINNÉ každý deň — chránia cievy pri Leidene.'
-  },
-  {id:'chia-puding',name:'Chia puding z kokosového mlieka',type:'b',time:'5 min + noc',kcal:470,
-   ingredients:[{n:'Chia semienka',a:'35g'},{n:'Kokosové mlieko plnotučné',a:'200ml'},{n:'Čučoriedky',a:'60g'},{n:'Vlašské orechy',a:'20g'},{n:'Škorica',a:'štipka'}],
-   steps:['Večer pred spaním: chia semienka zmiešaj s kokosovým mliekom.','Premiešaj dobre aby sa nelepiili.','Daj do pohára, zakry a daj do chladničky.','Ráno je puding hotový.','Pridaj čučoriedky a škoricu.'],
-   tip:'Vyrob si 2–3 porcie naraz — vydržia v chladničke 3 dni.'
-  },
-  {id:'orechy-ranajky',name:'Raňajky z orechov a jablka',type:'b',time:'2 min',kcal:350,
-   ingredients:[{n:'Vlašské orechy',a:'25g (asi 5 ks)'},{n:'Makadamiové orechy',a:'20g (asi 5 ks)'},{n:'Zelené jablko',a:'1 stredné (150g)'}],
-   steps:['Orechy daj do misky.','Jablko nakrájaj na kolieska alebo plátky.','Zjedz — hotovo.'],
-   tip:'Piatkové raňajky — rýchle, jednoduché. Nezabudni vypiť vodu s citrónom.'
-  },
-  {id:'kvaskovy-avokado',name:'Kváskový chlieb s avokádom',type:'b',time:'5 min',kcal:490,
-   ingredients:[{n:'Kváskový chlieb',a:'2 plátky (80g)'},{n:'Avokádo',a:'1 celé (150g)'},{n:'Cesnak',a:'1 strúčik'},{n:'Cibuľa',a:'¼ malej'},{n:'Tekvicové semiačka',a:'10g'},{n:'Olivový olej',a:'5ml'}],
-   steps:['Avokádo rozmaž vidličkou.','Pridaj pretlačený cesnak a nasekanú cibuľu, premiešaj.','Natrieš na kváskový chlieb.','Posyp tekvicovými semiačkami.','Polej kvapkou olivového oleja.'],
-   tip:'Avokádo rýchlo hnedne — priprav tesne pred jedlom.'
-  },
-  {id:'jogurt-orechy',name:'Jogurt s vlašskými orechmi',type:'b',time:'2 min',kcal:430,
-   ingredients:[{n:'Biely jogurt bezlaktózový',a:'200g'},{n:'Vlašské orechy',a:'20g'},{n:'Škorica cejlónska',a:'½ čl'},{n:'Chia semienka (voliteľné)',a:'20g'},{n:'Čučoriedky (voliteľné)',a:'50g'}],
-   tip:'Základná verzia = jogurt + orechy + škorica. Rozšírená verzia = pridaj chia semienka a čučoriedky.',
-   steps:['Jogurt daj do misky.','Nasekané vlašské orechy prihoď.','Posyp škoricou.'],
-   tip:'Vždy BEZLAKTÓZOVÝ variant — DNA predispozícia na nízku laktázu.'
-  },
-  {id:'jogurt-para',name:'Jogurt so škoricou a para orechmi',type:'b',time:'2 min',kcal:290,
-   ingredients:[{n:'Biely jogurt bezlaktózový',a:'200g'},{n:'Para orechy',a:'2 ks — NIE VIAC!'},{n:'Škorica cejlónska',a:'½ čl'}],
-   steps:['Jogurt daj do misky.','Pridaj 2 para orechy — PRESNE 2.','Posyp škoricou.'],
-   tip:'Para orechy obsahujú selén. Pri viac ako 2 kusoch denne je selén toxický!'
-  },
-  {id:'pohankova-kasa',name:'Pohánková kaša so škoricou',type:'b',time:'15 min',kcal:490,
+{id:'pohankova-kasa',name:'Pohánková kaša so škoricou',type:'b',time:'15 min',kcal:490,
    ingredients:[{n:'Pohánka',a:'80g (suché)'},{n:'Voda',a:'240ml'},{n:'Vlašské orechy',a:'20g'},{n:'Škorica',a:'½ čl'},{n:'Zelené jablko',a:'½ ks (75g)'}],
    steps:['Pohánku opláchni.','Daj do hrnca s vodou, priveď do varu na stupni 7.','Zníž na stupeň 3, var 10–12 minút.','Daj do misky, posyp škoricou.','Pridaj nasekané vlašské orechy a nakrájané jablko.'],
    tip:'Pohánka má nutý zemitý chuť — škorica ju skvele dopĺňa.'
   },
-  {id:'cottage-fenikel',name:'Cottage syr s feniklom',type:'b',time:'5 min',kcal:430,
-   ingredients:[{n:'Cottage syr bezlaktózový',a:'200g (celé balenie)'},{n:'Fenikel',a:'60g'},{n:'Vlašské orechy',a:'20g'},{n:'Olivový olej',a:'5ml'},{n:'Kváskový chlieb',a:'1 plátok (40g)'}],
-   steps:['Fenikel nakrájaj na tenké plátky alebo nadrobno.','Zmiešaj s cottage syrom.','Prihoď nasekané vlašské orechy.','Polej olivovým olejom.'],
-   tip:'Fenikel má sladkastú anizvovú chuť — ak ti nesedí, daj namiesto neho uhorku.'
-  },
-  {id:'quinoa-kokos',name:'Quinoa nasladko s kokosom',type:'b',time:'15 min',kcal:440,
-   ingredients:[{n:'Quinoa',a:'60g'},{n:'Kokosová dužina strúhaná nesladená',a:'20g'},{n:'Pistácie',a:'15 ks — MAX!'},{n:'Voda',a:'180ml'}],
-   steps:['Quinoa uvar podľa postupu (opláchni, 180ml vody, 12–15 min).','Daj do misky.','Posyp kokosovou dužinou.','Pridaj pistácie — presne 15 kusov.'],
-   tip:'Pistácie sú ORANŽOVÁ zóna — dodržuj limit 15 kusov.'
-  },
-  {id:'kuraci-vyvar',name:'Kurací vývar',type:'d',time:'3–4 hod',kcal:280,
-   ingredients:[{n:'Kuracie kosti a chrupavky',a:'500g'},{n:'Mrkva',a:'1 väčšia (100g)'},{n:'Petržlen koreňový',a:'1 ks (80g)'},{n:'Zeler koreňový',a:'kus (60g)'},{n:'Cibuľa',a:'1 ks'},{n:'Cesnak',a:'3 strúčiky'},{n:'Voda',a:'2 litre'},{n:'Kuracie mäso',a:'200g (stehno alebo prsia)'}],
-   steps:['Kosti daj do hrnca, zalej studenou vodou.','Priveď do varu, prvú vodu zlej (zbavíš vývar peny).','Znova zalej 2 litrami čistej vody.','Pridaj nakrájanú zeleninu, cesnak, cibuľu.','Var na stupni 2–3 (veľmi mierny var) 3–4 hodiny bez pokrývky.','Pridaj kuracie mäso v poslednej hodine varenia.','Preceď cez sitko.','Podávaj s mäsom a zeleninou.'],
-   tip:'Čím dlhšie vár, tým viac kolagénu. Môžeš vyrobiť viac a zmraziť na ďalšie dni.'
-  },
-  {id:'peceny-losos',name:'Pečený losos s feniklom',type:'d',time:'25 min',kcal:480,
-   ingredients:[{n:'Losos filé',a:'180g'},{n:'Fenikel',a:'100g'},{n:'Varené zemiaky',a:'150g'},{n:'Citrón',a:'½ ks'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'}],
-   steps:['Rúru predhrej na 180°C.','Fenikel nakrájaj na plátky, daj na plech vystlaný papierom.','Losos polož na fenikel.','Polej olivovým olejom, vytlač citrón, pridaj pretlačený cesnak.','Peč 15–18 minút kým losos nie je nepriehľadný.'],
-   tip:'Losos je hotový keď sa dá ľahko roztrhať vidličkou. Neprepeč — zostane šťavnatý.'
-  },
-  {id:'zelene-smoothie',name:'Zelené smoothie s inulínom',type:'d',time:'5 min',kcal:180,
-   ingredients:[{n:'Šalátová uhorka',a:'150g'},{n:'Stonkový zeler',a:'60g'},{n:'Citrón',a:'½ ks (šťava)'},{n:'Zelené jablko',a:'½ ks'},{n:'Inulín prášok',a:'1 čl (5g)'},{n:'Voda',a:'100ml'}],
-   steps:['Všetko nakrájaj na kusy.','Daj do mixéra.','Pridaj inulín a vodu.','Mixuj 30–60 sekúnd.','Vypi ihneď.'],
-   tip:'Toto je ľahká večera — nie je to jedlo, je to tekutá podpora pre obličky a črevá.'
-  },
-  {id:'zeleninovka',name:'Hustá zeleninová polievka s kuracím',type:'d',time:'30 min',kcal:260,
-   ingredients:[{n:'Kuracie prsia',a:'100g'},{n:'Mrkva',a:'1 ks (80g)'},{n:'Zeler koreňový',a:'50g'},{n:'Cuketa',a:'100g'},{n:'Cibuľa',a:'½ ks'},{n:'Cesnak',a:'2 strúčiky'},{n:'Olivový olej',a:'10ml'},{n:'Voda alebo vývar',a:'700ml'}],
-   steps:['Cibuľu a cesnak opraž na olivovom oleji 2 minúty.','Pridaj nakrájanú mrkvu a zeler, opekaj 3 minúty.','Pridaj cuketu, zalej vodou/vývarom.','Priveď do varu na stupni 7, zníž na stupeň 4, var 15 minút.','Kuracie prsia nakrájaj na kúsky, pridaj do polievky.','Var ďalších 10 minút na stupni 4.','Dochuť cesnakom ak treba.'],
-   tip:'Bez soli — prisol až v tanieri ak musíš. Soľ zvyšuje vylučovanie cystínu.'
-  },
-  {id:'piatkovy-detox',name:'Piatkový detox shot + smoothie',type:'d',time:'10 min',kcal:220,
-   ingredients:[{n:'Zázvor čerstvý',a:'20g'},{n:'Kurkuma čerstvá',a:'10g'},{n:'Citrón',a:'½ ks'},{n:'Kokosová dužina',a:'40g'},{n:'Inulín',a:'1 čl'},{n:'Voda',a:'100ml'}],
-   steps:['Shot: zázvor a kurkumu odšťavuj alebo nastrúhaj a vytlač cez plátno.','Zmiešaj so šťavou z citróna.','Vypi shot naraz.','Smoothie: kokosovú dužinu, inulín a vodu mixuj.','Vypi smoothie po shote.'],
-   tip:'Ľanový olej (5ml) pridaj do shotu — kurkumín bez tuku sa nevstrebe.'
-  },
-  {id:'tvarohova-natierka',name:'Tvarohová nátierka s cesnakom',type:'d',time:'5 min',kcal:390,
-   ingredients:[{n:'Tvaroh',a:'150g'},{n:'Cesnak',a:'1–2 strúčiky'},{n:'Cibuľa',a:'¼ ks'},{n:'Pažítka',a:'1 lyžica'},{n:'Soľ',a:'štipka'},{n:'Knäckebrót',a:'3–4 ks'},{n:'Šalátová uhorka',a:'½ ks'}],
-   steps:['Tvaroh daj do misky.','Cesnak pretlač, cibuľu nadrobno nasekanej.','Premiešaj s tvarohom, pridaj pažítku a štipku soli.','Natrieš na knäckebrót.','Vedľa nakrájaj uhorku na plátky.'],
-   tip:'Cesnak a cibuľa každý deň — ochrana ciev pri Leidene.'
-  },
-  {id:'avokado-natierka',name:'Avokádová nátierka s cesnakom',type:'d',time:'3 min',kcal:380,
+{id:'avokado-natierka',name:'Avokádová nátierka s cesnakom',type:'d',time:'3 min',kcal:380,
    ingredients:[{n:'Avokádo',a:'1 ks — celé!'},{n:'Cibuľka jarná alebo cibuľa',a:'¼ ks'},{n:'Cesnak',a:'1–2 strúčiky'},{n:'Citrón',a:'kvapka šťavy'},{n:'Soľ',a:'štipka'},{n:'Kváskový chlieb',a:'2 plátky (80g)'}],
    steps:['Avokádo rozpolí, vyber kôstku.','Lyžicou vyber dužinu do misky.','Rozmač vidličkou na hladkú nátierku.','Pridaj pretlačený cesnak, nasekanú cibuľku, kvapku citróna a štipku soli.','Premiešaj — bez olivového oleja, avokádo má dostatok zdravých tukov.','Natrieš na kváskový chlieb, vedľa nakrájaj uhorku.'],
    tip:'Priprav tesne pred jedlom — avokádo rýchlo hnedne. Citrón spomaľuje hnednutie. BEZ masla — avokádo je krémové samo o sebe.'
   },
-  {id:'kokos-smoothie',name:'Smoothie Sila kokosu',type:'d',time:'15 min',kcal:470,
-   ingredients:[{n:'Kokosové mlieko plnotučné',a:'150ml'},{n:'Čučoriedky',a:'80g'},{n:'Inulín prášok',a:'1 čl (5g)'},{n:'Vlašské orechy',a:'15g'},{n:'Vajcia',a:'2 ks (natvrdo)'}],
-   steps:['Vajcia vlož do vriacej vody — 9 minút pre natvrdo.','Medzitým daj do mixéra kokosové mlieko, čučoriedky, inulín a vlašské orechy.','Mixuj 30 sekúnd.','Vajcia olúp, nakrájaj na polovice.','Naservíruj smoothie do pohára + vajcia vedľa.'],
-   tip:'Kyselina kaprylová z kokosu bojuje s kvasinkami. Inulín živí správne črevné baktérie.'
-  },
-  {id:'cuketova-polievka',name:'Hustá cuketová polievka',type:'d',time:'20 min',kcal:380,
-   ingredients:[{n:'Cuketa',a:'300g'},{n:'Cibuľa',a:'½ ks'},{n:'Cesnak',a:'2 strúčiky'},{n:'Olivový olej',a:'10ml'},{n:'Vývar alebo voda',a:'500ml'},{n:'Tekvicové semiačka',a:'15g'},{n:'Kurkuma',a:'½ čl'},{n:'Kváskový chlieb',a:'1 plátok (40g)'}],
-   steps:['Cibuľu a cesnak opraž na oleji 2 minúty.','Cuketu nakrájaj na kocky, pridaj do hrnca.','Opekaj 3 minúty, pridaj kurkumu.','Zalej vývarom, priveď do varu na stupni 7, zníž na stupeň 4, var 12 minút kým cuketa nezmäkne.','Rozmixuj tyčovým mixérom.','Naservíruj, posyp tekvicovými semiačkami.'],
-   tip:'Cuketa = nízke oxaláty. Tekvicové semiačka pridaj až do taniera — zachováš ich enzýmy.'
-  },
-  {id:'prazenica',name:'Praženica na masle',type:'d',time:'5 min',kcal:380,
+{id:'prazenica',name:'Praženica na masle',type:'d',time:'5 min',kcal:380,
    ingredients:[{n:'Vajcia',a:'2–3 ks'},{n:'Maslo',a:'10g'},{n:'Šalátová uhorka',a:'100g'},{n:'Pažítka',a:'1 lyžica'},{n:'Kváskový chlieb',a:'2 plátky (80g)'},{n:'Soľ',a:'štipka'}],
    steps:['Vajcia rozšľahaj vidličkou.','Maslo roztop na panvici na stupni 3.','Vlej vajcia, miešaj drevenou lyžicou.','Keď sú takmer hotové, odstav z ohňa — dojdú samy.','Podávaj s nakrájanou uhorkou a pažítkou.'],
    tip:'Maslo namiesto oleja = lepšia chuť a vitamín A. Indukcia stupeň 3 = mierny oheň = krémová praženica, nie gumová.'
   },
-  {id:'salat-s-vajcom',name:'Listový šalát s vajíčkom natvrdo',type:'d',time:'12 min',kcal:400,
-   ingredients:[{n:'Miešaný listový šalát',a:'80g'},{n:'Vajíčko natvrdo',a:'2 ks'},{n:'Makadamiové orechy',a:'5 ks'},{n:'Olivový olej',a:'15ml'},{n:'Knäckebrót',a:'2 ks'},{n:'Citrón',a:'¼ ks'},{n:'Cibuľa',a:'¼ ks'}],
-   steps:['Vajíčka uvár natvrdo — 9 minút vo vriacej vode.','Šalát umyj a usuš.','Vajíčka olúp, nakrájaj na polovice.','Cibuľu nakrájaj na tenké krúžky.','Šalát hoď do misky, pridaj vajíčka, cibuľu a orechy.','Polej olejom a citrónom.'],
-   tip:'Makadamiové orechy = zdravé tuky. Citrónový dresing = alkalizácia.'
-  },
-  {id:'chia-puding-mandlove',name:'Chia puding s mandľovým mliekom',type:'b',time:'5 min + noc',kcal:380,
-   ingredients:[{n:'Chia semienka',a:'35g'},{n:'Mandľové mlieko bezlaktózové',a:'200ml'},{n:'Čučoriedky',a:'60g'},{n:'Škorica',a:'štipka'}],
-   steps:['Večer: chia zmiešaj s mandľovým mliekom, dobre premiešaj.','Daj do pohára, zakry, vlož do chladničky.','Ráno pridaj čučoriedky a škoricu.'],
-   tip:'Mandľové mlieko = bezlaktózová alternatíva ku kokosovému. Chia absorbuje tekutinu a zväčší sa 3×.'
-  },
-  {id:'tuniak-salat',name:'Tuniakový šalát s olivami',type:'d',time:'8 min',kcal:390,
-   ingredients:[{n:'Tuniak vo vlastnej šťave',a:'150g (1 konzerva)'},{n:'Olivy čierne',a:'30g (asi 10 ks)'},{n:'Avokádo',a:'½ ks'},{n:'Cibuľa',a:'¼ ks'},{n:'Citrón',a:'¼ ks'},{n:'Olivový olej',a:'5ml'},{n:'Knäckebrót',a:'2 ks'}],
-   steps:['Tuniak odceď zo šťavy.','Cibuľu nakrájaj na drobno.','Avokádo rozpolí, vyber dužinu a nakrájaj na kocky.','Zmiešaj tuniak, cibuľu, olivy a avokádo.','Polej citrónom a olivovým olejom.','Naservíruj s knäckebrótom.'],
-   tip:'Tuniak VO VLASTNEJ ŠŤAVE — nie v oleji. Olivy = zdravé tuky a menej oxalátov ako iné doplnky.'
-  },
-  {id:'tvaroh-pazitka',name:'Tvaroh s pažítkou a paprikou',type:'b',time:'5 min',kcal:380,
-   ingredients:[{n:'Tvaroh bezlaktózový',a:'200g (celé balenie)'},{n:'Pažítka',a:'2 lyžice'},{n:'Červená paprika',a:'½ ks (80g)'},{n:'Olivový olej',a:'5ml'},{n:'Knäckebrót',a:'2 ks'}],
-   steps:['Tvaroh daj do misky.','Pažítku nadrobno, papriku nakrájaj na kocky.','Premiešaj s tvarohom.','Polej olivovým olejom.','Naservíruj s knäckebrótom.'],
-   tip:'Paprika = vitamín C ktorý pomáha vstrebávaniu železa. Bezlaktózový tvaroh — DNA predispozícia.'
-  },
-  {id:'omeleta-cuketa',name:'Omeleta s cuketou a mozzarelou',type:'d',time:'15 min',kcal:430,
-   ingredients:[{n:'Vajcia',a:'3 ks'},{n:'Cuketa',a:'200g'},{n:'Mozzarella strúhaná',a:'50g'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'},{n:'Pažítka',a:'1 lyžica'}],
-   steps:['Cuketu nakrájaj na tenké kolieska.','Cesnak opraž na oleji 1 minútu.','Pridaj cuketu, opekaj 4 minúty kým nezmäkne.','Vajcia rozšľahaj, vlej na panvicu.','Keď sú takmer hotové, posyp mozzarelou.','Zlož z ohňa, zakry — mozzarella sa roztopí.','Posyp pažítkou.'],
-   tip:'Cuketa = nízke oxaláty. Mozzarella = menej laktózy ako tvrdé syry.'
-  },
-  {id:'cottage-redkovka',name:'Cottage syr s reďkovkou',type:'b',time:'5 min',kcal:420,
-   ingredients:[{n:'Cottage syr bezlaktózový',a:'200g (celé balenie)'},{n:'Reďkovky',a:'80g (asi 5 ks)'},{n:'Pohánkové vločky',a:'30g (zalejte jogurtom alebo mliekom)'},{n:'Pažítka',a:'1 lyžica'},{n:'Olivový olej',a:'5ml'},{n:'Knäckebrót',a:'2 ks'}],
-   steps:['Reďkovky nakrájaj na kolieska.','Pažítku nadrobno.','Zmiešaj s cottage syrom.','Polej olivovým olejom.','Naservíruj s knäckebrótom.'],
-   tip:'Reďkovky = diuretikum, pomáhajú vyplavovať kyselinu močovú.'
-  },
-  {id:'tekvicova-polievka',name:'Krémová tekvicová polievka',type:'d',time:'35 min',kcal:380,
-   ingredients:[{n:'Hokkaido tekvica',a:'500g'},{n:'Cibuľa',a:'½ ks'},{n:'Cesnak',a:'2 strúčiky'},{n:'Kokosové mlieko',a:'150ml'},{n:'Olivový olej',a:'10ml'},{n:'Vývar',a:'400ml'},{n:'Tekvicové semiačka',a:'15g'},{n:'Kurkuma',a:'½ čl'}],
-   steps:['Rúru predhrej na 200°C.','Tekvicu rozpolí, vyber semienka, nakrájaj na kúsky.','Peč 20 minút kým nezmäkne.','Cibuľu a cesnak opraž na oleji.','Pridaj pečenú tekvicu, kurkumu, zalej vývarom.','Rozmixuj tyčovým mixérom.','Pridaj kokosové mlieko, premiešaj.','Posyp tekvicovými semiačkami.'],
-   tip:'VÍKEND recept — urob väčšie množstvo a zmraz. Hokkaido sa nemusí lúpať — šupka je jedlá.'
-  },
-  {id:'zapekany-karfiol',name:'Zapekaný karfiol s vajíčkom a syrom',type:'d',time:'30 min',kcal:420,
+{id:'zapekany-karfiol',name:'Zapekaný karfiol s vajíčkom a syrom',type:'d',time:'30 min',kcal:420,
    ingredients:[{n:'Karfiol',a:'400g'},{n:'Vajcia',a:'2 ks'},{n:'Tvrdý syr (strúhaný)',a:'50g'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'},{n:'Kurkuma',a:'½ čl'}],
    steps:['Rúru predhrej na 180°C.','Karfiol rozober na ružičky, blanšíruj 5 minút v osolenej vode.','Daj do zapekacej misy, polej olejom, pridaj cesnak a kurkumu.','Vajcia rozšľahaj, vylej na karfiol.','Posyp syrom.','Zapekaj 20 minút kým vajcia nestuhnutú.'],
    tip:'Karfiol = nízke oxaláty, vysoký vitamín C. Kurkuma = protizápalový účinok.'
   },
-  {id:'jogurt-uhorka-salat',name:'Šalát jogurt a uhorka s kôprom',type:'b',time:'5 min',kcal:280,
+{id:'jogurt-uhorka-salat',name:'Šalát jogurt a uhorka s kôprom',type:'b',time:'5 min',kcal:280,
    ingredients:[{n:'Biely jogurt bezlaktózový',a:'150g'},{n:'Šalátová uhorka',a:'150g'},{n:'Kôpor',a:'2 lyžice'},{n:'Cibuľa',a:'¼ ks'},{n:'Para orechy',a:'2 ks — MAX!'}],
    steps:['Uhorku nakrájaj na drobné kúsky alebo nastrúhaj nahrubo.','Cibuľu nadrobno, kôpor nasekaj.','Zmiešaj jogurt, uhorku, cibuľu, kôpor.','Pridaj 2 para orechy — presne 2.'],
    tip:'Para orechy MAX 2 ks denne — selén pri väčšom množstve je toxický!'
   },
-  {id:'hummus-mrkva',name:'Hummus s mrkvovými hranolkami',type:'b',time:'5 min',kcal:480,
+{id:'hummus-mrkva',name:'Hummus s mrkvovými hranolkami',type:'b',time:'5 min',kcal:480,
    ingredients:[{n:'Hotový hummus (cícer + tahini)',a:'200g'},{n:'Mrkva',a:'2 ks (160g)'},{n:'Cibuľa',a:'¼ ks'},{n:'Makadamiové orechy',a:'5 ks'},{n:'Olivový olej',a:'5ml'}],
    steps:['Mrkvu olúp, nakrájaj na hranolky.','Cibuľu nakrájaj na kolieska.','Hummus daj do misky, polej olejom.','Naservíruj s mrkvovými hranolkami a cibuľou.','Pridaj makadamiové orechy.'],
    tip:'Hummus kúp hotový (ingrediencie: cícer, tahini, citrón, cesnak) — bez prísad. Mrkva surová = lepšie enzýmy.'
   },
-  {id:'ovocny-salat',name:'Ovocný šalát s orechmi a jogurtom',type:'b',time:'5 min',kcal:430,
+{id:'ovocny-salat',name:'Ovocný šalát s orechmi a jogurtom',type:'b',time:'5 min',kcal:430,
    ingredients:[{n:'Zelené jablko',a:'1 ks (150g)'},{n:'Hruška',a:'1 ks (150g)'},{n:'Vlašské orechy',a:'20g'},{n:'Biely jogurt bezlaktózový',a:'150g'}],
    steps:['Jablko a hruška nakrájaj na kúsky.','Hoď do misky.','Pridaj nasekané vlašské orechy.'],
    tip:'Zelené jablko + hruška = nízka fruktóza a obsah kyseliny jablčnej = alkalizácia.'
   },
-  {id:'tvaroh-lnane',name:'Tvaroh s ľanovými semiačkami',type:'b',time:'5 min',kcal:390,
+{id:'tvaroh-lnane',name:'Tvaroh s ľanovými semiačkami',type:'b',time:'5 min',kcal:390,
    ingredients:[{n:'Tvaroh bezlaktózový',a:'200g (celé balenie)'},{n:'Ľanové semiačka',a:'15g (1 pl)'},{n:'Cibuľa',a:'¼ ks'},{n:'Olivový olej',a:'5ml'},{n:'Knäckebrót',a:'2 ks'}],
    steps:['Cibuľu nadrobno.','Zmiešaj s tvarohom.','Pridaj ľanové semiačka a olivový olej.','Naservíruj s knäckebrótom.'],
    tip:'Ľanové semiačka = Omega-3 a vláknina. Mleté ľanové semiačka sú lepšie stráviteľné ako celé.'
   },
-  {id:'vajicka-do-skla',name:'Vajíčka do skla',type:'d',time:'10 min',kcal:390,
+{id:'vajicka-do-skla',name:'Vajíčka do skla',type:'d',time:'10 min',kcal:390,
    ingredients:[{n:'Vajcia',a:'2 ks'},{n:'Maslo',a:'5g'},{n:'Šalát poľníček',a:'60g'},{n:'Avokádo',a:'½ ks'},{n:'Olivový olej',a:'5ml'},{n:'Citrón',a:'¼ ks'},{n:'Knäckebrót',a:'2 ks'}],
    steps:['Ramekin alebo malý hrnček vymaž maslom.','Rozbij vajcia do ramekinov.','Vlož do hrnca s vriacou vodou (vo vodnom kúpeli) na 8–10 minút.','Avokádo rozpolí, vyber dužinu, nakrájaj na plátky.','Poľníček polej olejom a citrónom.','Podávaj s knäckebrótom.'],
    tip:'Vajíčka do skla = jemná príprava vo vodnom kúpeli — nikdy neprepečieš bielkovina zostane mäkká.'
   },
-  {id:'gril-cuketa-paprika',name:'Grilovaná cuketa a paprika s fetou',type:'d',time:'15 min',kcal:400,
+{id:'gril-cuketa-paprika',name:'Grilovaná cuketa a paprika s fetou',type:'d',time:'15 min',kcal:400,
    ingredients:[{n:'Cuketa',a:'200g'},{n:'Červená paprika',a:'1 ks (150g)'},{n:'Feta syr',a:'50g'},{n:'Olivový olej',a:'15ml'},{n:'Kváskový chlieb',a:'2 plátky (80g)'},{n:'Cesnak',a:'1 strúčik'},{n:'Čerstvý tymián',a:'pár vetvičiek'}],
    steps:['Cuketu nakrájaj na plátky hrubé 5mm, papriku na prúžky.','Polej olejom, pridaj cesnak a tymián.','Griluj na panvici alebo v rúre pri 200°C — 10–12 minút.','Naservíruj, posyp fetou.'],
    tip:'Feta = menej laktózy ako iné syry. Paprika je povolená od T3.'
   },
-  {id:'dusena-mrkva-hrasok',name:'Dusená mrkva s hráškom a vajcami',type:'d',time:'15 min',kcal:420,
+{id:'dusena-mrkva-hrasok',name:'Dusená mrkva s hráškom a vajcami',type:'d',time:'15 min',kcal:420,
    ingredients:[{n:'Mrkva',a:'2 ks (160g)'},{n:'Mrazený hrášok',a:'100g'},{n:'Vajcia varené natvrdo',a:'2 ks'},{n:'Varené zemiaky',a:'150g'},{n:'Maslo',a:'10g'},{n:'Olivový olej',a:'5ml'},{n:'Cibuľa',a:'¼ ks'}],
    steps:['Mrkvu nakrájaj na kolieska.','Cibuľu opraž na masle 2 minúty.','Pridaj mrkvu, dus pod pokrievkou 8 minút.','Pridaj hrášok, var ďalšie 3 minúty.','Vajcia uvár natvrdo, nakrájaj.','Naservíruj spolu.'],
    tip:'Hrášok = folát pre zníženie homocysteínu. Mrkva = betakarotén.'
   },
-  {id:'pec-tekvica-feta',name:'Pečená maslová tekvica s fetou',type:'d',time:'35 min',kcal:400,
+{id:'pec-tekvica-feta',name:'Pečená maslová tekvica s fetou',type:'d',time:'35 min',kcal:400,
    ingredients:[{n:'Maslová tekvica',a:'500g'},{n:'Feta syr',a:'60g'},{n:'Tekvicové semiačka',a:'15g'},{n:'Olivový olej',a:'10ml'},{n:'Rozmarín',a:'2 vetvičky'},{n:'Cesnak',a:'2 strúčiky'}],
    steps:['Rúru predhrej na 200°C.','Tekvicu olúp, nakrájaj na kocky 2cm.','Polej olejom, pridaj cesnak a rozmarín.','Peč 25–30 minút kým nezmäkne a nezlatnie.','Naservíruj, posyp fetou a tekvicovými semiačkami.'],
    tip:'VÍKEND recept. Maslová tekvica = betakarotén, draslík, nízke oxaláty.'
   },
-  {id:'zapekata-brokolica',name:'Zapekaná brokolica so syrom a vajcom',type:'d',time:'25 min',kcal:400,
+{id:'zapekata-brokolica',name:'Zapekaná brokolica so syrom a vajcom',type:'d',time:'25 min',kcal:400,
    ingredients:[{n:'Brokolica',a:'400g'},{n:'Vajcia',a:'2 ks'},{n:'Tvrdý syr strúhaný',a:'50g'},{n:'Cesnak',a:'1 strúčik'},{n:'Olivový olej',a:'10ml'}],
    steps:['Rúru predhrej na 180°C.','Brokolicu rozober na ružičky, blanšíruj 4 minúty.','Daj do zapekacej misy, polej olejom, pridaj cesnak.','Vajcia rozšľahaj, vylej na brokolicu.','Posyp syrom.','Zapekaj 15–18 minút.'],
    tip:'Brokolica = folát pre zníženie HCY. Blanšírovanie zachová farbu a vitamíny.'
   },
-  {id:'paradajkova-polievka',name:'Paradajková polievka so stéviou',type:'d',time:'20 min',kcal:360,
+{id:'paradajkova-polievka',name:'Paradajková polievka so stéviou',type:'d',time:'20 min',kcal:360,
    ingredients:[{n:'Paradajky',a:'400g (alebo konzerva pelati)'},{n:'Cibuľa',a:'½ ks'},{n:'Cesnak',a:'2 strúčiky'},{n:'Olivový olej',a:'15ml'},{n:'Stévia',a:'2 kvapky (voliteľné)'},{n:'Bazalka',a:'pár listov'},{n:'Kváskový chlieb',a:'2 plátky (80g)'}],
    steps:['Cibuľu a cesnak opraž na oleji 2 minúty.','Pridaj nakrájané paradajky alebo pelati.','Priveď do varu na stupni 7, zníž na stupeň 4, var 10–12 minút.','Rozmixuj tyčovým mixérom.','Dochuť stéviou ak chceš sladkasté.','Naservíruj s bazalkou a knäckebrótom.'],
    tip:'Paradajky povolené od T3 — kyselina šťavelová je nižšia ako si ľudia myslia. Stévia = náhrada cukru bez fruktózy.'
   },
-  {id:'mozzarella-salat',name:'Mozzarella s paradajkami a bazalkou',type:'b',time:'5 min',kcal:430,
-   ingredients:[{n:'Mozzarella',a:'125g'},{n:'Paradajky',a:'150g'},{n:'Bazalka čerstvá',a:'pár listov'},{n:'Olivový olej',a:'10ml'},{n:'Knäckebrót',a:'3 ks'}],
-   steps:['Mozzarellu nakrájaj na kolieska.','Paradajky na kolieska.','Striedaj mozzarellu a paradajky.','Polej olejom, prihoď bazalku.','Naservíruj s knäckebrótom.'],
-   tip:'Paradajky od T3. Mozzarella = menej laktózy. Klasická caprese — jednoduchá a rýchla.'
-  },
-
-  {id:'kura-bylinky',name:'Pečené kuracie prsia s bylinkami a cuketou',type:'l',time:'35 min',kcal:520,
-   ingredients:[{n:'Kuracie prsia',a:'200g'},{n:'Cuketa',a:'200g'},{n:'Čakankový šalát',a:'60g'},{n:'Tymián čerstvý',a:'pár vetvičiek'},{n:'Rozmarín',a:'pár vetvičiek'},{n:'Cesnak',a:'2 strúčiky'},{n:'Olivový olej',a:'10ml'},{n:'Citrón',a:'¼ ks'}],
-   steps:['Rúru predhrej na 180°C.','Kuracie prsia polož na plech, polej olejom, pridaj tymián, rozmarín a pretlačený cesnak.','Peč 25–28 minút kým prsia nie sú nepriehľadné a šťava číra.','Cuketu nakrájaj na plátky, opraz na panvici na stupni 5, 4 minúty.','Čakanku umyj, rozober na listy.','Naservíruj prsia s cuketou a čakankovým šalátom, polej citrónom.'],
-   tip:'🔥 Indukcia: panvica stupeň 5 na cuketu. Rúra 180°C = nie indukcia. Kura je hotové keď pri prepichnutí vytečie číra šťava.'
-  },
-  {id:'treska-fenikel',name:'Pečená treska s varenným feniklom',type:'l',time:'30 min',kcal:490,
-   ingredients:[{n:'Treska filé',a:'180g'},{n:'Fenikel',a:'150g'},{n:'Šalátová uhorka',a:'100g'},{n:'Citrón',a:'½ ks'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'}],
-   steps:['Rúru predhrej na 180°C.','Fenikel nakrájaj na štvrtiny, daj do hrnca s vodou, priveď do varu na stupni 7–8, potom zníž na 3–4, var 10 minút.','Tresku polož na plech, polej olejom, vytlač citrón, pridaj cesnak.','Peč 15–18 minút.','Uhorku nakrájaj na kolieska, dochuť citrónom.','Naservíruj tresku s feniklom a uhorkovým šalátom.'],
-   tip:'🔥 Indukcia: fenikel — priveď na 7, zníž na 3–4. Rúra na tresku. Treska je hotová keď sa ľahko rozpadá vidličkou.'
-  },
-  {id:'morc-prirodno',name:'Morčacie na prírodno s cuketou a poľníčkom',type:'l',time:'30 min',kcal:510,
-   ingredients:[{n:'Morčacie prsia',a:'180g'},{n:'Cuketa',a:'150g'},{n:'Šalát poľníček',a:'60g'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'},{n:'Citrón',a:'¼ ks'},{n:'Varené zemiaky',a:'150g'}],
-   steps:['Morčacie prsia nakrájaj na plátky alebo nechaj celé.','Opraz na panvici na stupni 6, 3–4 minúty z každej strany kým nezmení farbu.','Pridaj cesnak, zníž na stupeň 4, pod pokrievku, 10 minút.','Cuketu nakrájaj na kolieska, daj na inú panvicu stupeň 5, opraz 4 minúty.','Zemiaky uvár — priveď na 7, zníž na 4, var 15 minút.','Poľníček polej olejom a citrónom.'],
-   tip:'🔥 Indukcia: mäso stupeň 6 → 4, cuketa stupeň 5, zemiaky stupeň 7 → 4. Morčacie na prírodno = bez omáčky, len olej a cesnak.'
-  },
-  {id:'losos-zemiaky',name:'Pečený losos s bylinkovým dresingom a zemiakmi v šupke',type:'l',time:'35 min',kcal:620,
-   ingredients:[{n:'Losos filé',a:'180g'},{n:'Zemiaky v šupke',a:'250g'},{n:'Olivový olej',a:'15ml'},{n:'Citrón',a:'½ ks'},{n:'Kôpor čerstvý',a:'2 lyžice'},{n:'Cesnak',a:'1 strúčik'},{n:'Horčica',a:'½ čl'}],
-   steps:['Rúru predhrej na 200°C.','Zemiaky umyj, nakrájaj na štvrtiny (so šupkou), polej olejom, daj na plech.','Peč zemiaky 20 minút pri 200°C.','Losos polož vedľa zemiakov, peč ďalších 15–18 minút.','Bylinkový dresing: olivový olej + citrón + kôpor + pretlačený cesnak + horčica, zmiešaj.','Naservíruj losos so zemiakmi, polej dresingom.'],
-   tip:'🔥 Indukcia: tu netreba — všetko ide do rúry. Zemiaky v šupke = draslík. Dresing rob čerstvý, nie varený.'
-  },
-  {id:'kura-tymian-cuketa',name:'Kuracie prsia na tymiáne s cuketovými rezancami',type:'l',time:'25 min',kcal:510,
-   ingredients:[{n:'Kuracie prsia',a:'180g'},{n:'Cuketa veľká',a:'300g'},{n:'Tymián čerstvý',a:'pár vetvičiek'},{n:'Cesnak',a:'2 strúčiky'},{n:'Olivový olej',a:'10ml'},{n:'Citrón',a:'¼ ks'}],
-   steps:['Cuketu nastrúhaj na dlhé rezance škrabkou na zeleninu alebo nožom — cuketové rezance.','Kuracie prsia sploští paličkou na mäso.','Opraz na panvici stupeň 6, tymián a cesnak, 3 minúty z každej strany.','Zníž na stupeň 4, pod pokrievku, 8 minút.','Na inej panvici stupeň 5, opraz cuketové rezance 3 minúty.','Polej citrónom, naservíruj.'],
-   tip:'🔥 Indukcia: kura stupeň 6 → 4, cuketové rezance stupeň 5. Cuketové rezance neprepec — majú byť al dente, nie kašovité.'
-  },
-  {id:'kura-tymian',name:'Kuracie prsia na tymiáne s ryžou',type:'l',time:'30 min',kcal:590,
-   ingredients:[{n:'Kuracie prsia',a:'180g'},{n:'Ryža',a:'80g (suché)'},{n:'Šalátová uhorka',a:'100g'},{n:'Tymián čerstvý',a:'pár vetvičiek'},{n:'Makový olej',a:'5ml'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'}],
-   steps:['Ryžu uvár — priveď na 7 s 150ml vody, po vare zníž na 3, pokrievka, 12 minút.','Kuracie prsia sploští, opraz na panvici stupeň 6 s tymiánom a cesnakom, 3 minúty z každej strany.','Zníž na stupeň 4, pod pokrievku, 8 minút.','Uhorku nakrájaj na kolieska.','Ryžu po uvarení pokvapkaj makovým olejom — nie počas varenia!','Naservíruj.'],
-   tip:'🔥 Indukcia: ryža stupeň 7 → 3, kura stupeň 6 → 4. Makový olej vždy pokvapkávaj po uvarení — nie na varenie, maximálne 40°C.'
-  },
-  {id:'kura-stehno-salat',name:'Pečené kuracie stehno so zemiakovým šalátom',type:'l',time:'45 min',kcal:620,
-   ingredients:[{n:'Kuracie stehno bez kože',a:'1 ks (~200g)'},{n:'Zemiaky uvarené',a:'250g'},{n:'Cibuľa',a:'½ ks'},{n:'Olivový olej',a:'15ml'},{n:'Citrón',a:'½ ks'},{n:'Kôpor alebo pažítka',a:'2 lyžice'},{n:'Horčica',a:'½ čl'}],
-   steps:['Rúru predhrej na 190°C.','Kuracie stehno polož na plech, polej olejom, pridaj bylinky.','Peč 35–40 minút kým koža nezlatnie.','Zemiaky uvár vopred — priveď na 7, zníž na 4, var 15 minút. Nechaj vychladnúť.','Zemiaky nakrájaj na kocky, cibuľu nadrobno.','Dresing: olivový olej + citrón + horčica + kôpor. Zmiešaj so zemiakmi a cibuľou.','Podávaj stehno so zemiakovým šalátom.'],
-   tip:'🔥 Indukcia: zemiaky stupeň 7 → 4. Rúra na kura. Zemiakový šalát BEZ majonézy — olivový olej + citrón = ľahší, zdravší, alkalický.'
-  },
-
-  {id:'citratova-bomba',name:'Citrátová bomba',type:'drink',time:'2 min',kcal:30,
+{id:'citratova-bomba',name:'Citrátová bomba',type:'drink',time:'2 min',kcal:30,
    ingredients:[{n:'Citrón',a:'1 celý'},{n:'Limetka',a:'½ ks'},{n:'TOMA NATURA (NIE Rajec, NIE vodovod!)',a:'300ml vlažná 30–35°C'}],
    steps:['Vytlač šťavu z 1 celého citróna.','Vytlač šťavu z ½ limetky.','Zmiešaj s 300ml vody.','Vypi IHNEĎ PO VSTÁVANÍ — pred jedlom, kávou, čímkoľvek.'],
    tip:'Paradox: citrón je kyslý ale v tele sa premení na bikarbonát ktorý zvyšuje pH moču. Toto je najdôležitejšia vec ráno.'
   },
-  {id:'urea-detox',name:'Urea-Detox šťava',type:'drink',time:'5 min',kcal:50,
+{id:'urea-detox',name:'Urea-Detox šťava',type:'drink',time:'5 min',kcal:50,
    ingredients:[{n:'Šalátová uhorka (dlhá zelená)',a:'250g'},{n:'Stonkový zeler (NIE listový!)',a:'125g'},{n:'Limetka (šťava)',a:'½ ks'},{n:'Inulín prášok',a:'1 zarovnaná čl (5g)'}],
    steps:['Uhorku nakrájaj na kusy.','Stonkový zeler nakrájaj na kusy.','Odšťavuj v odšťavovači.','Pridaj šťavu z ½ limetky a 1 zarovnanú čl inulínu, premiešaj.','Vypi okolo 11:00 — pred obedom. Ak ideš do práce, priprav ráno do fľaše.'],
    tip:'Limetka = alkalizácia. Inulín = ochrana pred oxalátmi (kŕmi baktérie Oxalobacter formigenes). Bez odšťavovača: zjedz uhorku a zeler ako súčasť jedla — účinok je podobný.'
   },
-  {id:'spine-shot',name:'Zázvorová voda — ANTI FLAME nápoj',type:'drink',time:'20 min',kcal:10,
+{id:'spine-shot',name:'Piatkový detox shot (zázvor + kurkuma)',type:'drink',time:'20 min',kcal:10,
    ingredients:[{n:'Voda z vodovodu',a:'0,9 litra'},{n:'Zázvor čerstvý',a:'2–3 tenké plátky (nie viac!)'},{n:'Citrón (šťava)',a:'1 ks — PRIDAJ AŽ PO VYCHLADNUTÍ!'}],
    steps:['Priveď 0,9l vody z vodovodu do varu na stupni 7.','Pridaj 2–3 tenké plátky zázvoru — menej je viac!','Zníž na stupeň 3, lúhuj 10–15 minút.','Odstavy a nechaj vychladnúť na izbovú teplotu (pod 40°C).','⚠️ Až keď je vlažná — pridaj šťavu z 1 citróna. Nie skôr — teplo zničí vitamín C!','Prelej do sklenenej fľaše (nie plast!). Priprav ráno na celý deň.','Pi vlažnú — pohár 2 (07:00), pohár 10 (18:00), pohár 12 (20:30).'],
    tip:'Citrón VŽDY až po vychladnutí — nie do horúcej vody! Na varenie použij vodu z vodovodu. Uchovávaš v skle.'
@@ -1328,7 +1145,7 @@ const RECIPES=[
 
 const TRAFFIC={
   green:[
-    {n:'Rajec + šťava z ¼ citróna/limetky — do každého pohára',r:'Rajec pH 7,81 = alkalizácia moču. Citrón/limetka = dodatočná alkalizácia. Vodovod + citrón nefunguje!'},
+    {n:'Rajec + šťava z ¼ citróna/limetky — do každého pohára (3–9)',r:'Rajec pH 7,81 = alkalizácia moču. Citrón/limetka = dodatočná alkalizácia. Vodovod + citrón nefunguje!'},
     {n:'Bylinkové čaje – breza, zlatobyľ, praslička, baza',r:'Vyplavujú kyselinu močovú. Na varenie čaju môžeš použiť vodovod.'},
     {n:'Uhorka, stonkový zeler, cuketa, fenikel',r:'Diuretické účinky, nízke oxaláty.'},
     {n:'Biela reďkovka, čakanka, listové šaláty',r:'Biela reďkovka = diuretikum. Čakanka = prirodzený inulín.'},
@@ -1477,7 +1294,12 @@ function getCurrentTeaWeek(){
 
 function getTeaSub(){
   const weekNum=getCurrentTeaWeek();
-  const group=TEA_GROUPS[weekNum-1];
+  let group=TEA_GROUPS[weekNum-1];
+  // Ak je týždeň 4 (Slim Vital) a nie je odomknutý, vráť T1 CLEAN čaj
+  if(weekNum===4 && !isSlimUnlocked()){
+    group=TEA_GROUPS[0]; // CLEAN — týždeň 1
+    return `300ml · <strong style="color:${group.color}">${group.emoji} ${group.name}</strong> <span style="color:var(--orange)">(Slim Vital zamknutý — pH musí byť > 6,0)</span>`;
+  }
   if(!group)return '300ml bylinného čaju podľa aktuálnej rotácie';
   return `300ml · <strong style="color:${group.color}">${group.emoji} ${group.name}</strong> (týždeň ${weekNum})`;
 }
@@ -1559,10 +1381,9 @@ function renderTeaRotation(){
     </div>`;
   }).join('');
 }
-// Pitný režim T2+: pohár 1 = TOMA NATURA, poháre 2/10/12 = vodovod+baza+NONA, ostatné = Rajec+citrón
+// Pitný režim T4+: pohár 1 = TOMA NATURA, poháre 2/10/12 = TOMA NATURA+citrón+elektrolyty, ostatné = Rajec+citrón
 function getWaterType(){return 'rajec';}
-function getWaterLabel(){return 'Rajec + ¼ citróna/limetky';}
-function getWaterEmoji(){return '🫙';}
+
 // Masážny protokol — dynamicky podľa mesiaca od štartu
 function getMassageMonth(){
   if(!st.phaseStart) return 1;
@@ -1590,29 +1411,28 @@ function getMassageSub(type){
   }
   return '';
 }
-
-
+function getWaterLabel(){return 'Rajec + ¼ citróna/limetky';}
+function getWaterEmoji(){return '🫙';}
 
 const DAILY_PLAN=[
   // POHÁR 1 — Citrátová bomba
-  {time:'06:00',icon:'🍋',label:'POHÁR 1 — Citrátová bomba',sub:'1 citrón + ½ limetky + 300ml TOMA NATURA vlažnej (30–35°C) — IHNEĎ po vstávaní, nalačno. Táto voda = prázdny vysávač, nemiešaj so zázvorom!',why:'Neutralizuje nočnú acidózu. TOMA NATURA = nízke TDS = hladná voda. Vždy len TOMA NATURA — nie Rajec, nie vodovod!',tag:'dom',cup:1,dl:3,waterType:'citratova'},
+  {time:'06:00',icon:'🍋',label:'POHÁR 1 — Citrátová bomba',sub:'1 citrón + ½ limetky + 300ml DOBREJ VODY vlažnej (30–35°C) — IHNEĎ po vstávaní, nalačno. Táto voda = prázdny vysávač, nemiešaj so zázvorom!',why:'Neutralizuje nočnú acidózu. TOMA NATURA = nízke TDS = hladná voda. Vždy len TOMA NATURA — nie Rajec, nie vodovod!',tag:'dom',cup:1,dl:3,waterType:'citratova'},
   {time:'06:00',icon:'📏',label:'Zmeral som váhu',sub:'Po toalete, pred jedlom — zapiš do Monitoringu',why:'Každý deň rovnaké podmienky = porovnateľný trend',tag:'dom'},
   {time:'06:00',icon:'🧪',label:'Zmeral som pH moču',sub:'PO–PI: prúžkom | SO+NE: pH metrom pri teplote moču ~25°C — zapiš do Voda & pH',why:'Ranné pH je najdôležitejší denný indikátor stavu obličiek',tag:'dom'},
   {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
   {time:'06:20',icon:'🏋️',label:'SM systém',sub:'15 minút — záložka Telo → Pohyb',why:'Trakcia chrbtice, uvoľnenie psoasu, stabilizácia L4/5',tag:'dom'},
   {time:'06:30',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (250g uhorky + 125g zeleru + ½ limetky + 1čl inulínu), bylinkový čaj, suplementy 09:30/10:00/12:00/13:00/16:00/17:00',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci',tag:'dom',weekdayOnly:true},
-  // POHÁR 2 — Voda s bazou a soľou ráno
-  {time:'07:00',icon:'🫗',label:'POHÁR 2 — Voda s bazou a soľou',sub:'300ml vody z vodovodu (neprevarená) + sušená baza + 5–6 zrniečok NONA soli',why:'Stabilizácia krvného tlaku. Baza = diuretikum + podpora imunity. NONA soľ = elektrolyty bez zaťaženia obličiek.',tag:'dom',cup:2,dl:3,waterType:'nona'},
-  {time:'07:00',icon:'💊',label:'Serapeptáza 120k',sub:'Nalačno — aspoň 30 minút pred raňajkami. ⚠️ Len jarná kúra (máj–jún)!',why:'Biologický upratovač: rozkladá fibrín a biofilmy v platničkách.',tag:'dom'},
+  // POHÁR 2 — TOMA NATURA + elektrolyty
+  {time:'07:00',icon:'🍋',label:'POHÁR 2 — TOMA NATURA + elektrolyty',sub:'300ml TOMA NATURA (vlažná) + šťava z ¼ citróna + 1 tbl GymBeam elektrolytov',why:'Doplnenie elektrolytov bez straty alkalizačného efektu. TOMA NATURA = nízke TDS = vysávač odpadu.',tag:'dom',cup:2,dl:3,waterType:'citratova'},
   // POHÁR 3
-  {time:'08:00',icon:'🫙',label:'POHÁR 3',sub:'300ml Rajec + šťava z ¼ citróna (alebo limetky/pomaranča) — vlažný, nie ľadový',why:'Rajec pH 7,81 = alkalizácia moču. Citrón = dodatočná alkalizácia. Piť po trochách.',tag:'dom',cup:3,dl:3,waterType:'rajec'},
+  {time:'08:00',icon:'💧',label:'POHÁR 3',sub:'300ml vlažnej — vlažná, nie ľadová',why:'Plynulá hydratácia pred odchodom do práce',tag:'dom',cup:3,dl:3,waterType:'rajec'},
   {time:'08:00',icon:'🧴',label:'LEG FLOW 2.0 — ranný sprej',sub:'',why:'Aktivácia lymfy a prekrvenia pred odchodom. Tenkú vrstvu Anti-stres na ľavú slabinu pred prechádzkou.',tag:'dom',massageType:'morning'},
   {time:'08:30',icon:'🚶',label:'Lymfatická prechádzka',sub:'Aspoň 10 minút pred odchodom do práce',why:'Aktivácia panvy a lymfatického odtoku pred sedením v aute',tag:'dom'},
   // POHÁR 4 + Raňajky
-  {time:'09:30',icon:'💊',label:'Kurací kolagén II + Vit C 500mg',sub:'3 tbl kolagénu + 1 tbl Vit C — zapiť trochou vody, ešte pred jedlom!',why:'Stavba platničiek L3–S1. Nalačno = najlepšie vstrebávanie. MAX 500mg Vit C!',tag:'praca'},
+  {time:'09:30',icon:'💊',label:'Kurací kolagén II',sub:'3 tbl kolagénu — zapiť trochou vody, ešte pred jedlom!',why:'Stavba platničiek L3–S1. Nalačno = najlepšie vstrebávanie. Vitamín C vysadený — nahrádza rakytník v čaji.',tag:'praca'},
   {time:'09:30',icon:'🌅',label:'Raňajky — štart jedálenského okna',sub:'Pozri Jedálniček → dnešný deň',why:'Pôst 16 hodín: 17:30 — 09:30',tag:'praca'},
   // POHÁR 4
-  {time:'10:00',icon:'🫙',label:'POHÁR 4',sub:'300ml Rajec + šťava z ¼ citróna (alebo limetky/pomaranča)',why:'Rajec pH 7,81 = alkalizácia. Citrón v Rajci funguje — na rozdiel od vodovodu.',tag:'praca',cup:4,dl:3,waterType:'rajec'},
+  {time:'10:00',icon:'💧',label:'POHÁR 4',sub:'300ml vlažnej',why:'',tag:'praca',cup:4,dl:3,waterType:'rajec'},
   {time:'10:00',icon:'💊',label:'A-Z Multivitamín',sub:'1 tableta s vodou',why:'Komplex vitamínov a minerálov vrátane draslíka a elektrolytov',tag:'praca'},
   {time:'10:00',icon:'🥜',label:'Makadamiové orechy',sub:'5 ks (veľké) alebo 8 ks (malé) — jedz pomaly, po jednom, dobre požuj. >70% dobrých tukov, bez cholesterolu.',why:'Zdroj omega-3 a zdravých tukov. Selén = para orechy (max 2 ks/deň).',tag:'praca'},
   // POHÁR 5 — Urea-Detox
@@ -1621,26 +1441,26 @@ const DAILY_PLAN=[
   {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie — BEZ omáčok. ⚠️ Po jedle NECHAJ 15 MIN PAUZU pred pitím — nezrieď žalúdočnú kyselinu! Jedz pomaly, dobre požuj.',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy',tag:'praca',weekdayOnly:true},
   {time:'11:30',icon:'🍳',label:'Varenie obeda doma',sub:'Pozri Jedálniček → dnešný deň',why:'Víkend = doma varené, plná kontrola nad ingredienciami.',tag:'dom',weekendOnly:true},
   // POHÁR 6
-  {time:'12:00',icon:'🫙',label:'POHÁR 6',sub:'300ml Rajec + šťava z ¼ citróna — pi postupne, nie naraz (kvôli žalúdočnej kyseline po obede)',why:'Alkalizácia po obede. Rajec + citrón = účinná kombinácia.',tag:'praca',cup:6,dl:3,waterType:'rajec'},
+  {time:'12:00',icon:'💧',label:'POHÁR 6',sub:'300ml vlažnej — pi postupne, nie naraz (kvôli žalúdočnej kyseline po obede)',why:'',tag:'praca',cup:6,dl:3,waterType:'rajec'},
   {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'Po obede — nie nalačno',why:'Motor mitochondrií. Rozpustný v tukoch = musí byť s jedlom.',tag:'praca'},
   // POHÁR 7 — Bylinkový čaj
-  {time:'13:00',icon:'🫙',label:'POHÁR 7 + B9',sub:'300ml Rajec + šťava z ¼ citróna. Methylfolát B9 1 tbl — zapiť vodou, nie čajom! Čaj po obede zníži žalúdočnú kyselinu.',why:'Príliš blízko obeda — čaj by prealkalizoval a zhoršil trávenie. B9 znižuje HCY pri Leidene.',tag:'praca',cup:7,dl:3,waterType:'rajec'},
+  {time:'13:00',icon:'💧',label:'POHÁR 7 + B9',sub:'300ml vlažnej vody. Methylfolát B9 1 tbl — zapiť vodou, nie čajom! Čaj po obede zníži žalúdočnú kyselinu.',why:'Príliš blízko obeda — čaj by prealkalizoval a zhoršil trávenie. B9 znižuje HCY pri Leidene.',tag:'praca',cup:7,dl:3,waterType:'rajec'},
   {time:'14:00',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! Aspoň 1 hodinu po obede.',tag:'praca',cup:8,dl:3,waterType:'caj',teaType:true},
   {time:'14:30',icon:'🌱',label:'Tekvicové semiačka',sub:'Max 1 hrsť (20–30g) — zapiť vodou. Odstup min. 3–4h od makadamiových.',why:'Zinok + magnézium. Vždy zapiť — oxaláty nesmú tvoriť piesok.',tag:'praca'},
   {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — záložka Telo → Dýchanie. Každých 60 minút vstať a pohybovať sa (Leiden!).',why:'V práci nemôžeš ľahnúť — aspoň sed.',tag:'praca'},
   // POHÁR 8
-  {time:'16:00',icon:'🫙',label:'POHÁR 9 + Zinok',sub:'300ml Rajec + šťava z ¼ citróna. Zinok 15mg — zapiť vodou. Fľaša DOPITÁ! NIE naraz s horčíkom (22:00).',why:'Zinok — imunita a hojenie tkanív. Rajec + citrón = alkalizácia popoludní.',tag:'praca',cup:9,dl:3,waterType:'rajec'},
+  {time:'16:00',icon:'💧',label:'POHÁR 9 + Zinok',sub:'300ml vlažnej vody. Zinok 15mg — zapiť vodou. Fľaša DOPITÁ! NIE naraz s horčíkom (22:00).',why:'Zinok — imunita a hojenie tkanív.',tag:'praca',cup:9,dl:3,waterType:'rajec'},
   {time:'17:00',icon:'💊',label:'Krilový olej',sub:'Pred večerou — zapiť trochou vody',why:'Omega-3 pre cievy pri Leidenovej mutácii.',tag:'dom'},
   {time:'17:15',icon:'🌙',label:'Večera — KONIEC jedálenského okna do 17:30',sub:'Pozri Jedálniček → dnešná večera. Po 17:30 už len voda a čaje.',why:'Pôst 16 hodín začína teraz. Ľanový/makový olej pridaj do večere — za studena!',tag:'dom',highlight:true},
-  // POHÁR 9 — Zázvorová voda pred prechádzkou
-  {time:'18:00',icon:'🫗',label:'POHÁR 10 — Voda s bazou a soľou',sub:'300ml vody z vodovodu (neprevarená) + sušená baza + 5–6 zrniečok NONA soli — pred prechádzkou. Na slabinu: tenkú vrstvu Anti-stres emulzie.',why:'Stabilizácia tlaku pred pohybom. Anti-stres na jazvu = pohyb ako vnútorná masáž.',tag:'dom',cup:10,dl:3,waterType:'nona'},
+  // POHÁR 10 — TOMA NATURA + elektrolyty pred prechádzkou
+  {time:'18:00',icon:'🫚',label:'POHÁR 10 — TOMA NATURA + elektrolyty',sub:'300ml TOMA NATURA (vlažná) + šťava z ¼ citróna + 1 tbl GymBeam elektrolytov — pred prechádzkou. Na slabinu: tenkú vrstvu Anti-stres emulzie.',why:'Doplnenie elektrolytov pred pohybom. Anti-stres na jazvu = pohyb ako vnútorná masáž.',tag:'dom',cup:10,dl:3,waterType:'citratova'},
   {time:'18:00',icon:'🚶',label:'Lymfatická prechádzka po večeri',sub:'30–45 minút, pomalé tempo',why:'Aktivácia lymfy + prevencia trombózy (Leiden) po celodennom sedení',tag:'dom'},
   {time:'19:00',icon:'💊',label:'BioMineral Biokomplex — pastilka',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť.',why:'Udržanie bunkovej hladiny minerálov počas noci.',tag:'dom'},
   // POHÁR 10 — Bylinkový čaj večer
   {time:'19:10',icon:'🍵',label:'POHÁR 11 — Bylinkový čaj večerný',sub:'',why:'Večerná podpora detoxu.',tag:'dom',cup:11,dl:3,teaType:true,waterType:'caj'},
   {time:'20:00',icon:'⚗️',label:'Graphites CH15',sub:'5 globúl — nechaj rozpustiť v ústach. 10 min nič nejesť/nepiť. Sezónne (júl–august).',why:'Prevencia sebopsoriázy v lete. Nevstrebáva sa cez tráviaci trakt.',tag:'dom',everyOtherDay:true},
-  // POHÁR 11 — Zázvorová voda večer
-  {time:'20:30',icon:'🫗',label:'POHÁR 12 — Voda s bazou a soľou',sub:'300ml vody z vodovodu (neprevarená) + sušená baza + 5–6 zrniečok NONA soli — 3. a posledná dávka. Dopiť do 21:00!',why:'Večerná stabilizácia tlaku a elektrolytov. Baza podporuje nočný detox.',tag:'dom',cup:12,dl:3,waterType:'nona'},
+  // POHÁR 12 — TOMA NATURA + elektrolyty večer
+  {time:'20:30',icon:'🫚',label:'POHÁR 12 — TOMA NATURA + elektrolyty',sub:'300ml TOMA NATURA (vlažná) + šťava z ¼ citróna + 1 tbl GymBeam elektrolytov — 3. a posledná dávka. Dopiť do 21:00!',why:'Večerné doplnenie elektrolytov. 3 tablety denne celkom = stabilizácia tlaku.',tag:'dom',cup:12,dl:3,waterType:'citratova'},
   {time:'20:30',icon:'🧴',label:'Večerná emulzia + infralampa',sub:'',why:'Nočná oprava platničiek. Bez emulzie infralampa stráca účinok.',tag:'dom',massageInfo:true,massageType:'evening'},
   {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou.',tag:'dom'},
   {time:'21:10',icon:'🌬️',label:'Dych 4-7-8',sub:'4 cykly — záložka Telo → Dýchanie',why:'Alkalizuje krv, upokojuje CNS pred spaním.',tag:'dom'},
@@ -1651,7 +1471,7 @@ const DAILY_PLAN=[
 // Farby pre typy nápojov
 const WATER_COLORS={
   citratova:'var(--green)',
-  nona:'#f59e0b',
+  nona:'var(--green)',
   rajec:'var(--teal)',
   caj:'#8b5cf6',
   urea:'#10b981',
@@ -1659,7 +1479,7 @@ const WATER_COLORS={
 };
 const WATER_LABELS={
   citratova:'TOMA NATURA — Citrátová bomba',
-  nona:'Vodovod + baza + NONA soľ',
+  nona:'TOMA NATURA + citrón + elektrolyty',
   rajec:'Rajec + ¼ citróna/limetky',
   caj:'Bylinkový čaj',
   urea:'Urea-Detox šťava',
@@ -1719,9 +1539,9 @@ function renderDailyChecklist(){
     const cupBadge=item.cup?`<span style="font-size:10px;font-weight:700;padding:1px 7px;border-radius:99px;background:${checked?'rgba(74,222,128,.15)':'rgba(45,212,191,.12)'};color:${checked?'var(--green)':cupColor};border:1px solid ${checked?'var(--green)':cupColor};flex-shrink:0">🥛 ${item.cup}. pohár · ${item.dl}dl</span>`:'';
     const massageBadge=item.massageType?`<span style="font-size:10px;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(251,146,60,.12);color:var(--orange);border:1px solid rgba(251,146,60,.3);flex-shrink:0">🧴 Mesiac ${getMassageMonth()}</span>`:'';
 
-    // Sub text — pre striedanie vôd ukáž aktuálny typ
+    // Sub text — pre rajec/nona ukáž popis
     let subText=item.massageType?getMassageSub(item.massageType):item.teaType?getTeaSub():(item.sub||'');
-    // pre striedanie je typ vody uz v labeli — subText nechaj bez duplikacie
+    // pre rajec je typ vody uz v labeli — subText nechaj bez duplikacie
 
     html+=`<div onclick="toggleDayItem(${i})" style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;opacity:${checked?0.5:1};${item.highlight?'background:rgba(74,222,128,0.05);margin:0 -16px;padding:10px 16px;':''}">
       <div style="width:22px;height:22px;border-radius:6px;border:2px solid ${checked?'var(--green)':isCurrent?'var(--accent)':'var(--border)'};flex-shrink:0;display:flex;align-items:center;justify-content:center;background:${checked?'var(--green)':'transparent'};margin-top:1px">
@@ -1732,7 +1552,7 @@ function renderDailyChecklist(){
           <span style="color:${isCurrent&&!checked?'var(--accent)':'var(--text3)'};font-weight:400;font-size:12px;flex-shrink:0;min-width:38px">${item.time}</span>
           <span style="font-size:11px">${item.icon}</span>
           <span style="font-size:14px;font-weight:${isCurrent&&!checked?600:400};color:${checked?'var(--text3)':item.highlight?'var(--accent)':item.cup?cupColor:'var(--text)'};text-decoration:${checked?'line-through':''}">
-            ${item.cup?`🥛 ${item.cup}. pohár · ${item.dl}dl — ${item.waterType==='striedanie'?getWaterLabel()+(item.label.replace(/^POHÁR \d+/,'').trim()?' '+item.label.replace(/^POHÁR \d+/,'').trim():''):item.label.replace(/^POHÁR \d+ — /,'')}`:item.label}
+            ${item.cup?`🥛 ${item.cup}. pohár · ${item.dl}dl — ${item.waterType==='rajec'?getWaterLabel()+(item.label.replace(/^POHÁR \d+/,'').trim()?' '+item.label.replace(/^POHÁR \d+/,'').trim():''):item.label.replace(/^POHÁR \d+ — /,'')}`:item.label}
           </span>
           <span style="font-size:10px;color:${tagColor};flex-shrink:0">${tagLabel}</span>
           ${massageBadge}
@@ -1794,7 +1614,7 @@ const MORNING=[
   {l:'Citrátová bomba',s:'1 citrón + ½ limetky + 300ml vody — ihneď po vstávaní',w:'Neutralizuje nočnú acidózu. Ráno máš pH najkyslé.'},
   {l:'Zmeral som pH moču',s:'pH papierikom alebo digitálnym pH metrom — zapísať do Voda & pH',w:'Ranné pH ti hovorí ako telo hospodárilo cez noc. Cieľ: nad 6,5.'},
   {l:'Zmeral som krvný tlak',s:'Ráno pred jedlom — zapísať do Monitoringu',w:'Genetické riziko hypertenzie. Vysoký tlak ničí obličky. Dôležité aj pri Ženšeni!'},
-  {l:'Voda v skle pripravená',s:'TOMA NATURA (pohár 1) + Rajec s citrónom (poháre 3–9) — min. 2 fľaše denne',w:'Bez vody po ruke nezapiješ suplementy ani nedoplníš pitný režim.'},
+  {l:'Voda v skle pripravená',s:'TOMA NATURA (pohár 1,2,10,12) + Rajec s citrónom (poháre 3–9) — min. 2 fľaše Rajec denne',w:'Bez vody po ruke nezapiješ suplementy ani nedoplníš pitný režim.'},
   {l:'Lymfatická prechádzka – pohybová pumpa',s:'Aspoň 10 minút chôdze ráno — aktivácia panvy a lymfy',w:'Extrúzia L4/5 blokuje lymfatický odtok. Pohyb = pumpa ktorá odtok obnoví. Počas dňa každých 90 minút vstať a prejsť sa (Leiden!).'}
 ];
 
@@ -1811,200 +1631,6 @@ const SUPPL=[
   {l:'Inulín (prášok)',t:'Dopoludnie — do smoothie alebo šťavy',w:'Kŕmivo pre baktérie degradujúce oxaláty v črevách.'},
   {l:'Bylinkový čaj — rotácia',t:'Dopoludnie + večer (2–3 šálky)',w:'Pozri záložku Voda & pH — aktuálna týždenná skupina čajov.'}
 ];
-
-const SHOP1={
-  '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~2,5 kg — 250g denne Urea-Detox šťava + ST raňajky + PI smoothie + šaláty'},
-    {n:'Stonkový zeler',o:'~1,1 kg — 125g denne Urea-Detox šťava + UT večera smoothie'},
-    {n:'Cuketa',o:'1 ks (~300g) — SO obed dusená'},
-    {n:'Fenikel',o:'1 ks (~200g) — PO večera s lososom'},
-    {n:'Čakanka',o:'1 hlávka — SO obed šalát'},
-    {n:'Biela reďkovka',o:'1 ks (~200g) — NE šalát (ŠT obed v jedálni)'},
-
-    {n:'Poľníček',o:'1 balenie (100g) — PI večera vajíčka do skla (ST obed v jedálni)'},
-    {n:'Zemiaky',o:'~600g — PO večera 150g + NE obed 200g + rezerva (ŠT a PI obed v jedálni)'},
-    {n:'Mrkva',o:'3 ks (~300g) — do vývaru SO'},
-    {n:'Petržlen koreňový',o:'2 ks (~160g) — do vývaru SO'},
-    {n:'Zeler koreňový',o:'kus (~150g) — do vývaru SO'},
-    {n:'Zelené jablká',o:'6 ks — PI raňajky 1ks + PI večera smoothie 1ks + rezerva'},
-    {n:'Čučoriedky',o:'~500g — PO kaša 80g + ŠT puding 60g + ŠT večera 80g + rezerva'},
-    {n:'Banán',o:'1 ks — NE po obede (odmena, nie prezretý)'},
-    {n:'Citróny',o:'10 ks — denne citrátová bomba + voda + PI večera shot'},
-    {n:'Limetky',o:'8 ks — ½ denne citrátová bomba + ½ denne Urea-Detox'},
-    {n:'Avokádo',o:'3 ks — UT večera 1 celé + SO raňajky 1 celé + rezerva'},
-    {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
-    {n:'Cesnak',o:'2 hlavičky — každý deň 1–2 strúčiky'},
-    {n:'Zázvor čerstvý',o:'~20g — len PI večera shot'},
-    {n:'Kurkuma čerstvá alebo prášok',o:'doplniť — PI večera shot'}
-  ],
-  '🍗 Mäso & ryby':[
-    {n:'Kuracie prsia',o:'~300g — SO obed 150g + NE vývar mäso 150g'},
-    {n:'Kuracie kosti a chrupavky',o:'~800g — SO vývar (víkend, zmraz na celý týždeň)'},
-    {n:'Losos filé',o:'300g — PO večera 150g + NE obed 150g'},
-
-
-  ],
-  '🥜 Orechy & semená':[
-    {n:'Vlašské orechy',o:'~200g — PO kaša 20g + PI raňajky 25g + NE raňajky 20g + ŠT večera 15g'},
-    {n:'Makadamiové orechy',o:'~60g — PI raňajky 20g'},
-    {n:'Para orechy',o:'2 ks — NE raňajky, presne 2 kusy!'},
-    {n:'Tekvicové semiačka',o:'~40g — UT raňajky 15g + SO raňajky 10g'}
-  ],
-  '🌾 Obilniny & pečivo':[
-    {n:'Quinoa',o:'140g — PO raňajky 70g + SO raňajky 70g'},
-    {n:'Pohánkové vločky',o:'60g — UT raňajky 60g'},
-    {n:'Chia semienka',o:'35g — ŠT puding 35g'},
-    {n:'Kváskový chlieb',o:'1 bochník — SO raňajky 80g + ST večera 80g'}
-  ],
-  '🥛 Mliečne & vajcia':[
-    {n:'Cottage syr BEZLAKTÓZOVÝ',o:'1 balenie 250g — ST raňajky 150g'},
-    {n:'Biely jogurt BEZLAKTÓZOVÝ plnotučný',o:'1 balenie 200g — NE raňajky'},
-    {n:'Tvaroh',o:'150g — ST večera nátierka'},
-    {n:'Vajcia',o:'8 ks — ST večera praženica 3ks + PI večera vajíčka do skla 2ks + rezerva'}
-  ],
-  '🥥 Tuky & kokos':[
-    {n:'Kokosové mlieko plnotučné',o:'2 plechovky × 400ml — UT raňajky 150ml + ŠT puding 200ml + ŠT večera 150ml'},
-    {n:'Kokosová dužina strúhaná nesladená',o:'20g — ŠT večera smoothie (ak nedostupná: nahraď 20ml kokosového mlieka)'},
-    {n:'Olivový olej extra virgin',o:'1 fľaša — varenie a šaláty'},
-    {n:'Ľanový olej',o:'malá fľaška — PI večera shot (nosič kurkumínu — bez neho sa kurkumín nevstrebe)'},
-    {n:'Maslo',o:'50g — ST večera praženica'}
-  ],
-  '💧 Voda & čaje':[
-    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — 1 fľaša denne (len pohár 1 = ranný vysávač). NIE plast, NIE barel!'},
-    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne do pohárov 3–9. S citrónom/limetkou do každého pohára.'},
-    {n:'NONA soľ',o:'1 balenie — 5–6 zrniečok do pohárov 2, 10, 12 (vodovod + baza)'},
-    {n:'Sušená baza',o:'1 balenie — do pohárov 2, 10, 12'}
-  ]
-};
-
-const SHOP2={
-  '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~2,5 kg — 250g denne Urea-Detox + PO večera smoothie + UT večera + šaláty'},
-    {n:'Stonkový zeler',o:'~1,1 kg — 125g denne Urea-Detox + PO večera smoothie'},
-    {n:'Cuketa',o:'2 ks (~500g) — ŠT večera 250g + NE obed 250g'},
-    {n:'Fenikel',o:'2 ks (~400g) — ŠT raňajky 100g + SO obed varený 200g'},
-
-
-    {n:'Poľníček',o:'1 balenie (100g) — NE obed šalát'},
-    {n:'Zelené jablká',o:'5 ks — PI raňajky + PO večera smoothie + rezerva'},
-    {n:'Čučoriedky',o:'~350g — PO kaša 40g + UT puding 60g + ŠT smoothie 80g + rezerva'},
-    {n:'Banán',o:'1 ks — NE po obede (odmena, nie prezretý)'},
-    {n:'Citróny',o:'10 ks — citrátová bomba + voda + PO večera smoothie'},
-    {n:'Limetky',o:'8 ks — ½ denne citrátová bomba + ½ denne Urea-Detox'},
-    {n:'Avokádo',o:'3 ks — ST raňajky 150g + UT večera 150g + NE večera 150g'},
-    {n:'Pažítka',o:'1 zväzok — PI večera nátierka'},
-    {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
-    {n:'Cesnak',o:'2 hlavičky — každý deň 1–2 strúčiky + PI večera nátierka'},
-    {n:'Zázvor čerstvý',o:'~20g — len PI večera shot'},
-    {n:'Kurkuma čerstvá alebo prášok',o:'doplniť — PI večera shot 10g'}
-  ],
-  '🍗 Mäso & ryby':[
-    {n:'Kuracie kosti a chrupavky',o:'~1 kg — SO vývar (víkend, zmraz na celý týždeň)'},
-
-    {n:'Morčacie prsia',o:'~200g — NE obed (PO obed v jedálni)'},
-
-
-    {n:'Treska filé',o:'150g — SO obed'}
-  ],
-  '🥜 Orechy & semená':[
-    {n:'Vlašské orechy',o:'~150g — PO kaša 20g + ŠT raňajky 20g + ŠT smoothie 15g'},
-    {n:'Makadamiové orechy',o:'~60g — PI raňajky 20g'},
-    {n:'Tekvicové semiačka',o:'~20g — PI raňajky 15g'},
-    {n:'Para orechy',o:'2 ks — NE raňajky, presne 2 kusy!'},
-    {n:'Pistácie',o:'~20g — SO raňajky, presne 15 kusov!'}
-  ],
-  '🌾 Obilniny & pečivo':[
-    {n:'Pohánkové vločky',o:'40g — PO raňajky 40g kaša'},
-    {n:'Chia semienka',o:'35g — UT raňajky puding'},
-    {n:'Quinoa',o:'60g — SO raňajky nasladko'},
-    {n:'Kváskový chlieb',o:'1 bochník — ST raňajky 80g + UT večera 80g + NE večera 80g + PI večera 80g'}
-  ],
-  '🥛 Mliečne & vajcia':[
-    {n:'Cottage syr BEZLAKTÓZOVÝ',o:'1 balenie 200g — ŠT raňajky'},
-    {n:'Biely jogurt BEZLAKTÓZOVÝ',o:'1 balenie 200g — NE raňajky'},
-    {n:'Tvaroh',o:'~150g — PI večera nátierka'},
-    {n:'Vajcia',o:'2 ks — PO večera vajíčka do skla'}
-  ],
-  '🥥 Kokos & tuky':[
-    {n:'Kokosové mlieko plnotučné',o:'2 plechovky × 400ml — UT puding 200ml + ŠT smoothie 150ml + rezerva'},
-    {n:'Kokosová dužina strúhaná nesladená',o:'20g — SO quinoa (nahraď 20ml kokosového mlieka ak nedostupná)'},
-    {n:'Ľanový olej',o:'doplniť — PI večera shot (nosič kurkumínu — bez neho sa kurkumín nevstrebe)'}
-  ],
-  '💧 Voda':[
-    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — 1 fľaša denne (len pohár 1). NIE plast!'},
-    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne do pohárov 3–9. S citrónom/limetkou.'},
-    {n:'NONA soľ + sušená baza',o:'doplniť — 5–6 zrniečok + baza do pohárov 2, 10, 12 (vodovod)'}
-  ]
-};
-
-const SHOP3={
-  '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~2 kg — 250g denne Urea-Detox + UT večera + šaláty'},
-    {n:'Stonkový zeler',o:'~900g — 125g denne Urea-Detox + SO smoothie'},
-    {n:'Cuketa',o:'3 ks (~900g) — PO polievka 300g + SO omeleta 150g + NE obed rezance 300g'},
-    {n:'Paradajky',o:'~150g — PO raňajky mozzarella (povolené od T3!)'},
-
-
-    {n:'Červená paprika',o:'1 ks — PI raňajky'},
-    {n:'Hokkaido tekvica',o:'1 ks (~600g) — NE večera polievka'},
-    {n:'Reďkovky',o:'1 zväzok — NE raňajky cottage'},
-    {n:'Zelené jablká',o:'3 ks — SO smoothie + rezerva'},
-    {n:'Čučoriedky',o:'~200g — ŠT puding + rezerva'},
-    {n:'Bazalka čerstvá',o:'1 zväzok — PO raňajky mozzarella + NE obed'},
-    {n:'Banán',o:'1 ks — NE po obede (odmena, nie prezretý)'},
-    {n:'Citróny',o:'10 ks — citrátová bomba + voda + NE obed'},
-    {n:'Limetky',o:'7 ks — citrátová bomba + Urea-Detox'},
-    {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
-    {n:'Cesnak',o:'2 hlavičky — každý deň 1–2 strúčiky'},
-    {n:'Pažítka',o:'1 zväzok — PI raňajky tvaroh'},
-    {n:'Zázvor čerstvý',o:'~20g — len PI večera shot'},
-    {n:'Kurkuma čerstvá alebo prášok',o:'doplniť — PI večera shot'}
-  ],
-  '🍗 Mäso & ryby':[
-    {n:'Kuracie prsia',o:'~450g — NE obed 300g + SO smoothie (voliteľné)'},
-    {n:'Kuracie kosti a chrupavky',o:'~800g — SO vývar (víkend, zmraz)'},
-
-    {n:'Losos filé',o:'150g — SO obed'},
-
-
-    {n:'Tuniak vo vlastnej šťave',o:'1 konzerva 150g — ŠT večera (NIE v oleji, NIE nakladaný!)'}
-  ],
-  '🥜 Orechy & semená':[
-    {n:'Vlašské orechy',o:'~100g — PO kaša + PI večera kaša'},
-    {n:'Makadamiové orechy',o:'~60g — ST večera 5 ks + SO smoothie 5 ks'},
-    {n:'Tekvicové semiačka',o:'~60g — PO polievka + SO smoothie + NE polievka'},
-    {n:'Para orechy',o:'2 ks — NE raňajky, MAX 2!'},
-    {n:'Pistácie',o:'~20g — ŠT puding, max 15 ks!'}
-  ],
-  '🌾 Obilniny & pečivo':[
-    {n:'Pohánka',o:'80g — PI večera kaša 80g'},
-    {n:'Ryžové chlebíky',o:'1 balenie — ST raňajky'},
-    {n:'Knäckebrót',o:'1 balenie — ST večera + ŠT večera + PI raňajky + NE raňajky'},
-    {n:'Kváskový chlieb',o:'½ bochníka — PO večera 1 plátok + UT večera 2 plátky'}
-  ],
-  '🥛 Mliečne & vajcia':[
-    {n:'Mozzarella',o:'125g — PO raňajky'},
-    {n:'Mozzarella strúhaná',o:'50g — SO omeleta'},
-    {n:'Biely jogurt BEZLAKTÓZOVÝ',o:'2 balenia — UT raňajky + PI večera kaša'},
-    {n:'Tvaroh BEZLAKTÓZOVÝ',o:'200g — PI raňajky (celé balenie)'},
-    {n:'Cottage syr BEZLAKTÓZOVÝ',o:'1 balenie 200g — NE raňajky'},
-    {n:'Olivy (v slanom náleve, nie octovom)',o:'~50g — ŠT večera'},
-    {n:'Mandľové mlieko UNSWEETENED',o:'200ml — ŠT puding'},
-    {n:'Vajcia',o:'9 ks — UT večera 2ks + ST večera 1ks + SO omeleta 3ks + NE vývar rezerva'},
-    {n:'Maslo',o:'30g — UT večera praženica'}
-  ],
-  '🥥 Kokos & tuky':[
-    {n:'Kokosové mlieko plnotučné',o:'1 plechovka — SO smoothie 150ml + NE polievka 100ml'},
-    {n:'Olivový olej',o:'doplniť — varenie, šaláty, NE obed'},
-    {n:'Ľanový olej',o:'doplniť — do šalátov a hotových jedál za studena'},
-    {n:'Makový olej',o:'doplniť — pokvapkanie hotových jedál (VÝLUČNE za studena, nie na varenie!)'}
-  ],
-  '💧 Voda':[
-    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — 1 fľaša denne (len pohár 1). NIE plast!'},
-    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne do pohárov 3–9. S citrónom/limetkou.'},
-    {n:'NONA soľ + sušená baza',o:'doplniť — do pohárov 2, 10, 12 (vodovod + baza + soľ)'}
-  ]
-};
 
 const SHOP4={
   '🥦 Zelenina & ovocie':[
@@ -2069,16 +1695,117 @@ const SHOP4={
     {n:'Ľanový olej',o:'doplniť — do šalátov a hotových jedál za studena (nosič kurkumínu)'}
   ],
   '💧 Voda':[
-    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — 1 fľaša denne (len pohár 1). NIE plast!'},
+    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — 1 fľaša denne (poháre 1,2,10,12). NIE plast!'},
     {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne do pohárov 3–9. S citrónom/limetkou.'},
-    {n:'NONA soľ + sušená baza',o:'doplniť — do pohárov 2, 10, 12 (vodovod + baza + soľ)'}
+    {n:'GymBeam elektrolyty',o:'1 balenie — 1 tbl do pohárov 2, 10, 12 = 3 tbl/deň'}
+  ]
+};
+
+const SHOP5={
+  '🥦 Zelenina & ovocie':[
+    {n:'Šalátová uhorka',o:'~1 kg — Urea-Detox + šaláty'},
+    {n:'Mrkva',o:'~500g — polievka, pyré, šaláty'},
+    {n:'Cukina',o:'~500g — grilovanie k lososovi a kuraciemu'},
+    {n:'Paradajky/paprika',o:'~300g — k cottage syru, šaláty'},
+    {n:'Listová zelenina (špenát, poľníček)',o:'šaláty a prílohy'},
+    {n:'Cibuľka jarná',o:'každý deň — do jedál'},
+    {n:'Banány',o:'~5 ks — draslík pre tlak, k raňajkám'},
+    {n:'Maliny/jahody/čučoriedky',o:'~300g — k jogurtu. S mierou — oxaláty!'},
+    {n:'Marhule alebo broskyne',o:'~300g — k tvarohu PO'},
+    {n:'Citróny/limetky',o:'~7 ks — do pohárov Rajca + varenie'},
+    {n:'Hokaido tekvica',o:'1 ks — polievka UT'},
+    {n:'Jablko',o:'záloha — keď budeš hladný'}
+  ],
+  '🥩 Mäso & ryby':[
+    {n:'Kuracie prsia',o:'~600g — PO para, ST rizoto, PI stehná'},
+    {n:'Kuracie stehná bez kože',o:'~400g — PI pečené'},
+    {n:'Pstruh čerstvý/mrazený',o:'~300g — UT pečený v papieri'},
+    {n:'Zubáč filety',o:'~300g — ŠT na bylinkách'},
+    {n:'Losos filety',o:'~200g — PI grilovaný s cukinou'},
+    {n:'Bravčová panenka',o:'~300g — SO grilovanie'}
+  ],
+  '🧀 Mliečne & vajcia':[
+    {n:'Vajcia',o:'~12 ks — PO 3ks, ŠT 2ks, SO praženica, NE'},
+    {n:'Cottage syr',o:'~4 balenia — UT,ŠT,PI,NE raňajky'},
+    {n:'Tvaroh jemný bezlaktózový',o:'~200g — PO raňajky'},
+    {n:'Kefír bezlaktózový',o:'~250ml — ST raňajky'},
+    {n:'Jogurt bezlaktózový',o:'~2 balenia — ŠT raňajky'},
+    {n:'Mozzarella syr',o:'~125g — ŠT večera'},
+    {n:'Syr tvrdý bezlaktózový (strúhaný)',o:'~100g — ST rizoto, omeleta'}
+  ],
+  '🌾 Obilniny & prílohy':[
+    {n:'Ryža guľatozrnná',o:'~400g — PO,ST,PI obed'},
+    {n:'Knäckebrot (bez kvasníc)',o:'~2 balenia — UT,ŠT,SO,NE'},
+    {n:'Zemiaková kaša (bezlaktózová)',o:'~300g — UT obed'}
+  ],
+  '🫒 Oleje & orechy':[
+    {n:'Olivový olej panenský',o:'doplniť — varenie a šaláty'},
+    {n:'Kokosový olej panenský',o:'doplniť — NE losos'},
+    {n:'Makový olej',o:'doplniť — raňajky + šaláty za studena'},
+    {n:'Makadamové orechy',o:'~100g — UT,ŠT,SO raňajky'},
+    {n:'Tekvicové semienka',o:'~100g — PO večera, ŠT večera, PI raňajky'}
+  ],
+  '💊 Suplementy':[
+    {n:'GymBeam elektrolyty',o:'doplniť — 3 tbl/deň do pohárov 2,10,12'},
+    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — poháre 1,2,10,12'},
+    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — poháre 3–9 s citrónom'}
+  ]
+};
+
+const SHOP6={
+  '🥦 Zelenina & ovocie':[
+    {n:'Šalátová uhorka',o:'~1 kg — Urea-Detox + šaláty'},
+    {n:'Mrkva',o:'~300g — šaláty'},
+    {n:'Cukina',o:'~600g — ST,ŠT grilovanie'},
+    {n:'Paradajky/paprika',o:'~300g — k cottage syru'},
+    {n:'Listový šalát',o:'~200g — SO raňajky'},
+    {n:'Cibuľka jarná',o:'každý deň'},
+    {n:'Banány',o:'~5 ks — draslík, ST,ŠT,NE'},
+    {n:'Maliny/jahody/čučoriedky',o:'~300g — PO jogurt. S mierou!'},
+    {n:'Melón',o:'~500g — ŠT večera'},
+    {n:'Citróny/limetky',o:'~7 ks — poháre Rajca + varenie'},
+    {n:'Jablko',o:'SO večera po rizote + záloha'}
+  ],
+  '🥩 Mäso & ryby':[
+    {n:'Kuracie prsia',o:'~800g — UT,ST,PI obed + ST,PI večera'},
+    {n:'Kuracie stehná bez kože',o:'~300g — ŠT obed'},
+    {n:'Zubáč filety',o:'~300g — PO na pare'},
+    {n:'Pstruh čerstvý/mrazený',o:'~300g — SO na olivovom oleji'},
+    {n:'Rybie filé (treska/zubáč)',o:'~200g — ŠT večera'},
+    {n:'Bravčová panenka',o:'~400g — ST,NE obed'}
+  ],
+  '🧀 Mliečne & vajcia':[
+    {n:'Vajcia',o:'~12 ks — PO omeleta, UT 3ks, NE praženica'},
+    {n:'Cottage syr',o:'~5 balení — UT,ŠT,PI,SO,NE raňajky'},
+    {n:'Jogurt bezlaktózový',o:'~2 balenia — PO,ST raňajky'},
+    {n:'Mozzarella syr',o:'~125g — UT raňajky'},
+    {n:'Tvaroh bezlaktózový',o:'~200g — PI raňajky'},
+    {n:'Syr bezlaktózový (na praženicu)',o:'~100g — NE večera'},
+    {n:'Maslo bezlaktózové',o:'~50g — ST zemiaky na masle'}
+  ],
+  '🌾 Obilniny & prílohy':[
+    {n:'Ryža guľatozrnná',o:'~400g — UT,PI,SO rizoto'},
+    {n:'Knäckebrot (bez kvasníc)',o:'~2 balenia — UT,ŠT,PI,SO,NE'},
+    {n:'Zemiaková kaša (bezlaktózová)',o:'~300g — ŠT obed'}
+  ],
+  '🫒 Oleje & orechy':[
+    {n:'Olivový olej panenský',o:'doplniť — varenie a šaláty'},
+    {n:'Kokosový olej panenský',o:'doplniť — PO omeleta, ŠT ryba'},
+    {n:'Makový olej',o:'doplniť — raňajky + zelenina za studena'},
+    {n:'Makadamové orechy',o:'~100g — UT,ŠT,PI raňajky'},
+    {n:'Tekvicové semienka',o:'~100g — PO,UT,ŠT,PI,SO raňajky/večera'}
+  ],
+  '💊 Suplementy':[
+    {n:'GymBeam elektrolyty',o:'doplniť — 3 tbl/deň do pohárov 2,10,12'},
+    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — poháre 1,2,10,12'},
+    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — poháre 3–9 s citrónom'}
   ]
 };
 
 let st=JSON.parse(localStorage.getItem('mh4')||'{}');
 if(!st.weight||st.weight.length===0){st.weight=[{v:85,d:'10. 5. 2026',start:true}];save();}
 else if(!st.weight.find(w=>w.start)){st.weight.unshift({v:85,d:'10. 5. 2026',start:true});save();}
-let cw=1,cd=0,csw=1,recipeFilter='all',recipeSearch='';
+let cw=4,cd=0,csw=4,recipeFilter='all',recipeSearch='';
 
 function toggleInduction(){
   const t=document.getElementById('induction-table');
@@ -2308,7 +2035,7 @@ function init(){
 
   // Aktualizuj info o dnešnom type vody
   const wti=document.getElementById('water-type-info');
-  if(wti)wti.innerHTML=`<strong>Dnešná voda ${getWaterEmoji()}:</strong> ${getWaterLabel()}<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú. Záloha = tlačidlo +3dl nižšie.<br><strong>Na čaj a varenie:</strong> voda z vodovodu je OK.`;
+  if(wti)wti.innerHTML=`<strong>Pitný režim T4+ ${getWaterEmoji()}:</strong> Pohár 1 = TOMA NATURA + citrón. Poháre 2,10,12 = TOMA NATURA + citrón + 1 tbl GymBeam elektrolyty. Poháre 3–9 = ${getWaterLabel()}.<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú. Záloha = tlačidlo +3dl nižšie.<br><strong>Na čaj a varenie:</strong> voda z vodovodu je OK.`;
 
   renderPhaseCard();
   renderDailyChecklist();
@@ -2339,12 +2066,12 @@ function showScreen(n,btn){
     if(st.phaseStart){
       const start=new Date(st.phaseStart);
       const elapsed=Math.floor((new Date()-start)/(1000*60*60*24));
-      targetWeek=((Math.floor(elapsed/7))%4)+1;
+      targetWeek=((Math.floor(elapsed/7))%3)+4; // rotácia T4→T5→T6→T4...
     }
     if(targetWeek!==cw || today!==cd){
       cw=targetWeek;
       cd=today;
-      ['wt1','wt2','wt3','wt4'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',i+1===cw));
+      ['wt4','wt5','wt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+4===cw); });
       renderDayTabs();renderMeals();
     }
   }
@@ -2485,11 +2212,11 @@ function renderSuppl(){
 
 function setWeek(w){
   cw=w;cd=0;
-  ['wt1','wt2','wt3','wt4'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',i+1===w));
+  ['wt4','wt5','wt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+4===w); });
   renderDayTabs();renderMeals();
 }
 
-function getWeekData(w){return w===1?W1:w===2?W2:w===3?W3:W4;}
+function getWeekData(w){return w===5?W5:w===6?W6:W4;}
 function renderDayTabs(){
   const meals=getWeekData(cw);
   const c=document.getElementById('day-tabs');c.innerHTML='';
@@ -2636,28 +2363,6 @@ function saveBp(){
   st.bp.push({sys,dia,v:sys,d:new Date().toLocaleDateString('sk-SK')});
   if(st.bp.length>20)st.bp.shift();
   save();renderMonitorHistory();
-  // Alert pri nízkom tlaku
-  const bpAlert=document.getElementById('bp-low-alert');
-  if(bpAlert){
-    if(sys<100){
-      bpAlert.innerHTML=`<div class="alert alert-red" style="margin-top:10px">
-        🚨 <strong>Tlak pod 100 — okamžitá akcia!</strong><br>
-        Striedaj: 1. pohár <strong>Bonaqua</strong> → 2. pohár <strong>Albert Quality</strong> → 1. pohár Bonaqua...<br>
-        + <strong>1 tbl GymBeam elektrolyty</strong> k vodám. Kým sa tlak nestabilizuje.
-      </div>`;
-      bpAlert.style.display='block';
-    } else if(sys<110){
-      bpAlert.innerHTML=`<div class="alert alert-red" style="margin-top:10px">
-        ⚠️ <strong>Tlak pod 110 — hydratácia elektrolytmi!</strong><br>
-        Striedaj: 1. pohár <strong>Bonaqua</strong> (pH 7,4 · draslík 4,41mg/l · sodík len 1,87mg/l)<br>
-        → 2. pohár <strong>Albert Quality</strong> (pH 7,7 · rýchle zdvihnutie objemu krvi)<br>
-        → opakuj, kým sa tlak nestabilizuje. Potom späť na štandardný režim.
-      </div>`;
-      bpAlert.style.display='block';
-    } else {
-      bpAlert.style.display='none';
-    }
-  }
 }
 
 function thinData(data){
@@ -2800,7 +2505,7 @@ function renderMonitorHistory(){
   // pH varovania
   const phLast5=phs.slice(-5);
   const phOver70=phLast5.length>=5&&phLast5.every(p=>p.v>7.0);
-  const phAlert=phOver70?`<div class="alert alert-red" style="margin-bottom:8px">⚠️ pH nad 7,0 počas 5 dní — <strong>zastav alkalizáciu!</strong> Vynechaj citrón z pohárov, nahraď čistým Rajec bez citróna.</div>`:'';
+  const phAlert=phOver70?`<div class="alert alert-red" style="margin-bottom:8px">⚠️ pH nad 7,0 počas 5 dní — <strong>zastav alkalizáciu!</strong> Vynechaj citrón z pohárov Rajca, pi čistý Rajec.</div>`:'';
   const phLastVal=phs.length?phs[phs.length-1].v:null;
   const phZone=phLastVal?phLastVal<6.0?'<span style="color:var(--orange)">⚠️ Pod zelenou zónou</span>':phLastVal<6.5?'<span style="color:var(--orange)">⚠️ Pod cieľom</span>':phLastVal>7.0?'<span style="color:var(--red)">⚠️ Príliš alkalické — zastav alkalizáciu!</span>':'<span style="color:var(--green)">✅ Zelená zóna</span>':'';
   h+=`<div style="margin-bottom:16px">
@@ -2906,10 +2611,10 @@ function updateKPIs(){
 
 function setShopWeek(w){
   csw=w;
-  ['swt1','swt2','swt3','swt4'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',i+1===w));
+  ['swt4','swt5','swt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+4===w); });
   renderShopList();
 }
-function getShopData(w){return w===1?SHOP1:w===2?SHOP2:w===3?SHOP3:SHOP4;}
+function getShopData(w){return w===5?SHOP5:w===6?SHOP6:SHOP4;}
 
 function renderShopList(){
   const data=getShopData(csw);const key='shop_w'+csw;
