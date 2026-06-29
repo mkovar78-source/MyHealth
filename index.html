@@ -275,8 +275,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <strong>Denný limit: ~2 000 kcal</strong>
   </div>
   <div class="week-tabs">
-    <button class="week-tab active" id="wt4" onclick="setWeek(4)">T4 — Alkalizačný</button>
-    <button class="week-tab" id="wt5" onclick="setWeek(5)">T5 — Iniciačná fáza</button>
+    <button class="week-tab active" id="wt5" onclick="setWeek(5)">T5 — Iniciačná fáza</button>
     <button class="week-tab" id="wt6" onclick="setWeek(6)">T6 — Metabolická stabilizácia</button>
   </div>
   <div class="day-tabs" id="day-tabs"></div>
@@ -438,8 +437,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- NÁKUP -->
 <div class="screen" id="screen-shop">
   <div class="week-tabs">
-    <button class="week-tab active" id="swt4" onclick="setShopWeek(4)">T4 — Alkalizačný</button>
-    <button class="week-tab" id="swt5" onclick="setShopWeek(5)">T5 — Iniciačná fáza</button>
+    <button class="week-tab active" id="swt5" onclick="setShopWeek(5)">T5 — Iniciačná fáza</button>
     <button class="week-tab" id="swt6" onclick="setShopWeek(6)">T6 — Metabolická stabilizácia</button>
   </div>
   <div style="display:flex;gap:8px;margin-bottom:12px">
@@ -1025,15 +1023,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <script>
-const W4=[
-  {day:'PO',b:'Pohánková kaša (80g suché) s kokosovým mliekom (100ml), vlašskými orechmi (25g) a čučoriedkami (80g)',bw:'Pohánka = žiadne puríny. Kokosové mlieko = zdravé tuky.',bkcal:681,bbielk:16.8,bsachar:70.3,btuky:40.2,l:'Pečená treska (200g) + zeleninový šalát s makovým olejom (15ml) + varené zemiaky (200g) + mrkva (100g)',lw:'Treska = najmenej purínov. Zemiaky 200g = draslík.',lkcal:633,lbielk:43.2,lsachar:75.5,ltuky:17.2,d:'Zapekaný karfiol (400g) s vajcami (2ks) a syrom (60g) + makový olej (10ml)',dw:'25 minút v rúre. Karfiol 400g = nízke oxaláty.',dkcal:614,dbielk:38.6,dsachar:21.9,dtuky:44.2,drid:'zapekany-karfiol'},
-  {day:'UT',b:'Šalát: uhorka (150g), jogurt bezlakt. (200g), para orechy 2ks (8g), makadamy (20g)',bw:'Para orechy MAX 2 ks! Jogurt = probiotikum.',bkcal:342,bbielk:10.8,bsachar:22.5,btuky:23.7,l:'Kuracie prsia (200g) s hráškom (100g) + ryža (80g suché) + makový olej (15ml)',lw:'Kura bez kože = minimum purínov. Hrášok = folát.',lkcal:824,lbielk:73,lsachar:76.4,ltuky:23.1,d:'Vajcia do skla (3ks) + poľníček (80g) + knäckebrót (60g) + avokádo 1 celé (150g)',dw:'10 minút. Avokádo = zdravé tuky.',dkcal:746,dbielk:33.4,dsachar:60.4,dtuky:44.1,drid:'vajicka-do-skla'},
-  {day:'ST',b:'Hummus (200g) s mrkvovými hranolkami (150g) + makadamy (40g) + olivový olej (10ml)',bw:'Hummus 200g = väčšia porcia. Mrkva surová = enzýmy.',bkcal:769,bbielk:20.6,bsachar:48.6,btuky:60.7,l:'Zeleninové rizoto so špenátom (200g) + ryža (80g suché) + syr tvrdý (60g) + olivový olej (15ml)',lw:'Špenát namiesto húb — žiadne puríny. Syr = bielkoviny.',lkcal:699,lbielk:26.4,lsachar:70.2,ltuky:36.1,d:'Paradajková polievka (250g) + kváskový chlieb (80g) + olivový olej (15ml)',dw:'20 minút. Kváskový chlieb namiesto knäckebrótu = sýtejšia večera.',dkcal:346,dbielk:7.9,dsachar:41.8,dtuky:16.7,drid:'paradajkova-polievka'},
-  {day:'ST',b:'Ovocný šalát: jablko (120g) + hruška (120g) + vlašské orechy (30g) + makadamy (20g)',bw:'Jablko + hruška = nízka fruktóza. Vlašské = B6.',bkcal:470,bbielk:7,bsachar:41.8,btuky:35,l:'Rybie filé (200g) + zemiaková kaša bezlakt. (300g) + maslo bezlakt. (15g)',lw:'Ryba = nízkopurínová. Zemiaky 300g = väčšia porcia.',lkcal:527,lbielk:42.1,lsachar:54.1,ltuky:15.1,d:'Grilovaná cuketa (300g) + paprika (150g) + feta syr (80g) + olivový olej (15ml)',dw:'15 minút. Cuketa = nízke oxaláty. Feta = menej laktózy.',dkcal:442,dbielk:16.3,dsachar:21.5,dtuky:33.2,drid:'gril-cuketa-paprika'},
-  {day:'PI',b:'Tvaroh bezlakt. (200g) s tekvicovými semiačkami (25g) + knäckebrót (60g)',bw:'Tvaroh 200g = celé balenie. Tekvicové semiačka = zinok (nie ľanové).',bkcal:546,bbielk:36.9,bsachar:51.8,btuky:21.8,l:'Kuracie prsia (180g) + ryžové rezance (120g suché) s paradajkovou omáčkou (150g) + olivový olej (10ml)',lw:'Paradajková omáčka povolená. Ryžové rezance 120g = väčšia porcia.',lkcal:885,lbielk:65.3,lsachar:111.9,ltuky:17.9,d:'Zapekaná brokolica (400g) s vajcami (2ks) a syrom (50g) + makový olej (10ml)',dw:'20 minút v rúre. Brokolica 400g = folát pre zníženie HCY.',dkcal:610,dbielk:39.3,dsachar:29.8,dtuky:41.3,drid:'zapekata-brokolica'},
-  {day:'SO',b:'Praženica (3 vajcia) na olivovom oleji (10ml) + červená paprika (150g) + knäckebrót (60g)',bw:'3 vajcia = výdatné raňajky. Olivový olej nie maslo.',bkcal:624,bbielk:30.3,bsachar:53,btuky:31.8,l:'Kuracie prsia (200g) na tymiáne + ryža (80g suché) + uhorka (100g) + makový olej (15ml)',lw:'Tymián = protizápalový. Makový olej na pokvapkanie.',lkcal:758,lbielk:68.3,lsachar:65.5,ltuky:22.8,d:'Dusená mrkva (200g) s hráškom (100g) + vajcia (2ks) + makový olej (10ml)',dw:'15 minút. Hrášok = folát. Mrkva = betakarotén.',dkcal:437,dbielk:22.8,dsachar:35.3,dtuky:24,drid:'dusena-mrkva-hrasok'},
-  {day:'NE',b:'Avokádo 1 celé (150g) s cesnakom + vlašské orechy (25g) + knäckebrót (60g) + olivový olej (10ml)',bw:'Celé avokádo = zdravé tuky. Cesnak = Leiden ochrana.',bkcal:702,bbielk:12.2,bsachar:59,btuky:50.3,l:'Pečené kuracie stehno (220g) + zemiakový šalát (250g) bez majonézy + olivový olej (15ml)',lw:'Zemiaky 250g = draslík. Olivový olej + citrón — nie majonéza.',lkcal:775,lbielk:64.4,lsachar:45,ltuky:36.1,d:'Pečená maslová tekvica (500g) s rozmarínom + feta syr (80g) + tekvicové semiačka (25g) + olivový olej (10ml)',dw:'VÍKEND — 30 minút v rúre. Tekvica 500g = betakarotén a draslík.',dkcal:599,dbielk:23.7,dsachar:46,dtuky:39.6,drid:'pec-tekvica-feta'}
-];
 
 const W5=[
   {day:'PO',b:'Tvaroh jemný (200g) s marhuľami/broskyňami (150g) + makový olej (15ml)',bw:'Tvaroh = nízkopurínové bielkoviny. Marhule/broskyne = draslík pre tlak.',bkcal:449,bbielk:28.5,bsachar:43.3,btuky:17.7,brid:'tvaroh-marhule',l:'Kuracie prsia na pare (200g) + ryža (80g suché) + mrkva (100g) + cuketa (100g) + olivový olej (10ml)',lw:'Para = najšetrnejšia úprava. Kura bez kože = minimum purínov.',lkcal:629,lbielk:68.4,lsachar:84.7,ltuky:14.7,d:'Vajcia (3ks) na olivovom oleji + knäckebrót (60g) + tekvicové semiačka (30g) + makový olej (10ml)',dw:'Vajcia = nízkopurínové bielkoviny. Tekvicové semiačka = zinok.',dkcal:824,dbielk:36.7,dsachar:18.3,dtuky:55.4},
@@ -1073,11 +1062,6 @@ const RECIPES=[
    steps:['Vajcia rozšľahaj vidličkou.','Maslo roztop na panvici na stupni 3.','Vlej vajcia, miešaj drevenou lyžicou.','Keď sú takmer hotové, odstav z ohňa — dojdú samy.','Podávaj s nakrájanou uhorkou a pažítkou.'],
    tip:'Maslo namiesto oleja = lepšia chuť a vitamín A. Indukcia stupeň 3 = mierny oheň = krémová praženica, nie gumová.'
   },
-{id:'zapekany-karfiol',name:'Zapekaný karfiol s vajíčkom a syrom',type:'d',time:'30 min',kcal:420,
-   ingredients:[{n:'Karfiol',a:'400g'},{n:'Vajcia',a:'2 ks'},{n:'Tvrdý syr (strúhaný)',a:'50g'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'1 strúčik'},{n:'Kurkuma',a:'½ čl'}],
-   steps:['Rúru predhrej na 180°C.','Karfiol rozober na ružičky, blanšíruj 5 minút v osolenej vode.','Daj do zapekacej misy, polej olejom, pridaj cesnak a kurkumu.','Vajcia rozšľahaj, vylej na karfiol.','Posyp syrom.','Zapekaj 20 minút kým vajcia nestuhnutú.'],
-   tip:'Karfiol = nízke oxaláty, vysoký vitamín C. Kurkuma = protizápalový účinok.'
-  },
 {id:'jogurt-uhorka-salat',name:'Šalát jogurt a uhorka s kôprom',type:'b',time:'5 min',kcal:280,
    ingredients:[{n:'Biely jogurt bezlaktózový',a:'150g'},{n:'Šalátová uhorka',a:'150g'},{n:'Kôpor',a:'2 lyžice'},{n:'Cibuľa',a:'¼ ks'},{n:'Para orechy',a:'2 ks — MAX!'}],
    steps:['Uhorku nakrájaj na drobné kúsky alebo nastrúhaj nahrubo.','Cibuľu nadrobno, kôpor nasekaj.','Zmiešaj jogurt, uhorku, cibuľu, kôpor.','Pridaj 2 para orechy — presne 2.'],
@@ -1097,36 +1081,6 @@ const RECIPES=[
    ingredients:[{n:'Tvaroh bezlaktózový',a:'200g (celé balenie)'},{n:'Ľanové semiačka',a:'15g (1 pl)'},{n:'Cibuľa',a:'¼ ks'},{n:'Olivový olej',a:'5ml'},{n:'Knäckebrót',a:'2 ks'}],
    steps:['Cibuľu nadrobno.','Zmiešaj s tvarohom.','Pridaj ľanové semiačka a olivový olej.','Naservíruj s knäckebrótom.'],
    tip:'Ľanové semiačka = Omega-3 a vláknina. Mleté ľanové semiačka sú lepšie stráviteľné ako celé.'
-  },
-{id:'vajicka-do-skla',name:'Vajíčka do skla',type:'d',time:'10 min',kcal:390,
-   ingredients:[{n:'Vajcia',a:'2 ks'},{n:'Maslo',a:'5g'},{n:'Šalát poľníček',a:'60g'},{n:'Avokádo',a:'½ ks'},{n:'Olivový olej',a:'5ml'},{n:'Citrón',a:'¼ ks'},{n:'Knäckebrót',a:'2 ks'}],
-   steps:['Ramekin alebo malý hrnček vymaž maslom.','Rozbij vajcia do ramekinov.','Vlož do hrnca s vriacou vodou (vo vodnom kúpeli) na 8–10 minút.','Avokádo rozpolí, vyber dužinu, nakrájaj na plátky.','Poľníček polej olejom a citrónom.','Podávaj s knäckebrótom.'],
-   tip:'Vajíčka do skla = jemná príprava vo vodnom kúpeli — nikdy neprepečieš bielkovina zostane mäkká.'
-  },
-{id:'gril-cuketa-paprika',name:'Grilovaná cuketa a paprika s fetou',type:'d',time:'15 min',kcal:400,
-   ingredients:[{n:'Cuketa',a:'200g'},{n:'Červená paprika',a:'1 ks (150g)'},{n:'Feta syr',a:'50g'},{n:'Olivový olej',a:'15ml'},{n:'Kváskový chlieb',a:'2 plátky (80g)'},{n:'Cesnak',a:'1 strúčik'},{n:'Čerstvý tymián',a:'pár vetvičiek'}],
-   steps:['Cuketu nakrájaj na plátky hrubé 5mm, papriku na prúžky.','Polej olejom, pridaj cesnak a tymián.','Griluj na panvici alebo v rúre pri 200°C — 10–12 minút.','Naservíruj, posyp fetou.'],
-   tip:'Feta = menej laktózy ako iné syry. Paprika je povolená od T3.'
-  },
-{id:'dusena-mrkva-hrasok',name:'Dusená mrkva s hráškom a vajcami',type:'d',time:'15 min',kcal:420,
-   ingredients:[{n:'Mrkva',a:'2 ks (160g)'},{n:'Mrazený hrášok',a:'100g'},{n:'Vajcia varené natvrdo',a:'2 ks'},{n:'Varené zemiaky',a:'150g'},{n:'Maslo',a:'10g'},{n:'Olivový olej',a:'5ml'},{n:'Cibuľa',a:'¼ ks'}],
-   steps:['Mrkvu nakrájaj na kolieska.','Cibuľu opraž na masle 2 minúty.','Pridaj mrkvu, dus pod pokrievkou 8 minút.','Pridaj hrášok, var ďalšie 3 minúty.','Vajcia uvár natvrdo, nakrájaj.','Naservíruj spolu.'],
-   tip:'Hrášok = folát pre zníženie homocysteínu. Mrkva = betakarotén.'
-  },
-{id:'pec-tekvica-feta',name:'Pečená maslová tekvica s fetou',type:'d',time:'35 min',kcal:400,
-   ingredients:[{n:'Maslová tekvica',a:'500g'},{n:'Feta syr',a:'60g'},{n:'Tekvicové semiačka',a:'15g'},{n:'Olivový olej',a:'10ml'},{n:'Rozmarín',a:'2 vetvičky'},{n:'Cesnak',a:'2 strúčiky'}],
-   steps:['Rúru predhrej na 200°C.','Tekvicu olúp, nakrájaj na kocky 2cm.','Polej olejom, pridaj cesnak a rozmarín.','Peč 25–30 minút kým nezmäkne a nezlatnie.','Naservíruj, posyp fetou a tekvicovými semiačkami.'],
-   tip:'VÍKEND recept. Maslová tekvica = betakarotén, draslík, nízke oxaláty.'
-  },
-{id:'zapekata-brokolica',name:'Zapekaná brokolica so syrom a vajcom',type:'d',time:'25 min',kcal:400,
-   ingredients:[{n:'Brokolica',a:'400g'},{n:'Vajcia',a:'2 ks'},{n:'Tvrdý syr strúhaný',a:'50g'},{n:'Cesnak',a:'1 strúčik'},{n:'Olivový olej',a:'10ml'}],
-   steps:['Rúru predhrej na 180°C.','Brokolicu rozober na ružičky, blanšíruj 4 minúty.','Daj do zapekacej misy, polej olejom, pridaj cesnak.','Vajcia rozšľahaj, vylej na brokolicu.','Posyp syrom.','Zapekaj 15–18 minút.'],
-   tip:'Brokolica = folát pre zníženie HCY. Blanšírovanie zachová farbu a vitamíny.'
-  },
-{id:'paradajkova-polievka',name:'Paradajková polievka so stéviou',type:'d',time:'20 min',kcal:360,
-   ingredients:[{n:'Paradajky',a:'400g (alebo konzerva pelati)'},{n:'Cibuľa',a:'½ ks'},{n:'Cesnak',a:'2 strúčiky'},{n:'Olivový olej',a:'15ml'},{n:'Stévia',a:'2 kvapky (voliteľné)'},{n:'Bazalka',a:'pár listov'},{n:'Kváskový chlieb',a:'2 plátky (80g)'}],
-   steps:['Cibuľu a cesnak opraž na oleji 2 minúty.','Pridaj nakrájané paradajky alebo pelati.','Priveď do varu na stupni 7, zníž na stupeň 4, var 10–12 minút.','Rozmixuj tyčovým mixérom.','Dochuť stéviou ak chceš sladkasté.','Naservíruj s bazalkou a knäckebrótom.'],
-   tip:'Paradajky povolené od T3 — kyselina šťavelová je nižšia ako si ľudia myslia. Stévia = náhrada cukru bez fruktózy.'
   },
 {id:'citratova-bomba',name:'Citrátová bomba',type:'drink',time:'2 min',kcal:30,
    ingredients:[{n:'Citrón',a:'1 celý'},{n:'Limetka',a:'½ ks'},{n:'TOMA NATURA (NIE Rajec, NIE vodovod!)',a:'300ml vlažná 30–35°C'}],
@@ -1724,74 +1678,6 @@ const SUPPL=[
   {l:'Bylinkový čaj — rotácia',t:'Dopoludnie + večer (2–3 šálky)',w:'Pozri záložku Voda & pH — aktuálna týždenná skupina čajov.'}
 ];
 
-const SHOP4={
-  '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~2 kg — 250g denne Urea-Detox + UT raňajky + SO obed + šaláty'},
-    {n:'Stonkový zeler',o:'~900g — 125g denne Urea-Detox'},
-    {n:'Cuketa',o:'1 ks (~300g) — ŠT gril 150g'},
-    {n:'Paradajky',o:'~400g — ST polievka (povolené od T3!)'},
-    {n:'Brokolica',o:'350g — PI večera zapekaná'},
-    {n:'Červená paprika',o:'3 ks — SO raňajky + ŠT gril + ST hummus'},
-    {n:'Maslová tekvica (Hokkaido)',o:'1 ks (~600g) — NE večera pečená'},
-    {n:'Karfiol',o:'400g — PO večera zapekaný'},
-    {n:'Mrkva',o:'5 ks (~400g) — ST hummus hranolky + SO večera dusená'},
-    {n:'Hrášok mrazený',o:'~100g — SO večera dusená (UT obed v jedálni)'},
-    {n:'Poľníček',o:'1 balenie — UT večera'},
-    {n:'Zemiaky',o:'~1 kg — ŠT kaša 300g + NE šalát 250g'},
-    {n:'Zelené jablká',o:'2 ks — ŠT raňajky'},
-    {n:'Hruška',o:'2 ks — ŠT raňajky'},
-    {n:'Banán',o:'1 ks — NE po obede (odmena, nie prezretý)'},
-    {n:'Citróny',o:'10 ks — citrátová bomba + voda'},
-    {n:'Limetky',o:'7 ks — citrátová bomba + Urea-Detox'},
-    {n:'Avokádo',o:'2 ks — UT večera ½ + NE raňajky 1 celé'},
-    {n:'Kôpor čerstvý',o:'1 zväzok — UT raňajky'},
-    {n:'Rozmarín čerstvý',o:'vetvičky — NE večera tekvica'},
-    {n:'Cibuľa',o:'1 sieťka (~1 kg) — každý deň povinné!'},
-    {n:'Cesnak',o:'2 hlavičky — každý deň 1–2 strúčiky + NE raňajky'},
-    {n:'Zázvor čerstvý',o:'~20g — len PI večera shot'},
-    {n:'Kurkuma',o:'doplniť — PI večera shot'}
-  ],
-  '🍗 Mäso & ryby':[
-    {n:'Kuracie prsia',o:'~300g — SO obed na tymiáne'},
-    {n:'Kuracie stehno',o:'2 ks (~300g) — NE obed'},
-    {n:'Kuracie kosti a chrupavky',o:'~800g — SO vývar (zmraz)'},
-
-
-
-  ],
-  '🥜 Orechy & semená':[
-    {n:'Vlašské orechy',o:'~100g — PO kaša 20g + NE raňajky 20g'},
-    {n:'Makadamiové orechy',o:'~30g — ST raňajky 5 ks'},
-    {n:'Tekvicové semiačka',o:'~30g — NE večera tekvica'},
-    {n:'Ľanové semiačka',o:'~50g — PI raňajky'}
-  ],
-  '🌾 Obilniny & pečivo':[
-    {n:'Pohánkové vločky',o:'40g — PO raňajky kaša'},
-
-    {n:'Ryžové chlebíky',o:'1 balenie — ST raňajky hummus'},
-    {n:'Knäckebrót',o:'1 balenie — UT večera + ST večera + PI raňajky + NE raňajky'},
-    {n:'Kváskový chlieb',o:'½ bochníka — ST večera 2 plátky'}
-  ],
-  '🥛 Mliečne & vajcia':[
-    {n:'Biely jogurt BEZLAKTÓZOVÝ',o:'2 balenia — UT raňajky + PI večera'},
-    {n:'Tvaroh BEZLAKTÓZOVÝ',o:'200g — PI raňajky (celé balenie)'},
-    {n:'Feta syr',o:'~120g — ŠT gril 60g + NE večera 60g'},
-    {n:'Tvrdý syr strúhaný',o:'~80g — PO zapekanie 40g + PI zapekanie 40g'},
-    {n:'Vajcia',o:'12 ks — PO zapekanie 2ks + UT vajíčka do skla 2ks + PI brokolica 2ks + SO praženica 3ks + SO večera 2ks + rezerva'},
-    {n:'Maslo',o:'30g — ŠT rybie filé + vajíčka do skla'}
-  ],
-  '🥥 Kokos & tuky':[
-    {n:'Hummus hotový',o:'200g — ST raňajky (cícer + tahini, bez prísad)'},
-    {n:'Olivový olej',o:'doplniť — varenie, šaláty, NE raňajky'},
-    {n:'Makový olej',o:'doplniť — pokvapkanie hotových jedál (VÝLUČNE za studena, nie na varenie!)'},
-    {n:'Ľanový olej',o:'doplniť — do šalátov a hotových jedál za studena (nosič kurkumínu)'}
-  ],
-  '💧 Voda':[
-    {n:'TOMA NATURA neperlivá v SKLE 1,5l',o:'7 fliaš — 1 fľaša denne (poháre 1,2,10,12). NIE plast!'},
-    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — 2 fľaše denne do pohárov 3–9. S citrónom/limetkou.'},
-    {n:'GymBeam elektrolyty',o:'1 balenie — 1 tbl do pohárov 2, 10, 12 = 3 tbl/deň'}
-  ]
-};
 
 const SHOP5={
   '🥦 Zelenina & ovocie':[
@@ -1897,7 +1783,7 @@ const SHOP6={
 let st=JSON.parse(localStorage.getItem('mh4')||'{}');
 if(!st.weight||st.weight.length===0){st.weight=[{v:85,d:'10. 5. 2026',start:true}];save();}
 else if(!st.weight.find(w=>w.start)){st.weight.unshift({v:85,d:'10. 5. 2026',start:true});save();}
-let cw=4,cd=0,csw=4,recipeFilter='all',recipeSearch='';
+let cw=5,cd=0,csw=5,recipeFilter='all',recipeSearch='';
 
 function toggleInduction(){
   const t=document.getElementById('induction-table');
@@ -2159,17 +2045,9 @@ function showScreen(n,btn){
   btn.classList.add('active');
   // BOD 4 — pri otvorení jedálnička skočí na dnešný deň a aktuálny týždeň
   if(n==='food'){
-    const today=(new Date().getDay()+6)%7; // 0=PO, 6=NE
-    let targetWeek=cw; // default aktuálny
-    if(st.phaseStart){
-      const start=new Date(st.phaseStart);
-      const elapsed=Math.floor((new Date()-start)/(1000*60*60*24));
-      targetWeek=((Math.floor(elapsed/7))%3)+4; // rotácia T4→T5→T6→T4...
-    }
-    if(targetWeek!==cw || today!==cd){
-      cw=targetWeek;
+    const today=(new Date().getDay()+6)%7;
+    if(today!==cd){
       cd=today;
-      ['wt4','wt5','wt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+4===cw); });
       renderDayTabs();renderMeals();
     }
   }
@@ -2310,11 +2188,11 @@ function renderSuppl(){
 
 function setWeek(w){
   cw=w;cd=0;
-  ['wt4','wt5','wt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+4===w); });
+  ['wt5','wt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+5===w); });
   renderDayTabs();renderMeals();
 }
 
-function getWeekData(w){return w===5?W5:w===6?W6:W4;}
+function getWeekData(w){return w===6?W6:W5;}
 function renderDayTabs(){
   const meals=getWeekData(cw);
   const c=document.getElementById('day-tabs');c.innerHTML='';
@@ -2731,10 +2609,10 @@ function updateKPIs(){
 
 function setShopWeek(w){
   csw=w;
-  ['swt4','swt5','swt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+4===w); });
+  ['swt5','swt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+5===w); });
   renderShopList();
 }
-function getShopData(w){return w===5?SHOP5:w===6?SHOP6:SHOP4;}
+function getShopData(w){return w===6?SHOP6:SHOP5;}
 
 function renderShopList(){
   const data=getShopData(csw);const key='shop_w'+csw;
