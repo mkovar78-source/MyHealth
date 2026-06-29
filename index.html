@@ -1329,9 +1329,8 @@ const TEA_GROUPS=[
 ];
 
 function getCurrentTeaWeek(){
-  // Automaticky podľa toho odkedy začal program — uloží sa pri prvom spustení
-  if(!st.programStart)st.programStart=new Date().toISOString().split('T')[0];
-  const start=new Date(st.programStart);
+  // Štart čajovej rotácie: 25.05.2026
+  const start=new Date('2026-05-25');
   const now=new Date();
   const diffDays=Math.floor((now-start)/(1000*60*60*24));
   const weekNum=(Math.floor(diffDays/7)%4)+1; // rotácia 1-2-3-4-1-2-3-4...
