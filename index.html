@@ -272,11 +272,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="info-box" style="margin-bottom:14px">
     <strong>Jedálenské okno: 09:30 – 17:30</strong><br>
     Pred 09:30 len voda, čaje a suplementy. Po 17:30 len voda a čaje. Možná čierna káva bez cukru a smotany.<br>
-    <strong>Denný limit: ~2 000 kcal</strong>
+    <strong>Denný limit: ~2 100 kcal</strong>
   </div>
   <div class="week-tabs">
-    <button class="week-tab active" id="wt5" onclick="setWeek(5)">T5 — Iniciačná fáza</button>
-    <button class="week-tab" id="wt6" onclick="setWeek(6)">T6 — Metabolická stabilizácia</button>
+    <button class="week-tab active" id="wt7" onclick="setWeek(7)">T7 — Podpora homeostázy</button>
+    <button class="week-tab" id="wt8" onclick="setWeek(8)">T8 — Tkanivová saturácia</button>
   </div>
   <div class="day-tabs" id="day-tabs"></div>
   <div id="meal-content"></div>
@@ -440,8 +440,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <!-- NÁKUP -->
 <div class="screen" id="screen-shop">
   <div class="week-tabs">
-    <button class="week-tab active" id="swt5" onclick="setShopWeek(5)">T5 — Iniciačná fáza</button>
-    <button class="week-tab" id="swt6" onclick="setShopWeek(6)">T6 — Metabolická stabilizácia</button>
+    <button class="week-tab active" id="swt7" onclick="setShopWeek(7)">T7 — Podpora homeostázy</button>
+    <button class="week-tab" id="swt8" onclick="setShopWeek(8)">T8 — Tkanivová saturácia</button>
   </div>
   <div style="display:flex;gap:8px;margin-bottom:12px">
     <button class="btn" style="flex:1;margin-top:0" onclick="checkAllShop()">Odškrtnúť všetko</button>
@@ -1027,169 +1027,197 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 <script>
 
-const W5=[
-  {day:'PO',b:'Tvaroh jemný (200g) s marhuľami/broskyňami (150g) + makový olej (15ml)',bw:'Tvaroh = nízkopurínové bielkoviny. Marhule/broskyne = draslík pre tlak.',bkcal:449,bbielk:28.5,bsachar:43.3,btuky:17.7,brid:'tvaroh-marhule',l:'Kuracie prsia na pare (200g) + ryža (80g suché) + mrkva (100g) + cuketa (100g) + olivový olej (10ml)',lw:'Para = najšetrnejšia úprava. Kura bez kože = minimum purínov.',lkcal:629,lbielk:68.4,lsachar:84.7,ltuky:14.7,d:'Vajcia (3ks) na olivovom oleji + knäckebrót (60g) + tekvicové semiačka (30g) + makový olej (10ml)',dw:'Vajcia = nízkopurínové bielkoviny. Tekvicové semiačka = zinok.',dkcal:824,dbielk:36.7,dsachar:18.3,dtuky:55.4},
-  {day:'UT',b:'Cottage syr (200g) + knäckebrót (60g) + makadamy (40g) + paradajka (150g)',bw:'Cottage syr = vápnik bez purínov. Makadamy = zdravé tuky.',bkcal:769,bbielk:28,bsachar:51.3,btuky:47.1,brid:'cottage-knackebrot',l:'Pstruh (250g) pečený v papieri + zemiaková kaša bezlakt. (300g) + makový olej (10ml)',lw:'Pstruh v papieri = zachová šťavnatosť. Ryba = Omega-3.',lkcal:639,lbielk:56.9,lsachar:54.9,ltuky:21.8,d:'Zeleninová polievka — mrkva (200g) + hokaido (300g) + tekvicové semiačka (25g) + makový olej (15ml)',dw:'Hokaido = betakarotén. Makový olej za studena.',dkcal:428,dbielk:16.6,dsachar:58.6,dtuky:20.6,drid:'zeleninova-polievka-hokaido'},
-  {day:'ST',b:'Kefír (250ml) + banán (120g) + makový olej (15ml)',bw:'Kefír = probiotiká. Banán = draslík pre tlak.',bkcal:360,bbielk:10.4,bsachar:42.3,btuky:16.9,brid:'kefir-banan',l:'Kuracie rizoto — kura prsia (180g) + ryža (80g suché) + špenát (150g) + olivový olej (15ml) + syr tvrdý (50g)',lw:'Špenát = folát. Olivový olej = protizápalový.',lkcal:849,lbielk:76.2,lsachar:68.7,ltuky:26.5,d:'Omeleta — vajcia (3ks) + syr tvrdý (50g) + cuketa (150g) + knäckebrót (40g) + makadamy (20g)',dw:'Omeleta = rýchle bielkoviny. Syr bezlaktózový.',dkcal:918,dbielk:44.6,dsachar:40.4,dtuky:64.9,drid:'omeleta-syr-zelenina'},
-  {day:'ST',b:'Jogurt bezlakt. (200g) + čučoriedky (100g) + makadamy (40g)',bw:'Jogurt = probiotiká. Bobuľové ovocie s mierou. Makadamy = tuky.',bkcal:651,bbielk:13.7,bsachar:31.6,btuky:52.7,brid:'jogurt-bobule',l:'Zubáč (220g) na bylinkách + varené zemiaky (250g) + olivový olej (15ml)',lw:'Zubáč = najmenej purínov spomedzi rýb.',lkcal:583,lbielk:52.3,lsachar:45.9,ltuky:18.7,d:'Vajcia (2ks) natvrdo + mozzarella (125g) + knäckebrót (60g) + uhorka (150g) + tekvicové semiačka (20g)',dw:'Mozzarella = vápnik. Uhorka = preplach obličiek.',dkcal:644,dbielk:38.9,dsachar:54.1,dtuky:32.9},
-  {day:'PI',b:'Cottage syr (200g) + tekvicové semiačka (25g) + knäckebrót (60g) + banán (120g)',bw:'Banán = draslík. Tekvicové semiačka = zinok + horčík.',bkcal:749,bbielk:39.7,bsachar:73.7,btuky:25.5,brid:'cottage-semianka',l:'Kuracie stehná bez kože (220g) + ryža (80g suché) + cuketa (100g) + olivový olej (10ml)',lw:'Stehná bez kože. Ryža = bez purínov.',lkcal:680,lbielk:67.8,lsachar:65.5,ltuky:18.6,d:'Grilovaný losos (200g) + cuketa (200g) + makový olej (15ml)',dw:'Losos = Omega-3 pre Leiden. Cukina = nízke oxaláty.',dkcal:621,dbielk:37.3,dsachar:7.4,dtuky:51.7,drid:'losos-cukina'},
-  {day:'SO',b:'Praženica (3 vajcia) na olivovom oleji (10ml) + knäckebrót (60g) + makadamy (40g)',bw:'3 vajcia = výdatné raňajky. Olivový olej nie maslo.',bkcal:815,bbielk:34,bsachar:54.1,btuky:56.5,brid:'prazenica',l:'Bravčová panenka (220g) + grilovaná zelenina — cuketa (150g) + paprika (150g) + zemiaky (200g) + olivový olej (15ml)',lw:'Panenka = povolené. Zelenina grilovaná.',lkcal:883,lbielk:61.1,lsachar:72.1,ltuky:35.9,d:'Kuracie prsia (160g) + knäckebrót (60g) + listový šalát (80g) + olivový olej (10ml)',dw:'Ľahká večera. Kura prírodno = minimum tuku.',dkcal:431,dbielk:48.7,dsachar:46.9,dtuky:12.9},
-  {day:'NE',b:'Cottage syr (200g) + vajce (1ks) + makový olej (15ml) + knäckebrót (60g)',bw:'Kombinácia bielkovín. Vajíčko natvrdo alebo mäkko.',bkcal:559,bbielk:34.9,bsachar:48.5,btuky:22.2,brid:'cottage-vajce-makovy',l:'Losos (220g) + grilovaná cuketa (200g) + olivový olej (10ml)',lw:'Kokosový olej = MCT tuky. Losos = Omega-3.',lkcal:626,lbielk:44.9,lsachar:7.2,ltuky:47.3,lrid:'losos-cukina',d:'Kuracie prsia (180g) + zemiakovo-mrkvové pyré — zemiaky (200g) + mrkva (100g) + makadamy (25g)',dw:'Pyré vyšľahať s kvapkou makového oleja. Mrkva = betakarotén.',dkcal:715,dbielk:64.5,dsachar:49.5,dtuky:26.1}
+// TÝŽDEŇ 7 — Podpora homeostázy (od mamy, Fáza 1 Metabolická stabilizácia)
+const W7=[
+  {day:'PO',b:'Tvaroh jemný (200g), nakrájaná nektarinka (100g) a čučoriedky (80g), makadamové orechy (30g)',bw:'Tvaroh = nízkopurínové bielkoviny. Ovocie = draslík a vápnik.',bkcal:480,brid:'tvaroh-nektarinka-cucoriedky',
+   l:'Losos na bylinkách (180g), zemiaky s petržlenovou vňaťou a maslom (200g)',lw:'Losos = Omega-3, zemiaky = draslík pre tlak.',lkcal:650,weekdayOnly:true,
+   d:'Omeleta (2-3 vajcia) na kokosovom oleji (10ml), knäckebrot (40g), uhorka (150g)',dw:'Kokosový olej = MCT energia bez záťaže pečene.',dkcal:520,drid:'omeleta-knackebrot-uhorka'},
+  {day:'UT',b:'Cottage syr (200g) s tekvicovými semenami (25g), 1 vajce natvrdo, knäckebrot (40g), paprika (100g)',bw:'Cottage syr = vápnik bez purínov.',bkcal:520,brid:'cottage-vajce-paprika',
+   l:'Morčacie soté na šťave/smotane (200g), cestoviny (80g suché)',lw:'Morčacie = nízkopurínové mäso.',lkcal:700,weekdayOnly:true,
+   d:'Pečené zemiaky v šupke (250g) rozpolené a pokvapkané tekvicovým olejom, posypané strúhanou mozzarellou (40g), listový šalát, uhorka, tekvicové semiačka',dw:'Mozzarella = vápnikový štít proti oxalátom.',dkcal:560,drid:'pecene-zemiaky-mozzarella'},
+  {day:'ST',b:'Čistý biely jogurt (200g) s 1 banánom, makadamové orechy (30g)',bw:'Jogurt = probiotiká, banán = draslík pre tlak.',bkcal:420,brid:'jogurt-banan-makadamy',
+   l:'Kuracie rizoto s olivovým olejom (180g kura, 80g ryža suché), zeleninový šalát s dresingom z makového oleja',lw:'Rizoto = pomalé sacharidy.',lkcal:720,weekdayOnly:true,
+   d:'Ryžové penne s jemným brokolicovo-bazalkovým pestom* (100g), 2dcl mlieka',dw:'Pesto bez orechov — brokolica dodá draslík.',dkcal:580,drid:'rizove-penne-pesto'},
+  {day:'ŠT',b:'1 vajce natvrdo, ricotta syr (50g), knäckebrot (40g), paprika (100g), tekvicové semiačka (15g)',bw:'Vajce a ricotta = čisté nízkopurínové bielkoviny a vápnik.',bkcal:450,brid:'vajce-ricotta-paprika',
+   l:'Dusená ryba na bylinkách a masle (zubáč/pstruh, 180g), varené zemiaky s maslom a pažítkou (200g)',lw:'Biela ryba = draslík bez záťaže čriev.',lkcal:620,weekdayOnly:true,
+   d:'Tekvicová omáčka s hustým kokosovým mliekom a kôprom (zahustená ryžovým škrobom), 1-2 vajce natvrdo, pistácie (20g)',dw:'Tekvica = draslík, kokosové mlieko = 0 oxalátov.',dkcal:540,drid:'tekvicova-omacka-kokos'},
+  {day:'PI',b:'Jogurt (200g), nektarinka a broskyňa (150g), makadamové orechy (30g)',bw:'Ľahké raňajky s draslíkom z ovocia.',bkcal:460,brid:'jogurt-nektarinka-broskyna',
+   l:'Morčacie prsia (180g), ryža (80g suché), zelenina pokvapkaná tekvicovým olejom',lw:'Jednoduché a ľahko stráviteľné pred víkendom.',lkcal:680,weekdayOnly:true,
+   d:'Omeleta z 2 vajec s podusenou nastrúhanou cuketou, cibuľkou a paprikou na kokosovom oleji (ako lečo), knäckebrot (40g)',dw:'Cuketa = nízke oxaláty, kokosový olej = MCT.',dkcal:480,drid:'omeleta-leco-cuketa'},
+  {day:'SO',b:'Cottage syr (150g), 1 vajíčko, makový olej (10ml), knäckebrot (40g), 1 paradajka, tekvicové semiačka (15g)',bw:'Kombinácia bielkovín pred víkendovým varením.',bkcal:460,brid:'cottage-vajicko-paradajka',
+   l:'Pečený zubáč na masle potretý cesnakom, s karfiolovo-zemiakovým pyré*',lw:'Ryba + karfiol = urologický sen — draslík a vápnik bez záťaže.',lkcal:580,weekendOnly:true,lrid:'zubac-pyre',
+   d:'Cestoviny s krémovou šampiňónovou omáčkou a teľacím mäsom*, pistácie (20g)',dw:'Šampiňóny = minimálne oxaláty, teľacie = najviac vápnika spomedzi mäsa.',dkcal:650,drid:'cestoviny-sampinony-telacie'},
+  {day:'NE',b:'1 vajce natvrdo nakrájané, posolené a pokvapkané makovým olejom, opekaný toast* natretý ricottou, 2 plátky dusenej šunky, uhorka (100g)',bw:'Toast bez droždia = nekvasený, šetrný k HIT.',bkcal:480,brid:'rychly-toast',
+   l:'Kuracie stehná pečené (200g), ryža (80g suché), šalát Alkalizačné kombo*',lw:'Alkalizačné kombo = stopercentne bezpečná príloha.',lkcal:700,weekendOnly:true,lrid:'alkalizacne-kombo',
+   d:'Jemná karfiolovo-brokolicová krémová polievka*, 1 vajce natvrdo, opekaný toast*',dw:'Ľahká nízkohistamínová večera pred spaním.',dkcal:520,drid:'karfiol-brokolica-polievka',drid2:'rychly-toast'}
 ];
 
-const W6=[
-  {day:'PO',b:'Jogurt bezlakt. (200g) + čučoriedky (100g) + makový olej (15ml)',bw:'Jogurt = probiotiká. Makový olej = vápnik.',bkcal:350,bbielk:8.6,bsachar:27.7,btuky:16.9,brid:'jogurt-makovy-bobule',l:'Zubáč na pare (220g) + varené zemiaky (250g) + olivový olej (15ml)',lw:'Zubáč na pare = minimum tuku. Zemiaky = draslík pre tlak.',lkcal:583,lbielk:52.3,lsachar:45.9,ltuky:18.7,d:'Omeleta (3 vajcia) + tekvicové semiačka (25g) + cuketa (150g) + kokosový olej (10ml) + syr tvrdý (50g)',dw:'Kokosový olej = MCT. Tekvicové semiačka = zinok.',dkcal:841,dbielk:57.5,dsachar:9.1,dtuky:64.7,drid:'omeleta-syr-zelenina'},
-  {day:'UT',b:'Mozzarella (125g) + knäckebrót (60g) + uhorka (150g) + makadamy (30g)',bw:'Mozzarella = vápnik. Uhorka = preplach obličiek.',bkcal:729,bbielk:30.7,bsachar:55.9,btuky:44.3,brid:'mozzarella-knackebrot',l:'Kuracie prsia (200g) + ryža (80g suché) + špenát (150g) + olivový olej (15ml)',lw:'Kura restovať 7 minút. Olivový olej = protizápalový.',lkcal:713,lbielk:75.9,lsachar:68.5,ltuky:19.8,d:'Vajcia (3ks) namäkko + knäckebrót (60g) + tekvicové semiačka (25g) + makový olej (10ml)',dw:'Vajíčka namäkko = lepšie vstrebávanie bielkovín.',dkcal:851,dbielk:31.8,dsachar:44.8,dtuky:54.7},
-  {day:'ST',b:'Jogurt bezlakt. (200g) + tekvicové semiačka (25g) + banán (120g)',bw:'Banán = draslík pre tlak. Jogurt = probiotiká.',bkcal:433,bbielk:17.1,bsachar:52.9,btuky:14.6,brid:'jogurt-semianka-banan',l:'Bravčová panenka (220g) na bylinkách + zemiaky (250g) + maslo bezlakt. (15g) + cuketa (100g)',lw:'Bylinky: tymián, rozmarín. Zemiaky = energia.',lkcal:730,lbielk:53.7,lsachar:49.4,ltuky:31.6,d:'Kuracie prsia (180g) + grilovaná cuketa (200g) + makový olej (15ml)',dw:'Ľahká večera. Cukina = nízke oxaláty. Makový olej za studena.',dkcal:427,dbielk:57.5,dsachar:9.6,dtuky:18.9},
-  {day:'ST',b:'Cottage syr (200g) + knäckebrót (60g) + tekvicové semiačka (20g) + paradajka (150g)',bw:'Cottage syr = nízkopurínové bielkoviny. Paradajka = draslík.',bkcal:617,bbielk:36,bsachar:55.8,btuky:24.2,brid:'cottage-knackebrot',l:'Kuracie stehno bez kože (200g) + zemiaková kaša bezlakt. (300g) + uhorka (100g) + olivový olej (10ml)',lw:'Stehno bez kože. Zemiaková kaša bezlaktózová.',bkcal:617,lkcal:702,lbielk:61.1,lsachar:57.1,ltuky:22.1,d:'Rybie filé (200g) + knäckebrót (60g) + melón (200g) + kokosový olej (10ml)',dw:'Ľahká večera. Kokosový olej = MCT. Melón = hydratácia.',dkcal:529,dbielk:40.3,dsachar:68.6,dtuky:17.4,drid:'rybie-file-melon'},
-  {day:'PI',b:'Tvaroh bezlakt. (200g) + banán (120g) + makadamy (40g)',bw:'Tvaroh = vápnik bez purínov. Banán = draslík.',bkcal:736,bbielk:30.3,bsachar:46.5,btuky:42.2,brid:'tvaroh-banan-makadamy',l:'Kuracie prsia (200g) + ryža (80g suché) + mrkva (100g) + špenát (100g) + olivový olej (10ml)',lw:'Čerstvé bylinky len. Jednoduché = ľahko stráviteľné.',lkcal:741,lbielk:72.4,lsachar:80.1,ltuky:15.7,d:'Cottage syr (150g) + knäckebrót (60g) + makový olej (15ml) + tekvicové semiačka (20g)',dw:'Ľahká večera pred víkendom.',dkcal:477,dbielk:25.1,dsachar:39,dtuky:26.3},
-  {day:'SO',b:'Vajcia (2ks) natvrdo + knäckebrót (60g) + tekvicové semiačka (25g) + listový šalát (80g) + olivový olej (10ml)',bw:'Vajcia natvrdo = pomalé uvoľňovanie bielkovín.',bkcal:605,bbielk:27.5,bsachar:50.6,btuky:33,brid:'vajcia-natvrdo-salat',l:'Pstruh (250g) + pečené zemiaky (250g) + olivový olej (15ml)',lw:'Pstruh pokvapkať citrónom. Pečené zemiaky = draslík.',lkcal:609,lbielk:56.4,lsachar:45.9,ltuky:22.3,lrid:'pstruh-v-papieri',d:'Kuracie rizoto — kura prsia (180g) + ryža (80g suché) + olivový olej (15ml) + syr tvrdý (40g) + jablko (120g)',dw:'Rizoto = pomalé sacharidy. Jablko po večeri = vláknina.',dkcal:998,dbielk:72.5,dsachar:76,dtuky:42.2,drid:'kura-rizoto-syr'},
-  {day:'NE',b:'Cottage syr (200g) + knäckebrót (60g) + tekvicové semiačka (20g) + uhorka (100g)',bw:'Ľahké raňajky pred dlhším obedom.',bkcal:509,bbielk:30.5,bsachar:50.7,btuky:18.7,brid:'cottage-zelenina',l:'Bravčová panenka (220g) + grilovaná cuketa (200g) + makový olej (15ml) + zemiaky (200g)',lw:'Panenka = povolené. Makový olej na cukinu za studena.',lkcal:724,lbielk:55.6,lsachar:53.7,ltuky:29.7,lrid:'bravcova-panenka-bylinky',d:'Praženica (3 vajcia) + syr tvrdý (50g) + makadamy (25g) + banán (120g) + olivový olej (10ml)',dw:'Praženica = rýchle bielkoviny. Banán = draslík.',dkcal:806,dbielk:42,dsachar:41.2,dtuky:56.7,drid:'prazenica'}
+// TÝŽDEŇ 8 — Fáza tkanivovej saturácie (od mamy)
+const W8=[
+  {day:'PO',b:'Kefír (200ml), banán, čučoriedky (80g), makadamové orechy (30g)',bw:'Kefír = probiotiká, banán = draslík pre tlak.',bkcal:460,brid:'kefir-cucoriedky-makadamy',
+   l:'Losos na masle a cesnaku (180g), varené zemiaky s maslom a pažítkou (200g)',lw:'Losos = Omega-3 pre Leiden.',lkcal:650,weekdayOnly:true,
+   d:'Praženica na olivovom oleji (3 vajcia), knäckebrot/toast (40g), uhorka (100g), pistácie (20g)',dw:'Praženica = rýchle bielkoviny.',dkcal:560,drid:'prazenica-toast-uhorka'},
+  {day:'UT',b:'Mozzarella syr (100g), 1 vajce natvrdo, 2 plátky šunky, knäckebrot (40g), uhorka a paprika (100g)',bw:'Mozzarella = vápnik bez laktózovej záťaže.',bkcal:520,brid:'mozzarella-vajce-sunka',
+   l:'Morčacie rizoto s olivovým olejom (180g mäso, 80g ryža suché), zelenina',lw:'Rizoto = pomalé sacharidy.',lkcal:700,weekdayOnly:true,
+   d:'Pečená hokaido tekvica (250g) pokvapkaná bylinkami a cesnakom v makovom oleji, posypaná strúhanou mozzarellou (40g), knäckebrot (40g), 2dcl mlieka',dw:'Hokaido = betakarotén a draslík.',dkcal:560,drid:'hokaido-mozzarella-mlieko'},
+  {day:'ST',b:'Jogurt (200g), žltý melón (150g), makadamové orechy (30g)',bw:'Melón = hydratácia a draslík.',bkcal:420,brid:'jogurt-melon-makadamy',
+   l:'Kuracie prsia sóté na smotane (180g), cestoviny (80g suché)',lw:'Jednoduchý a rýchly obed.',lkcal:700,weekdayOnly:true,
+   d:'Rýchly cuketový krém s vajíčkom*, knäckebrot (40g), tekvicové semiačka (15g)',dw:'Cuketa = jeden z najnižších oxalátov spomedzi zeleniny.',dkcal:460,drid:'cuketovy-krem-vajicko'},
+  {day:'ŠT',b:'Cottage syr (200g), knäckebrot (40g), 2 plátky šunky, paradajka/paprika (100g)',bw:'Cottage syr = nízkopurínové bielkoviny.',bkcal:480,brid:'cottage-sunka-paprika',
+   l:'Morčacie prsia (180g) a ryža (80g suché), zelenina',lw:'Ľahko stráviteľný obed.',lkcal:680,weekdayOnly:true,
+   d:'Pečené zemiaky s rozmarínom (200g), Chrumkavý kapustovo-uhorkový šalát s čerstvou ricottou a makovým olejom*, pistácie (20g)',dw:'Kapusta a ricotta = vápnikový štít proti oxalátom.',dkcal:540,drid:'kapusta-salat-ricotta'},
+  {day:'PI',b:'Jemný tvaroh (200g), nektarinka a broskyňa (150g), hrsť makadamov (30g)',bw:'Tvaroh = vápnik bez purínov.',bkcal:460,brid:'tvaroh-nektarinka-broskyna',
+   l:'Kuracie stehno (200g), zemiaková kaša (250g), uhorky (100g)',lw:'Sýty obed pred víkendom.',lkcal:700,weekdayOnly:true,
+   d:'Cukinové placky (vajíčka + strúhaná cuketa) na kokosovom oleji (200g), pistácie (20g), 2dcl mlieka',dw:'Cuketa = nízke oxaláty.',dkcal:520,drid:'cuketove-placky-pistacie'},
+  {day:'SO',b:'Pečená tekvicová kaša* (nízkohistamínová), makadamové orechy (30g)',bw:'Draslík, vápnik a kyselina jablčná proti obličkovým kameňom.',bkcal:460,brid:'tekvicova-kasa-hist',
+   l:'Jemné teľacie (alebo morčacie) minútky s dusenou bielou kapustou a ryžou Basmati*',lw:'Teľacie = najviac vápnika spomedzi mäsa.',lkcal:620,weekendOnly:true,lrid:'telacie-minutky-kapusta-ryza',
+   d:'Treska na masle a bylinkách (180g), opekaný toast*, Alkalizačné kombo*',dw:'Ľahká biela ryba + bezpečný šalát na noc.',dkcal:560,drid:'rychly-toast',drid2:'alkalizacne-kombo'},
+  {day:'NE',b:'Dusená zelenina s vajíčkami ako lečo (200g), opekaný toast*, pistácie (20g)',bw:'Lečo = rýchle bielkoviny a zelenina spolu.',bkcal:480,brid:'rychly-toast',
+   l:'Krémové kuracie prsia na cukete a brokolici s preliatím z čerstvej mozzarelly*',lw:'Brokolica + mozzarella = draslík + vápnik proti oxalátom.',lkcal:650,weekendOnly:true,lrid:'kura-cuketa-brokolica-mozzarella',
+   d:'Ázijské ryžové rezance na cukete s kokosovým mliekom a makovým olejom*, jablko',dw:'Cuketa + kokosové mlieko = nulové oxaláty.',dkcal:560,drid:'azijske-ryzove-rezance'}
 ];
-
-
 
 const RECIPES=[
-{id:'pohankova-kasa',name:'Pohánková kaša so škoricou',type:'b',time:'15 min',kcal:490,
-   ingredients:[{n:'Pohánka',a:'80g (suché)'},{n:'Voda',a:'240ml'},{n:'Vlašské orechy',a:'20g'},{n:'Škorica',a:'½ čl'},{n:'Zelené jablko',a:'½ ks (75g)'}],
-   steps:['Pohánku opláchni.','Daj do hrnca s vodou, priveď do varu na stupni 7.','Zníž na stupeň 3, var 10–12 minút.','Daj do misky, posyp škoricou.','Pridaj nasekané vlašské orechy a nakrájané jablko.'],
-   tip:'Pohánka má nutý zemitý chuť — škorica ju skvele dopĺňa.'
+{id:'tvaroh-nektarinka-cucoriedky',name:'Tvaroh s nektarinkou a čučoriedkami',type:'b',time:'5 min',kcal:480,
+   ingredients:[{n:'Tvaroh jemný bezlaktózový',a:'200g'},{n:'Nektarinka',a:'100g'},{n:'Čučoriedky',a:'80g'},{n:'Makadamové orechy',a:'30g'}],
+   steps:['Tvaroh daj do misky.','Nektarinku nakrájaj na kúsky, pridaj spolu s čučoriedkami.','Posyp makadamami.','Jesť ihneď.'],
+   tip:'Čučoriedky s mierou — max 80g kvôli oxalátom.'
   },
-{id:'avokado-natierka',name:'Avokádová nátierka s cesnakom',type:'d',time:'3 min',kcal:380,
-   ingredients:[{n:'Avokádo',a:'1 ks — celé!'},{n:'Cibuľka jarná alebo cibuľa',a:'¼ ks'},{n:'Cesnak',a:'1–2 strúčiky'},{n:'Citrón',a:'kvapka šťavy'},{n:'Soľ',a:'štipka'},{n:'Kváskový chlieb',a:'2 plátky (80g)'}],
-   steps:['Avokádo rozpolí, vyber kôstku.','Lyžicou vyber dužinu do misky.','Rozmač vidličkou na hladkú nátierku.','Pridaj pretlačený cesnak, nasekanú cibuľku, kvapku citróna a štipku soli.','Premiešaj — bez olivového oleja, avokádo má dostatok zdravých tukov.','Natrieš na kváskový chlieb, vedľa nakrájaj uhorku.'],
-   tip:'Priprav tesne pred jedlom — avokádo rýchlo hnedne. Citrón spomaľuje hnednutie. BEZ masla — avokádo je krémové samo o sebe.'
+{id:'omeleta-knackebrot-uhorka',name:'Omeleta s knäckebrótom a uhorkou',type:'d',time:'10 min',kcal:520,
+   ingredients:[{n:'Vajcia',a:'2–3 ks'},{n:'Kokosový olej',a:'10ml'},{n:'Knäckebrót',a:'40g'},{n:'Uhorka',a:'150g'},{n:'Soľ',a:'štipka'}],
+   steps:['Vajcia rozšľahaj so štipkou soli.','Na panvici rozohrej kokosový olej.','Vlej vajcia, opekaj na miernom ohni do stuhnutia.','Prelož na tanier, podávaj s knäckebrótom a nakrájanou uhorkou.'],
+   tip:'Kokosový olej = MCT tuky pre rýchlu energiu bez záťaže pečene.'
   },
-{id:'prazenica',name:'Praženica na masle',type:'d',time:'5 min',kcal:380,
-   ingredients:[{n:'Vajcia',a:'2–3 ks'},{n:'Maslo',a:'10g'},{n:'Šalátová uhorka',a:'100g'},{n:'Pažítka',a:'1 lyžica'},{n:'Kváskový chlieb',a:'2 plátky (80g)'},{n:'Soľ',a:'štipka'}],
-   steps:['Vajcia rozšľahaj vidličkou.','Maslo roztop na panvici na stupni 3.','Vlej vajcia, miešaj drevenou lyžicou.','Keď sú takmer hotové, odstav z ohňa — dojdú samy.','Podávaj s nakrájanou uhorkou a pažítkou.'],
-   tip:'Maslo namiesto oleja = lepšia chuť a vitamín A. Indukcia stupeň 3 = mierny oheň = krémová praženica, nie gumová.'
+{id:'cottage-vajce-paprika',name:'Cottage syr s vajcom a paprikou',type:'b',time:'12 min',kcal:520,
+   ingredients:[{n:'Cottage syr',a:'200g'},{n:'Tekvicové semiačka',a:'25g'},{n:'Vajce',a:'1 ks'},{n:'Knäckebrót',a:'40g'},{n:'Paprika',a:'100g'}],
+   steps:['Vajce uvar natvrdo (9 minút od varu), prelož do studenej vody, ošúpaj.','Papriku nakrájaj na prúžky.','Cottage syr daj do misky, pridaj vajce a papriku.','Posyp tekvicovými semiačkami, podávaj s knäckebrótom.'],
+   tip:'Cottage syr = vápnik bez purínov.'
   },
-{id:'jogurt-uhorka-salat',name:'Šalát jogurt a uhorka s kôprom',type:'b',time:'5 min',kcal:280,
-   ingredients:[{n:'Biely jogurt bezlaktózový',a:'150g'},{n:'Šalátová uhorka',a:'150g'},{n:'Kôpor',a:'2 lyžice'},{n:'Cibuľa',a:'¼ ks'},{n:'Para orechy',a:'2 ks — MAX!'}],
-   steps:['Uhorku nakrájaj na drobné kúsky alebo nastrúhaj nahrubo.','Cibuľu nadrobno, kôpor nasekaj.','Zmiešaj jogurt, uhorku, cibuľu, kôpor.','Pridaj 2 para orechy — presne 2.'],
-   tip:'Para orechy MAX 2 ks denne — selén pri väčšom množstve je toxický!'
+{id:'pecene-zemiaky-mozzarella',name:'Pečené zemiaky v šupke s mozzarellou',type:'d',time:'35 min',kcal:560,
+   ingredients:[{n:'Zemiaky',a:'250g'},{n:'Tekvicový olej',a:'1 lyžica'},{n:'Mozzarella strúhaná',a:'40g'},{n:'Listový šalát',a:'80g'},{n:'Uhorka',a:'150g'},{n:'Tekvicové semiačka',a:'15g'}],
+   steps:['Zemiaky umy, prepichaj vidličkou.','Peč celé v šupke pri 200°C cca 30 minút domäkka.','Rozpoľ, pokvapkaj tekvicovým olejom.','Posyp strúhanou mozzarellou.','Podávaj s listovým šalátom, uhorkou a tekvicovými semiačkami.'],
+   tip:'Šupka zemiakov = vláknina, mozzarella naviaže oxaláty.'
   },
-{id:'hummus-mrkva',name:'Hummus s mrkvovými hranolkami',type:'b',time:'5 min',kcal:480,
-   ingredients:[{n:'Hotový hummus (cícer + tahini)',a:'200g'},{n:'Mrkva',a:'2 ks (160g)'},{n:'Cibuľa',a:'¼ ks'},{n:'Makadamiové orechy',a:'5 ks'},{n:'Olivový olej',a:'5ml'}],
-   steps:['Mrkvu olúp, nakrájaj na hranolky.','Cibuľu nakrájaj na kolieska.','Hummus daj do misky, polej olejom.','Naservíruj s mrkvovými hranolkami a cibuľou.','Pridaj makadamiové orechy.'],
-   tip:'Hummus kúp hotový (ingrediencie: cícer, tahini, citrón, cesnak) — bez prísad. Mrkva surová = lepšie enzýmy.'
+{id:'jogurt-banan-makadamy',name:'Biely jogurt s banánom a makadamami',type:'b',time:'3 min',kcal:420,
+   ingredients:[{n:'Biely jogurt bezlaktózový',a:'200g'},{n:'Banán',a:'1 ks (120g)'},{n:'Makadamové orechy',a:'30g'}],
+   steps:['Jogurt daj do misky.','Banán nakrájaj na kolieska, pridaj navrch.','Posyp makadamami.'],
+   tip:'Banán = rýchly draslík pre tlak, jesť čerstvo pripravené.'
   },
-{id:'ovocny-salat',name:'Ovocný šalát s orechmi a jogurtom',type:'b',time:'5 min',kcal:430,
-   ingredients:[{n:'Zelené jablko',a:'1 ks (150g)'},{n:'Hruška',a:'1 ks (150g)'},{n:'Vlašské orechy',a:'20g'},{n:'Biely jogurt bezlaktózový',a:'150g'}],
-   steps:['Jablko a hruška nakrájaj na kúsky.','Hoď do misky.','Pridaj nasekané vlašské orechy.'],
-   tip:'Zelené jablko + hruška = nízka fruktóza a obsah kyseliny jablčnej = alkalizácia.'
+{id:'vajce-ricotta-paprika',name:'Vajce natvrdo s ricottou a paprikou',type:'b',time:'12 min',kcal:450,
+   ingredients:[{n:'Vajce',a:'1 ks'},{n:'Ricotta',a:'50g'},{n:'Knäckebrót',a:'40g'},{n:'Paprika',a:'100g'},{n:'Tekvicové semiačka',a:'15g'}],
+   steps:['Vajce uvar natvrdo (9 minút), prelož do studenej vody, ošúpaj.','Papriku nakrájaj na prúžky.','Na tanier daj vajce, ricottu a papriku.','Posyp tekvicovými semiačkami, podávaj s knäckebrótom.'],
+   tip:'Vajce + ricotta = čisté nízkopurínové bielkoviny a vápnik.'
   },
-{id:'tvaroh-lnane',name:'Tvaroh s ľanovými semiačkami',type:'b',time:'5 min',kcal:390,
-   ingredients:[{n:'Tvaroh bezlaktózový',a:'200g (celé balenie)'},{n:'Ľanové semiačka',a:'15g (1 pl)'},{n:'Cibuľa',a:'¼ ks'},{n:'Olivový olej',a:'5ml'},{n:'Knäckebrót',a:'2 ks'}],
-   steps:['Cibuľu nadrobno.','Zmiešaj s tvarohom.','Pridaj ľanové semiačka a olivový olej.','Naservíruj s knäckebrótom.'],
-   tip:'Ľanové semiačka = Omega-3 a vláknina. Mleté ľanové semiačka sú lepšie stráviteľné ako celé.'
+{id:'tekvicova-omacka-kokos',name:'Tekvicová omáčka s kokosovým mliekom a kôprom',type:'d',time:'25 min',kcal:540,
+   ingredients:[{n:'Hokaido tekvica',a:'250g'},{n:'Kokosové mlieko husté',a:'150ml'},{n:'Kôpor čerstvý',a:'pár vetvičiek'},{n:'Ryžový škrob',a:'1 čl'},{n:'Vajcia',a:'1–2 ks'},{n:'Pistácie',a:'20g'},{n:'Soľ',a:'štipka'}],
+   steps:['Tekvicu nakrájaj na kocky, var v malom množstve vody domäkka (12–15 minút).','Rozmixuj s kokosovým mliekom na hladkú omáčku, zahusti ryžovým škrobom rozmiešaným vo vode, prevar.','Vajcia uvar natvrdo.','Omáčku posyp kôprom, podávaj s vajcom a pistáciami.'],
+   tip:'Tekvica = draslík, kokosové mlieko = 0 oxalátov.'
   },
-{id:'citratova-bomba',name:'Vodovod + NONA soľ',type:'drink',time:'2 min',kcal:5,
-   ingredients:[{n:'Voda z vodovodu',a:'300ml'},{n:'NONA soľ',a:'2–3 zrnká'},{n:'Citrón (šťava)',a:'¼ ks'}],
-   steps:['Do pohára nalej 300ml vody z vodovodu.','Pridaj 2–3 zrnká NONA soli.','Vytlač šťavu z ¼ citróna, premiešaj.','Vypi IHNEĎ PO VSTÁVANÍ — pred jedlom, kávou, čímkoľvek. Alebo večer po 17:00.'],
-   tip:'NONA soľ obsahuje jód a stopové minerály. Do práce sa neberie — len ráno doma a večer po návrate.'
+{id:'jogurt-nektarinka-broskyna',name:'Jogurt s nektarinkou a broskyňou',type:'b',time:'5 min',kcal:460,
+   ingredients:[{n:'Jogurt bezlaktózový',a:'200g'},{n:'Nektarinka',a:'75g'},{n:'Broskyňa',a:'75g'},{n:'Makadamové orechy',a:'30g'}],
+   steps:['Ovocie nakrájaj na kúsky.','Jogurt daj do misky, pridaj ovocie.','Posyp makadamami.'],
+   tip:'Ľahké raňajky s draslíkom z ovocia.'
   },
-{id:'urea-detox',name:'Urea-Detox šťava',type:'drink',time:'5 min',kcal:50,
-   ingredients:[{n:'Šalátová uhorka (dlhá zelená)',a:'250g'},{n:'Stonkový zeler (NIE listový!)',a:'125g'},{n:'Limetka (šťava)',a:'½ ks'},{n:'Inulín prášok',a:'1 zarovnaná čl (5g)'}],
-   steps:['Uhorku nakrájaj na kusy.','Stonkový zeler nakrájaj na kusy.','Odšťavuj v odšťavovači.','Pridaj šťavu z ½ limetky a 1 zarovnanú čl inulínu, premiešaj.','Vypi okolo 11:00 — pred obedom. Ak ideš do práce, priprav ráno do fľaše.'],
-   tip:'Limetka = alkalizácia. Inulín = ochrana pred oxalátmi (kŕmi baktérie Oxalobacter formigenes). Bez odšťavovača: zjedz uhorku a zeler ako súčasť jedla — účinok je podobný.'
+{id:'omeleta-leco-cuketa',name:'Omeleta ako lečo s cuketou a paprikou',type:'d',time:'12 min',kcal:480,
+   ingredients:[{n:'Vajcia',a:'2 ks'},{n:'Cuketa',a:'150g'},{n:'Cibuľka jarná',a:'1 ks'},{n:'Paprika',a:'100g'},{n:'Kokosový olej',a:'10ml'},{n:'Knäckebrót',a:'40g'},{n:'Soľ',a:'štipka'}],
+   steps:['Cuketu nastrúhaj nahrubo, papriku a cibuľku nakrájaj nadrobno.','Na panvici rozohrej kokosový olej, podus zeleninu 5 minút.','Vajcia rozšľahaj so štipkou soli, zalej zeleninu, opekaj do stuhnutia ako lečo.','Podávaj s knäckebrótom.'],
+   tip:'Cuketa = nízke oxaláty, kokosový olej = MCT.'
   },
-{id:'spine-shot',name:'Piatkový detox shot (zázvor + kurkuma)',type:'drink',time:'20 min',kcal:10,
-   ingredients:[{n:'Voda z vodovodu',a:'0,9 litra'},{n:'Zázvor čerstvý',a:'2–3 tenké plátky (nie viac!)'},{n:'Citrón (šťava)',a:'1 ks — PRIDAJ AŽ PO VYCHLADNUTÍ!'}],
-   steps:['Priveď 0,9l vody z vodovodu do varu na stupni 7.','Pridaj 2–3 tenké plátky zázvoru — menej je viac!','Zníž na stupeň 3, lúhuj 10–15 minút.','Odstavy a nechaj vychladnúť na izbovú teplotu (pod 40°C).','⚠️ Až keď je vlažná — pridaj šťavu z 1 citróna. Nie skôr — teplo zničí vitamín C!','Prelej do sklenenej fľaše (nie plast!). Priprav ráno na celý deň.','Pi vlažnú počas piatku — nahraď ňou jeden z bežných pohárov Rajca.'],
-   tip:'Citrón VŽDY až po vychladnutí — nie do horúcej vody! Na varenie použij vodu z vodovodu. Uchovávaš v skle.'
-  }
-,
-{id:'pstruh-v-papieri',name:'Pstruh pečený v papieri',type:'l',time:'25 min',kcal:639,
-   ingredients:[{n:'Pstruh (celý alebo filety)',a:'250g'},{n:'Olivový olej',a:'10ml'},{n:'Citrón',a:'½ ks'},{n:'Tymián čerstvý',a:'2 vetvičky'},{n:'Soľ',a:'štipka'},{n:'Cesnak',a:'1 strúčik'}],
-   steps:['Predhrej rúru na 190°C.','Pstruh opláchni, osol zvnútra aj zvonka.','Na plát papiera na pečenie polož tymián a cesnak.','Poloţ pstruha, pokvapkaj olivovým olejom a citrónom.','Zabaľ do papiera, okraje pevne preloţ.','Peč 18–20 minút.','Otvor papier, skontroluj — mäso sa musí ľahko oddeliť od kosti.'],
-   tip:'Pstruh v papieri = zachová všetky šťavy a arómy. Nikdy neotvárať počas pečenia!'},
-{id:'kura-rizoto-spenat',name:'Kuracie rizoto so špenátom',type:'l',time:'25 min',kcal:849,
-   ingredients:[{n:'Kuracie prsia',a:'180g'},{n:'Ryža guľatozrnná (suché)',a:'80g'},{n:'Špenát čerstvý',a:'150g'},{n:'Olivový olej',a:'15ml'},{n:'Syr tvrdý bezlaktózový (strúhaný)',a:'50g'},{n:'Vývar zeleninový (alebo voda)',a:'300ml'},{n:'Cesnak',a:'1 strúčik'},{n:'Soľ',a:'podľa chuti'}],
-   steps:['Kura nakrájaj na malé kocky.','Na panvici rozohrej olivový olej, restuj kura 5–6 minút dozlatista.','Pridaj cesnak, restuj 30 sekúnd.','Pridaj ryžu, premiešaj aby sa obalila olejom — 1 minúta.','Pridávaj vývar po naberačkách, miešaj — každú naberačku pridaj keď predchádzajúca vsakuje (cca 15 min).','Posledné 2 minúty zamieš špenát — zvädne rýchlo.','Odstaviť, zamiešaj strúhaný syr, prikry na 2 minúty.'],
-   tip:'Skutočné rizoto vyţaduje stále miešanie — vtedy je krémové. Nesadiť na vysoký oheň!'},
-{id:'zeleninova-polievka-hokaido',name:'Zeleninová polievka s hokaidom',type:'d',time:'20 min',kcal:428,
-   ingredients:[{n:'Hokaido tekvica',a:'300g'},{n:'Mrkva',a:'200g'},{n:'Vývar zeleninový (alebo voda)',a:'500ml'},{n:'Tekvicové semiačka',a:'25g'},{n:'Makový olej',a:'15ml'},{n:'Soľ',a:'štipka'},{n:'Muškátový oriešok',a:'štipka'}],
-   steps:['Hokaido neumývaj od šupky — len vykroj semená, nakrájaj na kocky.','Mrkvu ošúpaj, nakrájaj.','Vhod do hrnca, zalej vývarom, vár 12–15 minút do mäkka.','Tyčovým mixérom rozmixuj do hladka.','Ochutiť soľou a muškátom.','Naservírovať, posypať tekvicovými semiačkami.','Makový olej kvapnúť NA TANIER — nie variť!'],
-   tip:'Hokaido nepotrebuje šúpať — šupka sa uvarí a zmixuje. Makový olej vždy za studena = zachová vitamíny.'},
-{id:'omeleta-syr-zelenina',name:'Omeleta so syrom a zeleninou',type:'d',time:'10 min',kcal:918,
-   ingredients:[{n:'Vajcia',a:'3 ks'},{n:'Syr tvrdý bezlaktózový (strúhaný)',a:'50g'},{n:'Cukina',a:'150g'},{n:'Olivový olej / kokosový olej',a:'10ml'},{n:'Soľ',a:'štipka'}],
-   steps:['Cukinu nakrájaj na tenké kolieska.','Na panvici rozohrej olej, restuj cukinu 3 minúty.','Vajcia rozklepni do misy, rozšľahaj vidličkou so štipkou soli.','Odsuň cukinu na okraj, nalejy vajcia.','Keď okraje tuhnú, posyp syrom.','Preloţ na polovicu, odstaviť.','Jesť ihneď — omeleta počká len 2 minúty!'],
-   tip:'Panvica musí byť poriadne horúca pred naliatím vajec. Nie príliš dlho — vnútro má zostať jemne mäkké.'},
-{id:'kura-stehna-pecene',name:'Pečené kuracie stehná bez kože',type:'l',time:'35 min',kcal:680,
-   ingredients:[{n:'Kuracie stehná bez kože',a:'220g'},{n:'Ryža guľatozrnná (suché)',a:'80g'},{n:'Cukina',a:'100g'},{n:'Olivový olej',a:'10ml'},{n:'Cesnak',a:'2 strúčiky'},{n:'Paprika mletá',a:'½ čl'},{n:'Soľ',a:'štipka'}],
-   steps:['Predhrej rúru na 200°C.','Stehná osol, posyp paprikou, potri prelisovaným cesnakom.','Ulož na plech vyloţený papierom, pokvapkaj olivovým olejom.','Peč 28–30 minút — prevrátiť raz v polovici.','Medzitým uvař ryţu.','Cukinu nakrájaj, restuj na panvici 4 minúty.','Skontroluj stehná — šťava musí byť číra, nie ružová.'],
-   tip:'Bez kože = minimum purínov a tuku. Cesnak pod kožu (ak je) = intenzívnejšia chuť.'},
-{id:'losos-cukina',name:'Grilovaný losos s cukinou',type:'d',time:'15 min',kcal:621,
-   ingredients:[{n:'Losos filety',a:'200g'},{n:'Cukina',a:'200g'},{n:'Makový olej',a:'15ml'},{n:'Citrón',a:'½ ks'},{n:'Soľ',a:'štipka'},{n:'Kôpor čerstvý',a:'pár vetvičiek'}],
-   steps:['Losos osol, pokvapkaj citrónom — nechaj 5 minút.','Grilovaciu panvicu rozohrej na stredný oheň — bez oleja.','Losos polož kožou dole, griluj 4 minúty.','Prevrátiť, griluj ďalšie 3–4 minúty.','Cukinu nakrájaj na prúžky, griluj súbežne 3 minúty z každej strany.','Vyložiť na tanier, cukinu pokvapkaj makovým olejom za studena.','Posypať kôprom.'],
-   tip:'Makový olej VŽDY za studena na hotové jedlo — nie na varenie. Losos je hotový keď sa ľahko rozdelí vidličkou.'},
-{id:'zubac-para',name:'Zubáč na pare so zemiakmi',type:'l',time:'20 min',kcal:583,
-   ingredients:[{n:'Zubáč filety',a:'220g'},{n:'Zemiaky (varené)',a:'250g'},{n:'Olivový olej',a:'15ml'},{n:'Citrón',a:'½ ks'},{n:'Petržlen čerstvý',a:'hrsť'},{n:'Soľ',a:'štipka'}],
-   steps:['Zubáč osol, pokvapkaj citrónom.','Do hrnca nalej 2 cm vody, priveď do varu.','Zubáča ulož do sitka / parného nástavca.','Par 8–10 minút — mäso musí byť biele a pevné.','Medzitým uvař zemiaky (alebo použij uvarené).','Zemiaky rozkrájaj, pokvapkaj olivovým olejom.','Posypať petržlenom.'],
-   tip:'Para = najšetrnejšia úprava ryby. Zachová Omega-3 a nevyţaduje olej na varenie.'},
-{id:'bravcova-panenka-bylinky',name:'Bravčová panenka na bylinkách',type:'l',time:'25 min',kcal:730,
-   ingredients:[{n:'Bravčová panenka',a:'220g'},{n:'Zemiaky (varené)',a:'250g'},{n:'Maslo bezlaktózové',a:'15g'},{n:'Cukina',a:'100g'},{n:'Tymián čerstvý',a:'2 vetvičky'},{n:'Rozmarín',a:'1 vetvička'},{n:'Olivový olej',a:'10ml'},{n:'Soľ',a:'štipka'}],
-   steps:['Panenku nakrájaj na medailónky hrubé 2 cm.','Osol, posyp tymiánom.','Rozohrej panvicu na vysoký oheň, pridaj olivový olej.','Opekaj medailónky 2–3 minúty z každej strany — vnútri mierne ružové = OK.','Odstaviť, prikryť — nechaj 3 minúty odpočívať.','Zemiaky uvař alebo ohrej, okoreniť maslom.','Cukinu restovať 3 minúty na tej istej panvici.'],
-   tip:'Panenka je hotová pri 63°C vnútri. Neprepekaj — suché mäso je problém. Odpočinok po pečení = šťavnaté.'},
-{id:'rybie-file-melon',name:'Rybie filé s melónom',type:'d',time:'15 min',kcal:529,
-   ingredients:[{n:'Rybie filé (treska/zubáč)',a:'200g'},{n:'Melón',a:'200g'},{n:'Knäckebrót',a:'60g'},{n:'Kokosový olej',a:'10ml'},{n:'Citrón',a:'½ ks'},{n:'Soľ',a:'štipka'}],
-   steps:['Rybie filé osol, pokvapkaj citrónom.','Rozohrej panvicu s kokosovým olejom.','Filé opekaj 3–4 minúty z každej strany.','Melón nakrájaj na kúsky.','Naservírovať filé s melónom a knäckebródtom.'],
-   tip:'Melón po večeri = výborná hydratácia. Kokosový olej = MCT tuky pre rýchlu energiu.'},
-{id:'kura-rizoto-syr',name:'Kuracie rizoto so syrom a jablkom',type:'d',time:'25 min',kcal:998,
-   ingredients:[{n:'Kuracie prsia',a:'180g'},{n:'Ryža guľatozrnná (suché)',a:'80g'},{n:'Syr tvrdý bezlaktózový (strúhaný)',a:'40g'},{n:'Olivový olej',a:'15ml'},{n:'Vývar zeleninový (alebo voda)',a:'300ml'},{n:'Jablko',a:'120g'},{n:'Soľ',a:'štipka'}],
-   steps:['Kura nakrájaj na kocky, restuj na olivovom oleji 5 minút.','Pridaj ryžu, premiešaj — 1 minúta.','Pridávaj vývar po naberačkách za stáleho miešania (15 min).','Odstaviť, zamiešaj syr, prikry na 2 minúty.','Jablko nakrájaj na kúsky — podávaj vedľa.'],
-   tip:'Rizoto je výdatná večera — vhodná na víkend keď máš viac času. Jablko po rizote = vláknina na trávenie.'}
-,
-{id:'tvaroh-marhule',name:'Tvaroh s marhuľami a makovým olejom',type:'b',time:'5 min',kcal:449,
-   ingredients:[{n:'Tvaroh jemný bezlaktózový',a:'200g'},{n:'Marhule alebo broskyne',a:'150g'},{n:'Makový olej',a:'15ml'}],
-   steps:['Tvaroh vyber z chladničky 10 minút vopred — studený tvaroh je menej chutný.','Marhule/broskyne nakrájaj na kúsky.','Tvaroh daj do misky, pridaj ovocie.','Makový olej kvapni navrch — nie miešať.','Jesť ihneď.'],
-   tip:'Makový olej VŽDY za studena a navrch — nie miešať, aby sa zachoval vitamín E.'},
-{id:'cottage-knackebrot',name:'Cottage syr s knäckebródtom a zeleninou',type:'b',time:'5 min',kcal:769,
-   ingredients:[{n:'Cottage syr',a:'200g'},{n:'Knäckebrót',a:'60g (2 ks)'},{n:'Makadamové orechy',a:'40g'},{n:'Paradajka alebo paprika',a:'150g'}],
-   steps:['Paradajku/papriku nakrájaj na kúsky.','Cottage syr preloţ do misky.','Knäckebrót poukladaj vedľa.','Pridaj makadamy a nakrájanú zeleninu.','Cottage syr natierať na knäckebrót alebo jesť zvlášť.'],
-   tip:'Cottage syr nestiera dobre keď je studený — nechaj 5 minút vonku.'},
-{id:'kefir-banan',name:'Kefír s banánom a makovým olejom',type:'b',time:'3 min',kcal:360,
-   ingredients:[{n:'Kefír bezlaktózový',a:'250ml'},{n:'Banán',a:'120g (1 ks)'},{n:'Makový olej',a:'15ml'}],
-   steps:['Kefír nalej do pohára alebo misky.','Banán nakrájaj na kolieska.','Pridaj do kefíru.','Makový olej kvapni navrch.','Premiešaj len jemne.'],
-   tip:'Banán = rýchly draslík pre tlak. Jesť ihneď po príprave — banán v kefíri rýchlo hnedne.'},
-{id:'jogurt-bobule',name:'Jogurt s bobuľovým ovocím a makadamami',type:'b',time:'3 min',kcal:651,
-   ingredients:[{n:'Jogurt bezlaktózový',a:'200g'},{n:'Čučoriedky alebo maliny/jahody',a:'100g'},{n:'Makadamové orechy',a:'40g'}],
-   steps:['Jogurt vyber z chladničky 5 minút vopred.','Daj do misky.','Bobuľové ovocie pridaj navrch.','Makadamy posyp navrch — nie miešať.','Jesť ihneď.'],
-   tip:'Bobuľové ovocie s mierou — oxaláty. MAX 100g denne. Makadamy nemlieť — celé sú lepšie pre žuvanie a sýtosť.'},
-{id:'cottage-semianka',name:'Cottage syr s tekvicovými semiačkami a banánom',type:'b',time:'5 min',kcal:749,
-   ingredients:[{n:'Cottage syr',a:'200g'},{n:'Tekvicové semiačka',a:'25g'},{n:'Knäckebrót',a:'60g (2 ks)'},{n:'Banán',a:'120g (1 ks)'}],
-   steps:['Cottage syr preloţ do misky.','Tekvicové semiačka posyp navrch.','Banán nakrájaj na kolieska, pridaj vedľa.','Knäckebrót slúţi ako príloha.'],
-   tip:'Tekvicové semiačka = zinok + horčík. Nekúp pražené — vždy surové.'},
-{id:'vajcia-natvrdo-salat',name:'Vajcia natvrdo s listovým šalátom',type:'b',time:'12 min',kcal:605,
-   ingredients:[{n:'Vajcia',a:'2 ks'},{n:'Knäckebrót',a:'60g (2 ks)'},{n:'Tekvicové semiačka',a:'25g'},{n:'Listový šalát',a:'80g'},{n:'Olivový olej',a:'10ml'},{n:'Soľ',a:'štipka'}],
-   steps:['Vajcia vlož do studenej vody, priveď do varu.','Var 9 minút od varu — natvrdo.','Preloţ do studenej vody na 2 minúty — ľahšie šúpanie.','Ošúpaj, nakrájaj na polovice.','Listový šalát umyj, osuš, daj do misky.','Pokvapkaj olivovým olejom, osol.','Pridaj vajcia, knäckebrót a tekvicové semiačka.'],
-   tip:'9 minút = pevný žĺtok. Studená voda ihneď po varení = bielok sa neodseparuje od škrupiny.'},
-{id:'mozzarella-knackebrot',name:'Mozzarella s knäckebródtom a uhorkou',type:'b',time:'5 min',kcal:729,
-   ingredients:[{n:'Mozzarella bezlaktózová',a:'125g'},{n:'Knäckebrót',a:'60g (2 ks)'},{n:'Uhorka',a:'150g'},{n:'Makadamové orechy',a:'30g'}],
-   steps:['Mozzarellu nakrájaj na plátky.','Uhorku nakrájaj na kolieska alebo tyčinky.','Poukladaj na tanier — mozzarella, uhorka, knäckebrót.','Makadamy pridaj vedľa.'],
-   tip:'Mozzarella = ľahký vápnik bez purínov. Nemiešaj s kyslými potravinami — zráţa sa.'},
-{id:'jogurt-semianka-banan',name:'Jogurt s tekvicovými semiačkami a banánom',type:'b',time:'3 min',kcal:433,
-   ingredients:[{n:'Jogurt bezlaktózový',a:'200g'},{n:'Tekvicové semiačka',a:'25g'},{n:'Banán',a:'120g (1 ks)'}],
-   steps:['Jogurt daj do misky.','Banán nakrájaj na kolieska, pridaj navrch.','Tekvicové semiačka posyp navrch.'],
-   tip:'Banán pridaj tesne pred jedením — v jogurte rýchlo mäkne.'},
-{id:'cottage-vajce-makovy',name:'Cottage syr s vajcom a makovým olejom',type:'b',time:'8 min',kcal:559,
-   ingredients:[{n:'Cottage syr',a:'200g'},{n:'Vajce',a:'1 ks'},{n:'Makový olej',a:'15ml'},{n:'Knäckebrót',a:'60g (2 ks)'}],
-   steps:['Vajce uvař natvrdo (9 minút od varu) alebo namäkko (5 minút).','Preloţ do studenej vody, ošúpaj.','Cottage syr daj do misky.','Vajce nakrájaj na polovice, pridaj k cottage syru.','Makový olej kvapni navrch.','Knäckebrót podávaj vedľa.'],
-   tip:'Kombinácia cottage syr + vajce = kompletné aminokyseliny bez purínov.'},
-{id:'tvaroh-banan-makadamy',name:'Tvaroh s banánom a makadamami',type:'b',time:'3 min',kcal:736,
-   ingredients:[{n:'Tvaroh bezlaktózový',a:'200g'},{n:'Banán',a:'120g (1 ks)'},{n:'Makadamové orechy',a:'40g'}],
-   steps:['Tvaroh daj do misky.','Banán nakrájaj na kolieska, pridaj navrch.','Makadamy posyp navrch.'],
-   tip:'Tvaroh = vápnik bez purínov. Makadamy majú najmenej omega-6 spomedzi orechov — ideálne pre zápal.'},
-{id:'cottage-zelenina',name:'Cottage syr so zeleninou a knäckebródtom',type:'b',time:'5 min',kcal:509,
-   ingredients:[{n:'Cottage syr',a:'200g'},{n:'Knäckebrót',a:'60g (2 ks)'},{n:'Tekvicové semiačka',a:'20g'},{n:'Uhorka',a:'100g'}],
-   steps:['Uhorku nakrájaj na kolieska.','Cottage syr daj do misky.','Tekvicové semiačka posyp navrch.','Knäckebrót a uhorku podávaj vedľa.'],
-   tip:'Uhorka = preplach obličiek. Jesť denne minimálne 150g uhorky.'},
-{id:'jogurt-makovy-bobule',name:'Jogurt s bobuľovým ovocím a makovým olejom',type:'b',time:'3 min',kcal:350,
-   ingredients:[{n:'Jogurt bezlaktózový',a:'200g'},{n:'Čučoriedky alebo maliny/jahody',a:'100g'},{n:'Makový olej',a:'15ml'}],
-   steps:['Jogurt daj do misky.','Bobuľové ovocie pridaj navrch.','Makový olej kvapni navrch — nie miešať.'],
-   tip:'Makový olej za studena = zachová vitamín E a vápnik. Bobuľové ovocie MAX 100g — oxaláty.'}
+{id:'cottage-vajicko-paradajka',name:'Cottage syr s vajíčkom a paradajkou',type:'b',time:'10 min',kcal:460,
+   ingredients:[{n:'Cottage syr',a:'150g'},{n:'Vajce',a:'1 ks'},{n:'Makový olej',a:'10ml'},{n:'Knäckebrót',a:'40g'},{n:'Paradajka',a:'1 ks'},{n:'Tekvicové semiačka',a:'15g'}],
+   steps:['Vajce uvar natvrdo (9 minút), prelož do studenej vody, ošúpaj, prekroj na polovice.','Paradajku nakrájaj.','Cottage syr daj do misky, pridaj vajce a paradajku.','Makový olej kvapni navrch, posyp tekvicovými semiačkami.','Podávaj s knäckebrótom.'],
+   tip:'Kombinácia bielkovín pred víkendovým varením.'
+  },
+{id:'rizove-penne-pesto',name:'Ryžové penne s brokolicovo-bazalkovým pestom',type:'d',time:'20 min',kcal:580,
+   ingredients:[{n:'Ryžové penne',a:'100g'},{n:'Brokolica',a:'150g'},{n:'Mozzarella v náleve',a:'50g'},{n:'Smotana',a:'100ml'},{n:'Olivový olej',a:'1 lyžica'},{n:'Bazalka',a:'hrsť lístkov'},{n:'Soľ',a:'štipka'}],
+   steps:['Cestoviny uvar vo vriacej osolenej vode al dente, sceď.','Brokolicu rozober na ružičky a krátko uvar (5–7 min), aby zostala chrumkavá — vodu zlej.','Brokolicu daj do mixéra s olivovým olejom, bazalkou, soľou a smotanou — rozmixuj na krémové pesto.','Horúce cestoviny premiešaj s pestom a posyp strúhanou mozzarellou.'],
+   tip:'Pesto bez píniových orieškov (oxaláty) — brokolica dodá masívny draslík, mozzarella nahradí parmezán.'},
+{id:'zubac-pyre',name:'Pečený zubáč na masle s karfiolovo-zemiakovým pyré',type:'l',time:'25 min',kcal:480,
+   ingredients:[{n:'Zubáč filet (alebo platesa)',a:'150g'},{n:'Karfiol',a:'150g'},{n:'Zemiaky ošúpané',a:'50g'},{n:'Maslo (alebo olivový olej)',a:'1 lyžica'},{n:'Mlieko (alebo kokosové)',a:'30ml'},{n:'Soľ, rasca',a:'štipka'}],
+   steps:['Rybu jemne posoľ, posyp raskou a opeč na panvici z každej strany 3–4 minúty.','Karfiol a zemiaky uvar spolu domäkka, vodu po varení zlej.','Pridaj mlieko a maslo, rozmixuj na hladké pyré.'],
+   tip:'Biela ryba dodá draslík bez záťaže čriev, karfiol chráni obličky.'},
+{id:'cestoviny-sampinony-telacie',name:'Cestoviny s krémovou šampiňónovou omáčkou a teľacím mäsom',type:'d',time:'25 min',kcal:620,
+   ingredients:[{n:'Cestoviny',a:'100g'},{n:'Teľacie (alebo kuracie) mäso na kocky',a:'100g'},{n:'Šampiňóny čerstvé',a:'80g'},{n:'Ricotta',a:'50g'},{n:'Kokosové mlieko/smotana',a:'3 lyžice'},{n:'Olivový olej, soľ, rasca',a:'podľa chuti'}],
+   steps:['Cestoviny uvar, sceď a udržiavaj teplé.','Na panvici rozohrej olej, pridaj kocky mäsa a šampiňóny, posoľ, pridaj rascu — sprudka restuj 8–10 minút.','Odstav z ohňa, vmiešaj ricottu a kokosové mlieko na hladkú omáčku.','Cestoviny ihneď premiešaj s omáčkou a podávaj.'],
+   tip:'Rýchle restovanie bráni tvorbe histamínu. Šampiňóny majú minimum oxalátov, teľacie mäso najviac vápnika.'},
+{id:'rychly-toast',name:'Domáci rýchlo-toast bez droždia',type:'b',time:'30 min',kcal:380,
+   ingredients:[{n:'Ryžová múka',a:'150g'},{n:'Pšeničná múka',a:'50g'},{n:'Prášok do pečiva (vínny kameň)',a:'1 čl'},{n:'Soľ',a:'štipka'},{n:'Vajce',a:'1 ks'},{n:'Mlieko alebo kokosový nápoj',a:'150ml'},{n:'Olivový olej',a:'1 lyžica'}],
+   steps:['Suché suroviny premiešaj, pridaj mokré a vypracuj redšie cesto.','Vylej do malej formy na chlebík, pečte pri 180°C cca 25 minút.','Po vychladnutí nakrájaj a plátky nasucho opeč v hriankovači (alebo urob tenšie placky na panvici).'],
+   tip:'Nekvasený bochník bez droždia. Obložiť ricottou/mozzarellou (vápnik) a uhorkou/paprikou (draslík), na záver pokvapkať makovým olejom.'},
+{id:'alkalizacne-kombo',name:'Alkalizačné kombo',type:'l',time:'5 min',kcal:250,
+   ingredients:[{n:'Polníček, rukola a žerucha',a:'80g mix'},{n:'Panenský olivový alebo tekvicový olej',a:'1 lyžica'},{n:'Mozzarella strúhaná',a:'30g'},{n:'Tekvicové semiačka a/alebo pistácie',a:'15g'}],
+   steps:['Šalát pokvapkaj olejom.','Posyp strúhanou mozzarellou a tekvicovými semiačkami/pistáciami.'],
+   tip:'Chrumkavé, stopercentne bezpečné jedlo bez purínov a oxalátov.'},
+{id:'karfiol-brokolica-polievka',name:'Jemná karfiolovo-brokolicová krémová polievka',type:'d',time:'20 min',kcal:350,
+   ingredients:[{n:'Karfiol',a:'150g'},{n:'Brokolica',a:'100g'},{n:'Petržlenový koreň',a:'1 ks'},{n:'Maslo (alebo olivový olej)',a:'1 lyžica'},{n:'Smotana alebo kokosové mlieko',a:'100ml'},{n:'Soľ, rasca',a:'štipka'}],
+   steps:['Zeleninu nakrájaj na malé kúsky, zalej vodou aby bola tesne zakrytá, pridaj soľ a rascu.','Uvar domäkka (cca 15 minút), polovicu vody zlej.','Pridaj smotanu a maslo, rozmixuj tyčovým mixérom na hladký krém.'],
+   tip:'Odliatím vody sa zbavíš uvoľnených stopových oxalátov. Podávaj teplé.'},
+// ==== TÝŽDEŇ 8 — Fáza tkanivovej saturácie ====,
+{id:'kefir-cucoriedky-makadamy',name:'Kefír s banánom a čučoriedkami',type:'b',time:'3 min',kcal:460,
+   ingredients:[{n:'Kefír bezlaktózový',a:'200ml'},{n:'Banán',a:'1 ks'},{n:'Čučoriedky',a:'80g'},{n:'Makadamové orechy',a:'30g'}],
+   steps:['Kefír nalej do misky alebo pohára.','Banán nakrájaj na kolieska, pridaj spolu s čučoriedkami.','Posyp makadamami.'],
+   tip:'Kefír = probiotiká, banán = draslík pre tlak.'
+  },
+{id:'prazenica-toast-uhorka',name:'Praženica s toastom a uhorkou',type:'d',time:'10 min',kcal:560,
+   ingredients:[{n:'Vajcia',a:'3 ks'},{n:'Olivový olej',a:'10ml'},{n:'Knäckebrót/toast',a:'40g'},{n:'Uhorka',a:'100g'},{n:'Pistácie',a:'20g'},{n:'Soľ',a:'štipka'}],
+   steps:['Vajcia rozšľahaj so štipkou soli.','Na panvici rozohrej olivový olej, vlej vajcia, miešaj drevenou lyžicou na miernom ohni.','Podávaj s knäckebrótom/toastom, uhorkou a pistáciami.'],
+   tip:'Olivový olej namiesto masla = ľahšie stráviteľné večer.'
+  },
+{id:'mozzarella-vajce-sunka',name:'Mozzarella s vajcom a šunkou',type:'b',time:'12 min',kcal:520,
+   ingredients:[{n:'Mozzarella syr',a:'100g'},{n:'Vajce',a:'1 ks'},{n:'Dusená šunka',a:'2 plátky'},{n:'Knäckebrót',a:'40g'},{n:'Uhorka',a:'50g'},{n:'Paprika',a:'50g'}],
+   steps:['Vajce uvar natvrdo (9 minút), prelož do studenej vody, ošúpaj.','Mozzarellu nakrájaj na plátky.','Uhorku a papriku nakrájaj.','Na tanier poukladaj mozzarellu, vajce, šunku a zeleninu, podávaj s knäckebrótom.'],
+   tip:'Mozzarella = vápnik bez laktózovej záťaže.'
+  },
+{id:'hokaido-mozzarella-mlieko',name:'Pečená hokaido tekvica s mozzarellou',type:'d',time:'35 min',kcal:560,
+   ingredients:[{n:'Hokaido tekvica',a:'250g'},{n:'Makový olej',a:'1 lyžica'},{n:'Bylinky (tymián/rozmarín)',a:'podľa chuti'},{n:'Cesnak',a:'1 strúčik'},{n:'Mozzarella strúhaná',a:'40g'},{n:'Knäckebrót',a:'40g'},{n:'Mlieko',a:'2dcl'}],
+   steps:['Tekvicu nakrájaj na mesiačiky (nešúpať).','Pokvapkaj makovým olejom, posyp bylinkami a pretlačeným cesnakom.','Peč pri 200°C 25–30 minút domäkka.','Posledné 5 minút posyp strúhanou mozzarellou.','Podávaj s knäckebrótom a pohárom mlieka.'],
+   tip:'Hokaido = betakarotén a draslík, šupku netreba šúpať.'
+  },
+{id:'jogurt-melon-makadamy',name:'Jogurt so žltým melónom a makadamami',type:'b',time:'5 min',kcal:420,
+   ingredients:[{n:'Jogurt bezlaktózový',a:'200g'},{n:'Žltý melón',a:'150g'},{n:'Makadamové orechy',a:'30g'}],
+   steps:['Melón nakrájaj na kocky.','Jogurt daj do misky, pridaj melón.','Posyp makadamami.'],
+   tip:'Melón = hydratácia a draslík.'
+  },
+{id:'cottage-sunka-paprika',name:'Cottage syr so šunkou a paprikou',type:'b',time:'5 min',kcal:480,
+   ingredients:[{n:'Cottage syr',a:'200g'},{n:'Knäckebrót',a:'40g'},{n:'Dusená šunka',a:'2 plátky'},{n:'Paradajka/paprika',a:'100g'}],
+   steps:['Zeleninu nakrájaj na kúsky.','Cottage syr daj do misky, pridaj zeleninu a šunku.','Podávaj s knäckebrótom.'],
+   tip:'Cottage syr = nízkopurínové bielkoviny.'
+  },
+{id:'tvaroh-nektarinka-broskyna',name:'Jemný tvaroh s nektarinkou a broskyňou',type:'b',time:'5 min',kcal:460,
+   ingredients:[{n:'Tvaroh jemný bezlaktózový',a:'200g'},{n:'Nektarinka',a:'75g'},{n:'Broskyňa',a:'75g'},{n:'Makadamové orechy',a:'30g'}],
+   steps:['Ovocie nakrájaj na kúsky.','Tvaroh daj do misky, pridaj ovocie.','Posyp makadamami.'],
+   tip:'Tvaroh = vápnik bez purínov.'
+  },
+{id:'cuketove-placky-pistacie',name:'Cukinové placky s pistáciami',type:'d',time:'20 min',kcal:520,
+   ingredients:[{n:'Vajcia',a:'2 ks'},{n:'Cuketa strúhaná',a:'200g'},{n:'Kokosový olej',a:'10ml'},{n:'Pistácie',a:'20g'},{n:'Mlieko',a:'2dcl'},{n:'Soľ',a:'štipka'}],
+   steps:['Cuketu nastrúhaj a mierne vytlač prebytočnú vodu.','Zmiešaj s vajcami a štipkou soli.','Na panvici rozohrej kokosový olej, opekaj placky po lyžiciach z oboch strán do zlata.','Podávaj s pistáciami a pohárom mlieka.'],
+   tip:'Cuketa = nízke oxaláty.'
+  },
+{id:'cuketovy-krem-vajicko',name:'Rýchly cuketový krém s vajíčkom',type:'d',time:'15 min',kcal:320,
+   ingredients:[{n:'Cuketa',a:'200g'},{n:'Vajce',a:'1 ks'},{n:'Olivový olej',a:'1 lyžica'},{n:'Smotana',a:'100ml'},{n:'Soľ',a:'štipka'}],
+   steps:['Cuketu ošúp a nakrájaj na kocky.','Na panvici opeč na oleji 5 minút, podlej vodou a dus domäkka (7 minút), pridaj smotanu, prevar.','Odstav z ohňa a metličkou rýchlo vmiešaj čerstvé vajíčko — polievka sa krásne zahustí.'],
+   tip:'Cuketa má jeden z najnižších obsahov oxalátov. Vajíčko dodá čistý vápnik a krémovú chuť.'},
+{id:'kapusta-salat-ricotta',name:'Chrumkavý kapustovo-uhorkový šalát s ricottou a makovým olejom',type:'d',time:'10 min',kcal:300,
+   ingredients:[{n:'Biela alebo pekingská kapusta',a:'150g'},{n:'Uhorka ošúpaná',a:'1/2 ks'},{n:'Ricotta (alebo cottage bez príchute)',a:'50g'},{n:'Makový olej',a:'1 lyžica'},{n:'Soľ',a:'štipka'}],
+   steps:['Kapustu nakrájaj na tenké prúžky, uhorku na kocky (ošúpanú — šupka obsahuje salicyláty).','Posoľ a rukou premiešaj, aby kapusta zmäkla.','Navrch pridaj kúsky ricotty a tesne pred jedlom pokvapkaj makovým olejom.'],
+   tip:'Vápnikový štít — biela kapusta a ricotta v noci zablokujú voľné oxaláty v črevách.'},
+{id:'telacie-minutky-kapusta-ryza',name:'Jemné teľacie minútky s dusenou bielou kapustou a ryžou Basmati',type:'l',time:'30 min',kcal:560,
+   ingredients:[{n:'Teľacie (alebo morčacie) mäso na rezance',a:'150g'},{n:'Biela hlávková kapusta nasekaná',a:'150g'},{n:'Ryža Basmati',a:'60g'},{n:'Olivový olej, soľ, rasca',a:'podľa chuti'}],
+   steps:['Ryžu Basmati prepláchni a uvar klasicky.','Kapustu podus s olejom, soľou a raskou cca 15 minút, kým sa voda neodparí.','Na inej panvici sprudka orestuj teľacie rezance 5–7 minút, posoľ až na záver.','Všetko premiešaj na tanieri.'],
+   tip:'Teľacie mäso = najviac vápnika spomedzi mäsa, kapusta dodá aj draslík.'},
+{id:'kura-cuketa-brokolica-mozzarella',name:'Krémové kuracie prsia na cukete a brokolici s mozzarellou',type:'l',time:'25 min',kcal:520,
+   ingredients:[{n:'Kuracie prsia',a:'150g'},{n:'Brokolica',a:'100g'},{n:'Cuketa ošúpaná',a:'100g'},{n:'Mozzarella v náleve',a:'50g'},{n:'Olivový olej, soľ',a:'podľa chuti'}],
+   steps:['Kura nakrájaj na plátky, jemne posoľ a orestuj z oboch strán.','Pridaj kocky cukety a ružičky brokolice, podlej vodou, pod pokrievkou dus 8–10 minút.','Tesne pred koncom polož na mäso plátky mozzarelly, vypni sporák a nechaj roztopiť.'],
+   tip:'Brokolica dodá draslík, mozzarella masívnu dávku vápnika na naviazanie oxalátov.'},
+{id:'azijske-ryzove-rezance',name:'Ázijské ryžové rezance na cukete s kokosovým mliekom a makovým olejom',type:'d',time:'20 min',kcal:460,
+   ingredients:[{n:'Ryžové rezance (pho)',a:'100g'},{n:'Cuketa',a:'1/2 ks'},{n:'Mrkva ošúpaná',a:'1 ks'},{n:'Hustý kokosové mlieko/smotana',a:'100ml'},{n:'Makový olej',a:'1 lyžica'},{n:'Olivový olej, soľ',a:'podľa chuti'}],
+   steps:['Rezance zalej vriacou vodou, nechaj zmäknúť 4–5 minút, sceď.','Na panvici (ideálne wok) opeč prúžky cukety a mrkvy 5 minút — nech zostanú chrumkavé.','Zalej kokosovým mliekom, osoľ, nechaj prejsť varom cca 1 minútu.','Pridaj scedené rezance, premiešaj, vypni sporák — na záver pokvapkaj makovým olejom.'],
+   tip:'Cuketa a kokosové mlieko majú nulový obsah oxalátov, vysoký obsah vody a draslíka na preplach obličiek.'},
+{id:'tekvicova-kasa-hist',name:'Nízkohistamínová pečená tekvicová kaša',type:'b',time:'30 min',kcal:420,
+   ingredients:[{n:'Tekvica Maslová alebo Hokkaido',a:'150g'},{n:'Sladké jablko',a:'1 ks stredné'},{n:'Kokosové mlieko (alebo čerstvé kravské)',a:'150ml'},{n:'Ricotta alebo jemný tvaroh',a:'50g'},{n:'Makový olej',a:'1 lyžica'},{n:'Ryžový sirup',a:'1–2 čl (voliteľné)'}],
+   steps:['Tekvicu a jablko nakrájaj na kocky, pečte na plechu pri 180°C 20–25 minút domäkka.','Upečenú teplú tekvicu a jablko preprav do mixéra, pridaj kokosové mlieko a sirup, rozmixuj na hladkú kašu.','Do teplej kaše vmiešaj ricottu, na záver pokvapkaj makovým olejom.'],
+   tip:'Draslík a vápnik z jednej porcie, kyselina jablčná chráni pred obličkovými kameňmi. Konzumuj ihneď čerstvé, neuchovávaj do druhého dňa.'}
+
 ];
 
 const TRAFFIC={
@@ -1510,6 +1538,8 @@ const DAILY_PLAN=[
   {time:'19:10',icon:'🍵',label:'POHÁR 12 — Bylinkový čaj večerný',sub:'',why:'Večerná podpora detoxu.',tag:'dom',cup:12,dl:3,teaType:true,waterType:'caj'},
   // POHÁR 10 — Mattoni (mimo jedálenského okna, odstup od večere)
   {time:'19:30',icon:'🏅',label:'POHÁR 10 — Mattoni neperlivá',sub:'300ml Mattoni (neperlivá/nesýtená) — bez citrónu',why:'Alkalizuje moč. Mimo jedálenského okna, dostatočný odstup od večere.',tag:'dom',cup:10,dl:3,waterType:'mineral'},
+  {time:'19:45',icon:'🦶',label:'Teplý kúpeľ nôh',sub:'Kúpeľ nôh v teplej vode niekoľko minút — príprava pred aplikáciou Biominerál D6 krému.',why:'Teplo dilatuje póry na chodidlách — zlepšuje vstrebávanie krému (transdermálny bypass).',tag:'dom'},
+  {time:'19:55',icon:'🧴',label:'Biominerál D6 krém na chodidlá',sub:'Aplikovať ihneď po kúpeli nôh, kým sú chodidlá ešte teplé a póry otvorené.',why:'Transdermálny bypass — minerály sa vstrebávajú priamo cez pokožku chodidiel.',tag:'dom'},
   {time:'20:00',icon:'⚗️',label:'Graphites CH15',sub:'5 globúl — nechaj rozpustiť v ústach. 10 min nič nejesť/nepiť. Sezónne (júl–august).',why:'Prevencia sebopsoriázy v lete. Nevstrebáva sa cez tráviaci trakt.',tag:'dom',everyOtherDay:true},
   {time:'20:30',icon:'🧴',label:'Večerná emulzia + infralampa',sub:'',why:'Nočná oprava platničiek. Bez emulzie infralampa stráca účinok.',tag:'dom',massageInfo:true,massageType:'evening'},
   {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou.',tag:'dom'},
@@ -1683,115 +1713,127 @@ const SUPPL=[
 ];
 
 
-const SHOP5={
+// SHOP7/SHOP8 — obedy cez pracovný týždeň (PO-PI) sa nenakupujú, jedávaš ich v práci.
+// Zahrnuté sú len raňajky, večere a víkendové (SO+NE) obedy varené doma.
+const SHOP7={
   '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~1 kg — Urea-Detox + šaláty'},
-    {n:'Mrkva',o:'~500g — polievka, pyré, šaláty'},
-    {n:'Cukina',o:'~500g — grilovanie k lososovi a kuraciemu'},
-    {n:'Paradajky/paprika',o:'~300g — k cottage syru, šaláty'},
-    {n:'Listová zelenina (špenát, poľníček)',o:'šaláty a prílohy'},
-    {n:'Cibuľka jarná',o:'každý deň — do jedál'},
-    {n:'Banány',o:'~5 ks — draslík pre tlak, k raňajkám'},
-    {n:'Maliny/jahody/čučoriedky',o:'~300g — k jogurtu. S mierou — oxaláty!'},
-    {n:'Marhule alebo broskyne',o:'~300g — k tvarohu PO'},
-    {n:'Citróny/limetky',o:'~7 ks — do pohárov Rajca + varenie'},
-    {n:'Hokaido tekvica',o:'1 ks — polievka UT'},
-    {n:'Jablko',o:'záloha — keď budeš hladný'}
+    {n:'Nektarinky',o:'~2 ks — PO,PI raňajky'},
+    {n:'Broskyňa',o:'~1 ks — PI raňajky'},
+    {n:'Čučoriedky',o:'~80g — PO raňajky. S mierou!'},
+    {n:'Banán',o:'1 ks — ST raňajky'},
+    {n:'Šalátová uhorka',o:'~450g — PO,UT,NE (raňajky/večere)'},
+    {n:'Paprika',o:'~300g — UT,ŠT raňajky, PI večera'},
+    {n:'Zemiaky',o:'~500g — UT večera, SO obed, NE obed'},
+    {n:'Listový šalát',o:'~80g — UT večera'},
+    {n:'Brokolica',o:'~250g — ST,NE večera'},
+    {n:'Čerstvá bazalka',o:'hrsť — ST večera'},
+    {n:'Hokaido tekvica',o:'1 ks (~250g) — ŠT večera'},
+    {n:'Kôpor čerstvý',o:'pár vetvičiek — ŠT večera'},
+    {n:'Cuketa',o:'~150g — PI večera'},
+    {n:'Cibuľka jarná',o:'1 ks — PI večera'},
+    {n:'Paradajka',o:'1 ks — SO raňajky'},
+    {n:'Šampiňóny čerstvé',o:'~80g — SO večera'},
+    {n:'Karfiol',o:'~300g — SO obed, NE večera'},
+    {n:'Petržlenový koreň',o:'1 ks — NE večera'},
+    {n:'Polníček, rukola, žerucha',o:'~80g — NE obed (alkalizačné kombo)'}
   ],
   '🥩 Mäso & ryby':[
-    {n:'Kuracie prsia',o:'~600g — PO para, ST rizoto, PI stehná'},
-    {n:'Kuracie stehná bez kože',o:'~400g — PI pečené'},
-    {n:'Pstruh čerstvý/mrazený',o:'~300g — UT pečený v papieri'},
-    {n:'Zubáč filety',o:'~300g — ŠT na bylinkách'},
-    {n:'Losos filety',o:'~200g — PI grilovaný s cukinou'},
-    {n:'Bravčová panenka',o:'~300g — SO grilovanie'}
+    {n:'Teľacie (alebo kuracie) mäso na kocky',o:'~100g — SO večera'},
+    {n:'Zubáč filet (alebo platesa)',o:'~150g — SO obed'},
+    {n:'Kuracie stehná',o:'~200g — NE obed'}
   ],
   '🧀 Mliečne & vajcia':[
-    {n:'Vajcia',o:'~12 ks — PO 3ks, ŠT 2ks, SO praženica, NE'},
-    {n:'Cottage syr',o:'~4 balenia — UT,ŠT,PI,NE raňajky'},
     {n:'Tvaroh jemný bezlaktózový',o:'~200g — PO raňajky'},
-    {n:'Kefír bezlaktózový',o:'~250ml — ST raňajky'},
-    {n:'Jogurt bezlaktózový',o:'~2 balenia — ŠT raňajky'},
-    {n:'Mozzarella syr',o:'~125g — ŠT večera'},
-    {n:'Syr tvrdý bezlaktózový (strúhaný)',o:'~100g — ST rizoto, omeleta'}
+    {n:'Cottage syr',o:'~350g — UT,SO raňajky'},
+    {n:'Biely jogurt bezlaktózový',o:'~400g — ST,PI raňajky'},
+    {n:'Ricotta',o:'~130g — ŠT raňajky, SO večera, NE toast (natretie)'},
+    {n:'Mozzarella (strúhaná/v náleve)',o:'~170g — UT,ST,NE'},
+    {n:'Dusená šunka',o:'~2 plátky — NE raňajky'},
+    {n:'Vajcia',o:'~14 ks — počas týždňa raňajky/večere'},
+    {n:'Maslo',o:'~30g — SO obed'},
+    {n:'Mlieko',o:'~3dcl — ST,SO'},
+    {n:'Smotana na varenie/kokosová',o:'~3dcl — ST,SO,NE'}
   ],
   '🌾 Obilniny & prílohy':[
-    {n:'Ryža guľatozrnná',o:'~400g — PO,ST,PI obed'},
-    {n:'Knäckebrot (bez kvasníc)',o:'~2 balenia — UT,ŠT,SO,NE'},
-    {n:'Zemiaková kaša (bezlaktózová)',o:'~300g — UT obed'}
+    {n:'Knäckebrot (bez kvasníc)',o:'~250g — PO,UT,ŠT,PI,SO'},
+    {n:'Ryžové penne',o:'~100g — ST večera'},
+    {n:'Ryža guľatozrnná',o:'~80g — NE obed'},
+    {n:'Cestoviny',o:'~100g — SO večera'},
+    {n:'Ryžová múka',o:'~150g — NE toast (jedna dávka)'},
+    {n:'Pšeničná múka',o:'~50g — NE toast'},
+    {n:'Vínny kameň (prášok do pečiva)',o:'1 balenie — NE toast'},
+    {n:'Ryžový škrob',o:'1 balenie — ŠT večera (zahustenie omáčky)'}
   ],
   '🫒 Oleje & orechy':[
-    {n:'Olivový olej panenský',o:'doplniť — varenie a šaláty'},
-    {n:'Kokosový olej panenský',o:'doplniť — NE losos'},
-    {n:'Makový olej',o:'doplniť — raňajky + šaláty za studena'},
-    {n:'Makadamové orechy',o:'~100g — UT,ŠT,SO raňajky'},
-    {n:'Tekvicové semienka',o:'~100g — PO večera, ŠT večera, PI raňajky'}
-  ],
-  '💊 Suplementy':[
-    {n:'GymBeam elektrolyty',o:'doplniť — 3 tbl/deň do pohárov 4,7,9'},
-    {n:'Mattoni neperlivá/nesýtená 1,5l',o:'~1 balenie (6ks)/týždeň — poháre 2,6,10 (NIE perlivá!)'},
-    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — poháre 3,4,7,9,11 s citrónom'},
-    {n:'NONA soľ',o:'doplniť — poháre 1,13,14'},
-    {n:'BioMineral Biokomplex pastilky',o:'doplniť — 3×/deň'}
+    {n:'Olivový olej panenský',o:'doplniť — varenie (ST,NE)'},
+    {n:'Kokosový olej panenský',o:'doplniť — PO,PI'},
+    {n:'Makový olej',o:'doplniť — SO raňajky'},
+    {n:'Tekvicový olej',o:'doplniť — UT večera'},
+    {n:'Makadamové orechy',o:'~150g — PO,ST,PI raňajky'},
+    {n:'Tekvicové semienka',o:'~90g — UT,ŠT,SO'},
+    {n:'Pistácie',o:'~40g — ŠT,SO,NE'}
   ]
 };
 
-const SHOP6={
+const SHOP8={
   '🥦 Zelenina & ovocie':[
-    {n:'Šalátová uhorka',o:'~1 kg — Urea-Detox + šaláty'},
-    {n:'Mrkva',o:'~300g — šaláty'},
-    {n:'Cukina',o:'~600g — ST,ŠT grilovanie'},
-    {n:'Paradajky/paprika',o:'~300g — k cottage syru'},
-    {n:'Listový šalát',o:'~200g — SO raňajky'},
-    {n:'Cibuľka jarná',o:'každý deň'},
-    {n:'Banány',o:'~5 ks — draslík, ST,ŠT,NE'},
-    {n:'Maliny/jahody/čučoriedky',o:'~300g — PO jogurt. S mierou!'},
-    {n:'Melón',o:'~500g — ŠT večera'},
-    {n:'Citróny/limetky',o:'~7 ks — poháre Rajca + varenie'},
-    {n:'Jablko',o:'SO večera po rizote + záloha'}
+    {n:'Banán',o:'1 ks — PO raňajky'},
+    {n:'Čučoriedky',o:'~80g — PO raňajky. S mierou!'},
+    {n:'Nektarinka',o:'~75g — PI raňajky'},
+    {n:'Broskyňa',o:'~75g — PI raňajky'},
+    {n:'Žltý melón',o:'~150g — ST raňajky'},
+    {n:'Sladké jablko',o:'~2 ks — SO raňajky, NE večera'},
+    {n:'Šalátová uhorka',o:'~250g — PO,UT raňajky'},
+    {n:'Paprika/paradajka',o:'~150g — UT,ŠT raňajky'},
+    {n:'Hokaido tekvica',o:'1 ks (~250g) — UT večera'},
+    {n:'Cuketa',o:'~350g — ST,PI,NE večera'},
+    {n:'Biela alebo pekingská kapusta',o:'~150g — ŠT večera'},
+    {n:'Tekvica Maslová alebo Hokkaido',o:'~150g — SO raňajky'},
+    {n:'Mrkva',o:'1 ks — NE večera'},
+    {n:'Brokolica',o:'~100g — NE obed'},
+    {n:'Polníček, rukola, žerucha',o:'~80g — SO obed (alkalizačné kombo)'},
+    {n:'Cesnak',o:'~2 strúčiky — UT večera'},
+    {n:'Čerstvé bylinky (tymián/rozmarín)',o:'zväzok — UT večera'}
   ],
   '🥩 Mäso & ryby':[
-    {n:'Kuracie prsia',o:'~800g — UT,ST,PI obed + ST,PI večera'},
-    {n:'Kuracie stehná bez kože',o:'~300g — ŠT obed'},
-    {n:'Zubáč filety',o:'~300g — PO na pare'},
-    {n:'Pstruh čerstvý/mrazený',o:'~300g — SO na olivovom oleji'},
-    {n:'Rybie filé (treska/zubáč)',o:'~200g — ŠT večera'},
-    {n:'Bravčová panenka',o:'~400g — ST,NE obed'}
+    {n:'Dusená šunka',o:'~4 plátky — UT,ŠT raňajky'},
+    {n:'Teľacie (alebo morčacie) mäso na rezance',o:'~150g — SO obed'},
+    {n:'Treska (alebo iné rybie filé)',o:'~180g — SO večera'},
+    {n:'Kuracie prsia',o:'~150g — NE obed'}
   ],
   '🧀 Mliečne & vajcia':[
-    {n:'Vajcia',o:'~12 ks — PO omeleta, UT 3ks, NE praženica'},
-    {n:'Cottage syr',o:'~5 balení — UT,ŠT,PI,SO,NE raňajky'},
-    {n:'Jogurt bezlaktózový',o:'~2 balenia — PO,ST raňajky'},
-    {n:'Mozzarella syr',o:'~125g — UT raňajky'},
-    {n:'Tvaroh bezlaktózový',o:'~200g — PI raňajky'},
-    {n:'Syr bezlaktózový (na praženicu)',o:'~100g — NE večera'},
-    {n:'Maslo bezlaktózové',o:'~50g — ST zemiaky na masle'}
+    {n:'Kefír bezlaktózový',o:'~200ml — PO raňajky'},
+    {n:'Jogurt bezlaktózový',o:'~200g — ST raňajky'},
+    {n:'Tvaroh jemný bezlaktózový',o:'~200g — PI raňajky'},
+    {n:'Cottage syr',o:'~200g — ŠT raňajky'},
+    {n:'Ricotta (alebo jemný tvaroh)',o:'~100g — ŠT večera, SO raňajky'},
+    {n:'Mozzarella (syr/strúhaná/v náleve)',o:'~220g — UT,SO,NE'},
+    {n:'Vajcia',o:'~15 ks — počas týždňa raňajky/večere'},
+    {n:'Mlieko',o:'~5dcl — UT,PI,SO,NE'},
+    {n:'Smotana na varenie',o:'~2dcl — ST,NE'}
   ],
   '🌾 Obilniny & prílohy':[
-    {n:'Ryža guľatozrnná',o:'~400g — UT,PI,SO rizoto'},
-    {n:'Knäckebrot (bez kvasníc)',o:'~2 balenia — UT,ŠT,PI,SO,NE'},
-    {n:'Zemiaková kaša (bezlaktózová)',o:'~300g — ŠT obed'}
+    {n:'Knäckebrot (bez kvasníc)',o:'~200g — UT,ŠT'},
+    {n:'Ryža Basmati',o:'~60g — SO obed'},
+    {n:'Ryžové rezance (pho)',o:'~100g — NE večera'},
+    {n:'Ryžová múka',o:'~150g — SO,NE toast (jedna dávka)'},
+    {n:'Pšeničná múka',o:'~50g — SO,NE toast'},
+    {n:'Vínny kameň (prášok do pečiva)',o:'1 balenie — SO,NE toast'}
   ],
   '🫒 Oleje & orechy':[
-    {n:'Olivový olej panenský',o:'doplniť — varenie a šaláty'},
-    {n:'Kokosový olej panenský',o:'doplniť — PO omeleta, ŠT ryba'},
-    {n:'Makový olej',o:'doplniť — raňajky + zelenina za studena'},
-    {n:'Makadamové orechy',o:'~100g — UT,ŠT,PI raňajky'},
-    {n:'Tekvicové semienka',o:'~100g — PO,UT,ŠT,PI,SO raňajky/večera'}
-  ],
-  '💊 Suplementy':[
-    {n:'GymBeam elektrolyty',o:'doplniť — 3 tbl/deň do pohárov 4,7,9'},
-    {n:'Mattoni neperlivá/nesýtená 1,5l',o:'~1 balenie (6ks)/týždeň — poháre 2,6,10 (NIE perlivá!)'},
-    {n:'Rajec neperlivá v SKLE 1,5l',o:'14 fliaš — poháre 3,4,7,9,11 s citrónom'},
-    {n:'NONA soľ',o:'doplniť — poháre 1,13,14'},
-    {n:'BioMineral Biokomplex pastilky',o:'doplniť — 3×/deň'}
+    {n:'Olivový olej panenský',o:'doplniť — PO,ST,SO,NE'},
+    {n:'Kokosový olej panenský',o:'doplniť — PI večera'},
+    {n:'Makový olej',o:'doplniť — UT,ŠT,SO,NE'},
+    {n:'Makadamové orechy',o:'~150g — PO,ST,PI,SO raňajky'},
+    {n:'Tekvicové semienka',o:'~30g — ST,NE'},
+    {n:'Pistácie',o:'~60g — PO,PI,ŠT,NE'}
   ]
 };
 
 let st=JSON.parse(localStorage.getItem('mh4')||'{}');
 if(!st.weight||st.weight.length===0){st.weight=[{v:85,d:'10. 5. 2026',start:true}];save();}
 else if(!st.weight.find(w=>w.start)){st.weight.unshift({v:85,d:'10. 5. 2026',start:true});save();}
-let cw=5,cd=0,csw=5,recipeFilter='all',recipeSearch='';
+let cw=7,cd=0,csw=7,recipeFilter='all',recipeSearch='';
 
 function toggleInduction(){
   const t=document.getElementById('induction-table');
@@ -2196,14 +2238,16 @@ function renderSuppl(){
 
 function setWeek(w){
   cw=w;cd=0;
-  ['wt5','wt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+5===w); });
+  ['wt7','wt8'].forEach((id)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',el.id==='wt'+w); });
   renderDayTabs();renderMeals();
 }
 
-function getWeekData(w){return w===6?W6:W5;}
+function getWeekData(w){return w===7?W7:w===8?W8:null;}
 function renderDayTabs(){
+  const c=document.getElementById('day-tabs');
+  c.style.display='';
   const meals=getWeekData(cw);
-  const c=document.getElementById('day-tabs');c.innerHTML='';
+  c.innerHTML='';
   meals.forEach((m,i)=>{
     const b=document.createElement('button');b.className='day-tab'+(i===cd?' active':'');
     b.textContent=m.day;
@@ -2231,7 +2275,7 @@ function renderMeals(){
   const totalB=+((m.bbielk||0)+(m.lbielk||0)+(m.dbielk||0)).toFixed(1);
   const totalS=+((m.bsachar||0)+(m.lsachar||0)+(m.dsachar||0)).toFixed(1);
   const totalT=+((m.btuky||0)+(m.ltuky||0)+(m.dtuky||0)).toFixed(1);
-  const kcalOk=totalKcal>=1950&&totalKcal<=2250;
+  const kcalOk=totalKcal>=1900&&totalKcal<=2350;
   document.getElementById('meal-content').innerHTML=`
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
@@ -2617,10 +2661,11 @@ function updateKPIs(){
 
 function setShopWeek(w){
   csw=w;
-  ['swt5','swt6'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',i+5===w); });
+  const el7=document.getElementById('swt7'); if(el7) el7.classList.toggle('active',w===7);
+  const el8=document.getElementById('swt8'); if(el8) el8.classList.toggle('active',w===8);
   renderShopList();
 }
-function getShopData(w){return w===6?SHOP6:SHOP5;}
+function getShopData(w){return w===7?SHOP7:w===8?SHOP8:null;}
 
 function renderShopList(){
   const data=getShopData(csw);const key='shop_w'+csw;
