@@ -1368,6 +1368,16 @@ function getCurrentTeaWeek(){
   return weekNum;
 }
 
+function getCurrentMealWeek(){
+  // Štart T7: 20.07.2026 — rotácia T7-T8-T7-T8...
+  const start=new Date('2026-07-20');
+  const now=new Date();
+  const diffDays=Math.floor((now-start)/(1000*60*60*24));
+  if(diffDays<0) return 7; // pred štartom = defaultne T7
+  const idx=Math.floor(diffDays/7)%2;
+  return idx===0?7:8;
+}
+
 function getTeaSub(){
   const weekNum=getCurrentTeaWeek();
   let group=TEA_GROUPS[weekNum-1];
@@ -1549,6 +1559,7 @@ const DAILY_PLAN=[
   // POHÁR 14 — Vodovod + NONA soľ + Mg taurát + B6
   {time:'22:00',icon:'🧂',label:'POHÁR 14 + Mg taurát + B6',sub:'300ml vody z vodovodu (nechaj postáť, nech vyprchá chlór) + 2–3 zrnká NONA soli + šťava z ¼ citróna. Mg taurát + B6 — zapiť týmto pohárom, NIE naraz so zinkom! Nemusíš vypiť celý, nechaj pol pohára pri posteli.',why:'Nočná mineralizácia. NONA soľ = jód navyše. Citrón neutralizuje chlór.',tag:'dom',cup:14,dl:3,waterType:'vodovod'},
 ];
+DAILY_PLAN.sort((a,b)=>a.time.localeCompare(b.time));
 
 // Farby pre typy nápojov
 const WATER_COLORS={
@@ -2046,6 +2057,7 @@ function init(){
   const now=new Date();
   document.getElementById('todayDate').textContent=now.toLocaleDateString('sk-SK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   cd=(now.getDay()+6)%7;
+  cw=getCurrentMealWeek();csw=cw;
 
   // BOD 0 — Ak daily-checklist zostal prázdny po načítaní, force re-render
   setTimeout(()=>{
@@ -2096,10 +2108,11 @@ function showScreen(n,btn){
   // BOD 4 — pri otvorení jedálnička skočí na dnešný deň a aktuálny týždeň
   if(n==='food'){
     const today=(new Date().getDay()+6)%7;
-    if(today!==cd){
-      cd=today;
-      renderDayTabs();renderMeals();
-    }
+    const currentWeek=getCurrentMealWeek();
+    let needsRender=false;
+    if(today!==cd){ cd=today; needsRender=true; }
+    if(currentWeek!==cw){ cw=currentWeek; csw=currentWeek; syncWeekTabUI(cw); needsRender=true; }
+    if(needsRender){ renderDayTabs();renderMeals(); }
   }
 }
 
@@ -2236,9 +2249,13 @@ function renderSuppl(){
   });
 }
 
+function syncWeekTabUI(w){
+  ['wt7','wt8'].forEach((id)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',el.id==='wt'+w); });
+  ['swt7','swt8'].forEach((id)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',el.id==='swt'+w); });
+}
 function setWeek(w){
   cw=w;cd=0;
-  ['wt7','wt8'].forEach((id)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('active',el.id==='wt'+w); });
+  syncWeekTabUI(w);
   renderDayTabs();renderMeals();
 }
 
