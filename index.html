@@ -1399,6 +1399,11 @@ function isSlimUnlocked(){
   return phOk&&lastKm<450;
 }
 
+function getLastKm(){
+  const kms=st.km||[];
+  return kms.length?kms[kms.length-1].v:999; // 999 = žiadny záznam = zamknuté
+}
+
 function renderTeaRotation(){
   const weekNum=getCurrentTeaWeek();
   const group=TEA_GROUPS[weekNum-1];
@@ -1502,63 +1507,60 @@ function getWaterEmoji(){return '🫙';}
 
 const DAILY_PLAN=[
   // POHÁR 1 — Citrátová bomba
-  {time:'06:00',icon:'🧂',label:'POHÁR 1 — Vodovod + NONA soľ',sub:'Nalej si 300ml vody z vodovodu HNEĎ po vstaní a nechaj postáť (v otvorenom pohári) počas dýchania a SM systému — chlór vyprchá. Až potom pridaj 2–3 zrnká NONA soli + šťavu z ¼ citróna a vypi (cca 06:35), stále nalačno.',why:'Chlór vo vodovode prekysľuje — vyvetraním sa ho zbavíš, citrón potom alkalizuje ešte viac. NONA soľ = jód + minerály.',tag:'dom',cup:1,dl:3,waterType:'vodovod'},
+  {time:'06:00',icon:'🧂',label:'POHÁR 1 — Vodovod + NONA soľ',sub:'Nalej si 300ml vlažnej vody z vodovodu HNEĎ po vstaní a nechaj postáť (v otvorenom pohári) počas dýchania a SM systému — chlór vyprchá. Až potom pridaj 2 zrnká NONA soli + šťavu z ¼ citróna a vypi (cca 06:35), stále nalačno.',why:'Chlór vo vodovode prekysľuje — vyvetraním sa ho zbavíš, citrón potom alkalizuje ešte viac. NONA soľ = jód + minerály. Ráno pi čo najteplejšiu na prázdny žalúdok.',tag:'dom',cup:1,dl:3,waterType:'vodovod'},
   {time:'06:00',icon:'📏',label:'Zmeral som váhu',sub:'Po toalete, pred jedlom — zapiš do Monitoringu',why:'Každý deň rovnaké podmienky = porovnateľný trend',tag:'dom'},
   {time:'06:00',icon:'🧪',label:'Zmeral som pH moču',sub:'PO–PI: prúžkom | SO+NE: pH metrom pri teplote moču ~25°C — zapiš do Voda & pH',why:'Ranné pH je najdôležitejší denný indikátor stavu obličiek',tag:'dom'},
   {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
   {time:'06:20',icon:'🏋️',label:'SM systém',sub:'15 minút — záložka Telo → Pohyb',why:'Trakcia chrbtice, uvoľnenie psoasu, stabilizácia L4/5',tag:'dom'},
-  {time:'06:30',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (250g uhorky + 125g zeleru + ½ limetky + 1čl inulínu), bylinkový čaj, suplementy 09:30/10:00/12:00/13:00/16:00/17:00',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci',tag:'dom',weekdayOnly:true},
-  // POHÁR 2 — Mattoni
-  {time:'07:00',icon:'🏅',label:'POHÁR 2 — Mattoni neperlivá',sub:'300ml Mattoni (neperlivá/nesýtená, NIE perlivá!) — bez citrónu',why:'Alkalizuje moč — znižuje kyselinu močovú (dna). Piť mimo jedálenského okna, nie tesne po jedle.',tag:'dom',cup:2,dl:3,waterType:'mineral'},
-  // POHÁR 3
-  {time:'08:00',icon:'💧',label:'POHÁR 3',sub:'300ml vlažnej — vlažná, nie ľadová',why:'Plynulá hydratácia pred odchodom do práce',tag:'dom',cup:3,dl:3,waterType:'rajec'},
+  {time:'06:30',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Urea-Detox šťava (250g uhorky + 100g hlávkového šalátu + ½ limetky + 1čl inulínu), bylinkový čaj, suplementy 09:45/10:30/12:30/13:30/16:00/17:00',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci. Zeler vyradený, nahradený hlávkovým šalátom.',tag:'dom',weekdayOnly:true},
+  // POHÁR 2 — Mattoni + elektrolyty (1/2)
+  {time:'07:00',icon:'🏅',label:'POHÁR 2 + GymBeam elektrolyty (1/2)',sub:'250ml vlažnej vody z vodovodu + 1 tbl GymBeam elektrolytov',why:'Na krvný tlak. Elektrolyty znížené na 2×/deň.',tag:'dom',cup:2,dl:2.5,waterType:'vodovod'},
   {time:'07:45',icon:'💊',label:'BioMineral Biokomplex (1/3)',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť. NEZAPÍJAŤ.',why:'Bunková hygiena: minerálna rovnováha cez sliznicu.',tag:'dom'},
+  // POHÁR 3 — Mattoni
+  {time:'08:00',icon:'💧',label:'POHÁR 3 Mattoni neperlivá',sub:'250ml Mattoni (neperlivá/nesýtená, NIE perlivá!) — bez citrónu',why:'Plynulá hydratácia pred odchodom do práce',tag:'dom',cup:3,dl:2.5,waterType:'mineral'},
   {time:'08:00',icon:'🧴',label:'LEG FLOW 2.0 — ranný sprej',sub:'',why:'Aktivácia lymfy a prekrvenia pred odchodom. Tenkú vrstvu Anti-stres na ľavú slabinu pred prechádzkou.',tag:'dom',massageType:'morning'},
   {time:'08:30',icon:'🚶',label:'Lymfatická prechádzka',sub:'Aspoň 10 minút pred odchodom do práce',why:'Aktivácia panvy a lymfatického odtoku pred sedením v aute',tag:'dom'},
-  // POHÁR 4 + Raňajky
-  {time:'09:30',icon:'💊',label:'Kurací kolagén II',sub:'3 tbl kolagénu — zapiť trochou vody, ešte pred jedlom!',why:'Stavba platničiek L3–S1. Nalačno = najlepšie vstrebávanie. Vitamín C vysadený — nahrádza rakytník v čaji.',tag:'praca'},
+  // Kurací kolagén — zamknuté, kým pH nedosiahne 6,0
+  {time:'09:30',icon:'💊',label:'Kurací kolagén II',sub:'3 tbl kolagénu — zapiť trochou vody, ešte pred jedlom!',why:'Stavba platničiek L3–S1. Nalačno = najlepšie vstrebávanie. Vitamín C vysadený — nahrádza rakytník v čaji.',tag:'praca',lockUntilPH:6.0},
   {time:'09:30',icon:'🌅',label:'Raňajky — štart jedálenského okna',sub:'Pozri Jedálniček → dnešný deň',why:'Pôst 16 hodín: 17:30 — 09:30',tag:'praca'},
-  // POHÁR 4 — Rajec + elektrolyty
-  {time:'10:00',icon:'⚡',label:'POHÁR 4 + GymBeam elektrolyty (1/3)',sub:'300ml vlažnej + 1 tbl GymBeam elektrolytov',why:'',tag:'praca',cup:4,dl:3,waterType:'rajec'},
-  {time:'10:00',icon:'💊',label:'A-Z Multivitamín',sub:'1 tableta s vodou',why:'Komplex vitamínov a minerálov vrátane draslíka a elektrolytov',tag:'praca'},
-  {time:'10:00',icon:'🥜',label:'Makadamiové orechy',sub:'5 ks (veľké) alebo 8 ks (malé) — jedz pomaly, po jednom, dobre požuj. >70% dobrých tukov, bez cholesterolu.',why:'Zdroj omega-3 a zdravých tukov. Selén = para orechy (max 2 ks/deň).',tag:'praca'},
-  // POHÁR 5 — Urea-Detox
-  {time:'11:00',icon:'🥤',label:'POHÁR 5 — Urea-Detox šťava',sub:'250g uhorky + 125g zeleru + šťava z ½ limetky + 1čl inulínu — fľaša z domu',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami. Limetka = alkalizácia. Inulín = oxalátová bariéra.',tag:'praca',weekdayOnly:true,cup:5,dl:3,waterType:'urea'},
-  {time:'11:00',icon:'🥤',label:'POHÁR 5 — Urea-Detox šťava',sub:'250g uhorky + 125g zeleru + šťava z ½ limetky + 1čl inulínu — čerstvé doma',why:'Ftalidy zo zeleru zlepšujú prietok krvi obličkami. Limetka = alkalizácia. Inulín = oxalátová bariéra.',tag:'dom',weekendOnly:true,cup:5,dl:3,waterType:'urea'},
+  // POHÁR 4 — Mattoni (podmienené, ak nie je mlieko na raňajky)
+  {time:'09:45',icon:'⚡',label:'POHÁR 4',sub:'250ml Mattoni (neperlivá/nesýtená, NIE perlivá!), iba ak nemáš na raňajky mlieko alebo mliečny shake — vtedy rátaj to mlieko ako pohár 4',why:'',tag:'praca',cup:4,dl:2.5,waterType:'mineral'},
+  {time:'09:45',icon:'💊',label:'A-Z Multivitamín',sub:'1 tableta — zapiť s Mattoni z pohára 4, alebo trochou vody, ak máš mliečne raňajky.',why:'Komplex vitamínov a minerálov. Draslík v ňom nie je.',tag:'praca'},
+  {time:'10:30',icon:'🥤',label:'POHÁR 5 — Urea-Detox šťava',sub:'250g uhorky + 100g hlávkového šalátu (~4-5 veľkých listov) + šťava z ½ limetky + 1čl inulínu — fľaša z domu, cca 250ml. Cez sobotu a nedeľu vynechať.',why:'Šalát riedi moč a posúva pH z 5,25 smerom nahor + B9. Limetka = alkalizácia. Inulín = oxalátová bariéra a lepšie vstrebávanie minerálov. Zeler vyradený.',tag:'praca',weekdayOnly:true,cup:5,dl:2.5,waterType:'urea'},
   {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie — BEZ omáčok. ⚠️ Po jedle NECHAJ 15 MIN PAUZU pred pitím — nezrieď žalúdočnú kyselinu! Jedz pomaly, dobre požuj.',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy',tag:'praca',weekdayOnly:true},
   {time:'11:30',icon:'🍳',label:'Varenie obeda doma',sub:'Pozri Jedálniček → dnešný deň',why:'Víkend = doma varené, plná kontrola nad ingredienciami.',tag:'dom',weekendOnly:true},
-  {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'Po obede — nie nalačno',why:'Motor mitochondrií. Rozpustný v tukoch = musí byť s jedlom.',tag:'praca'},
-  // POHÁR 7 — Rajec + elektrolyty + B9
-  {time:'13:00',icon:'⚡',label:'POHÁR 7 + GymBeam elektrolyty (2/3) + B9',sub:'300ml vlažnej + 1 tbl GymBeam elektrolytov. Methylfolát B9 1 tbl — zapiť vodou, nie čajom!',why:'Príliš blízko obeda — čaj by prealkalizoval a zhoršil trávenie. B9 znižuje HCY pri Leidene.',tag:'praca',cup:7,dl:3,waterType:'rajec'},
-  // POHÁR 6 — Mattoni (2h po obede)
-  {time:'13:30',icon:'🏅',label:'POHÁR 6 — Mattoni neperlivá',sub:'300ml Mattoni (neperlivá/nesýtená) — bez citrónu, cca 2h po obede',why:'Alkalizuje moč. Až 2h po jedle — inak by znížila žalúdočnú kyselinu.',tag:'praca',cup:6,dl:3,waterType:'mineral'},
-  {time:'14:00',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! Aspoň 1 hodinu po obede.',tag:'praca',cup:8,dl:3,waterType:'caj',teaType:true},
-  {time:'14:30',icon:'🌱',label:'Tekvicové semiačka',sub:'Max 1 hrsť (20–30g) — zapiť vodou. Odstup min. 3–4h od makadamiových. Prírodný liek na kyselinu močovú.',why:'Zinok + magnézium. Vždy zapiť — oxaláty nesmú tvoriť piesok.',tag:'praca'},
+  {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'Po obede — nie nalačno, zapiť len trochou vody',why:'Motor mitochondrií. Rozpustný v tukoch = musí byť s jedlom.',tag:'praca'},
+  // POHÁR 6 — Mattoni + B9 (elektrolyty odtiaľto preč)
+  {time:'12:30',icon:'⚡',label:'POHÁR 6 + B9',sub:'200ml vody z vodovodu + Methylfolát B9 1 tbl — zapiť vodou, nie čajom!',why:'Príliš blízko obeda — čaj a minerálky by prealkalizovali a zhoršili trávenie. B9 znižuje HCY pri Leidene. GymBeam elektrolyty tu už nie sú — zmena na 2×/deň.',tag:'praca',cup:6,dl:2,waterType:'vodovod'},
+  // POHÁR 7 — Mattoni (2h po obede)
+  {time:'13:30',icon:'🏅',label:'POHÁR 7 — Mattoni neperlivá',sub:'250ml Mattoni (neperlivá/nesýtená) — bez citrónu, cca 2h po obede',why:'Alkalizuje moč, dopĺňa elektrolyty. Až cca 2h po jedle — inak by znížila žalúdočnú kyselinu.',tag:'praca',cup:7,dl:2.5,waterType:'mineral'},
+  {time:'14:30',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'300ml + šťava zo ¼ citróna',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! NIE po obede. Podľa rotácie, pridaný citrón.',tag:'praca',cup:8,dl:3,waterType:'caj',teaType:true},
   {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — záložka Telo → Dýchanie. Každých 60 minút vstať a pohybovať sa (Leiden!).',why:'V práci nemôžeš ľahnúť — aspoň sed.',tag:'praca'},
   {time:'14:45',icon:'💊',label:'BioMineral Biokomplex (2/3)',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť. NEZAPÍJAŤ.',why:'Bunková hygiena: minerálna rovnováha cez sliznicu.',tag:'praca'},
-  // POHÁR 9 — Rajec + elektrolyty + Zinok
-  {time:'16:00',icon:'⚡',label:'POHÁR 9 + GymBeam elektrolyty (3/3) + Zinok',sub:'300ml vlažnej + 1 tbl GymBeam elektrolytov. Zinok 15mg — zapiť vodou. NIE naraz s horčíkom (22:00).',why:'Zinok — imunita a hojenie tkanív.',tag:'praca',cup:9,dl:3,waterType:'rajec'},
+  // POHÁR 9 — Mattoni + Zinok (elektrolyty odtiaľto preč)
+  {time:'16:00',icon:'⚡',label:'POHÁR 9 + Zinok',sub:'250ml vlažnej vody z vodovodu + Zinok 15mg — zapiť vodou. NIE naraz s horčíkom, preto nie Mattoni (22:00).',why:'Zinok — imunita a hojenie tkanív. GymBeam elektrolyty odtiaľto presunuté — zmena na 2×/deň.',tag:'praca',cup:9,dl:2.5,waterType:'vodovod'},
   {time:'17:00',icon:'💊',label:'Krilový olej',sub:'Pred večerou — zapiť trochou vody',why:'Omega-3 pre cievy pri Leidenovej mutácii.',tag:'dom'},
-  {time:'17:15',icon:'🌙',label:'Večera — KONIEC jedálenského okna do 17:30',sub:'Pozri Jedálniček → dnešná večera. Po 17:30 už len voda a čaje.',why:'Pôst 16 hodín začína teraz. Ľanový/makový olej pridaj do večere — za studena!',tag:'dom',highlight:true},
+  {time:'17:15',icon:'🌙',label:'Večera — KONIEC jedálenského okna do 17:30',sub:'Pozri Jedálniček → dnešná večera. Po 17:30 už len voda a čaje.',why:'Pôst 16 hodín začína teraz. Ľanový/makový olej pridaj do večere — za studena! Pridávať iba podľa rozpisu v jedálničku.',tag:'dom',highlight:true},
+  // POHÁR 10 — Vodovod + elektrolyty (2/2)
+  {time:'18:00',icon:'🏅',label:'POHÁR 10 + GymBeam elektrolyty (2/2)',sub:'250ml vlažnej vody z vodovodu + GymBeam elektrolyty',why:'Vypiť pred alebo počas prechádzky.',tag:'dom',cup:10,dl:2.5,waterType:'vodovod'},
   {time:'18:00',icon:'🚶',label:'Lymfatická prechádzka po večeri',sub:'30–45 minút, pomalé tempo. Na slabinu pred prechádzkou: tenkú vrstvu Anti-stres emulzie.',why:'Aktivácia lymfy + prevencia trombózy (Leiden) po celodennom sedení',tag:'dom'},
-  {time:'18:45',icon:'💊',label:'BioMineral Biokomplex (3/3)',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť. NEZAPÍJAŤ.',why:'Bunková hygiena: minerálna rovnováha cez sliznicu.',tag:'dom'},
-  // POHÁR 11 — Rajec (biominerálový pár)
-  {time:'19:00',icon:'💧',label:'POHÁR 11',sub:'300ml vlažnej',why:'',tag:'dom',cup:11,dl:3,waterType:'rajec'},
-  // POHÁR 12 — Bylinkový čaj večer
-  {time:'19:10',icon:'🍵',label:'POHÁR 12 — Bylinkový čaj večerný',sub:'',why:'Večerná podpora detoxu.',tag:'dom',cup:12,dl:3,teaType:true,waterType:'caj'},
-  // POHÁR 10 — Mattoni (mimo jedálenského okna, odstup od večere)
-  {time:'19:30',icon:'🏅',label:'POHÁR 10 — Mattoni neperlivá',sub:'300ml Mattoni (neperlivá/nesýtená) — bez citrónu',why:'Alkalizuje moč. Mimo jedálenského okna, dostatočný odstup od večere.',tag:'dom',cup:10,dl:3,waterType:'mineral'},
-  {time:'19:45',icon:'🦶',label:'Teplý kúpeľ nôh',sub:'Kúpeľ nôh v teplej vode niekoľko minút — príprava pred aplikáciou Biominerál D6 krému.',why:'Teplo dilatuje póry na chodidlách — zlepšuje vstrebávanie krému (transdermálny bypass).',tag:'dom'},
+  // POHÁR 11 — Bylinkový čaj večerný (zlúčené s pôvodným pohárom vody)
+  {time:'19:00',icon:'💧',label:'POHÁR 11 — Bylinkový čaj večerný',sub:'250ml + šťava zo ¼ citróna',why:'Večerná podpora detoxu. Podľa rotácie, pridaný citrón.',tag:'dom',cup:11,dl:2.5,waterType:'caj',teaType:true},
+  {time:'19:45',icon:'🦶',label:'Teplý kúpeľ nôh',sub:'Kúpeľ nôh v teplej vode s NONA/epsomskou soľou (striedať), niekoľko minút — príprava pred aplikáciou Biominerál D6 krému.',why:'Teplo dilatuje póry na chodidlách — zlepšuje vstrebávanie krému (transdermálny bypass).',tag:'dom'},
   {time:'19:55',icon:'🧴',label:'Biominerál D6 krém na chodidlá',sub:'Aplikovať ihneď po kúpeli nôh, kým sú chodidlá ešte teplé a póry otvorené.',why:'Transdermálny bypass — minerály sa vstrebávajú priamo cez pokožku chodidiel.',tag:'dom'},
   {time:'20:00',icon:'⚗️',label:'Graphites CH15',sub:'5 globúl — nechaj rozpustiť v ústach. 10 min nič nejesť/nepiť. Sezónne (júl–august).',why:'Prevencia sebopsoriázy v lete. Nevstrebáva sa cez tráviaci trakt.',tag:'dom',everyOtherDay:true},
-  {time:'20:30',icon:'🧴',label:'Večerná emulzia + infralampa',sub:'',why:'Nočná oprava platničiek. Bez emulzie infralampa stráca účinok.',tag:'dom',massageInfo:true,massageType:'evening'},
+  // POHÁR 12 — Vodovod + keltská soľ (nové, oddelené od citrónovej vody)
+  {time:'20:15',icon:'🍵',label:'POHÁR 12 — Vodovod + keltská soľ',sub:'200ml vlažnej vody z vodovodu + štipka keltskej soli',why:'Večerná mineralizácia.',tag:'dom',cup:12,dl:2,waterType:'vodovod'},
+  {time:'20:30',icon:'💊',label:'BioMineral Biokomplex (3/3)',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť. NEZAPÍJAŤ.',why:'Bunková hygiena: minerálna rovnováha cez sliznicu.',tag:'dom'},
+  {time:'20:30',icon:'🧴',label:'Večerná emulzia + infralampa',sub:'',why:'Nočná oprava platničiek. Spustí sa automaticky, keď zapíšeš KM pod 400.',tag:'dom',massageInfo:true,massageType:'evening',lockUntilKmBelow:400},
   {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou.',tag:'dom'},
   {time:'21:10',icon:'🌬️',label:'Dych 4-7-8',sub:'4 cykly — záložka Telo → Dýchanie',why:'Alkalizuje krv, upokojuje CNS pred spaním.',tag:'dom'},
-  // POHÁR 13 — Vodovod + NONA soľ
-  {time:'21:30',icon:'🧂',label:'POHÁR 13 — Vodovod + NONA soľ',sub:'300ml vody z vodovodu (nechaj 15–20 min postáť v otvorenom pohári, nech vyprchá chlór) + 2–3 zrnká NONA soli + šťava z ¼ citróna',why:'Chlór vo vodovode prekysľuje — citrón po vyvetraní chlóru alkalizuje. Večerná mineralizácia — po 17:00, doma.',tag:'dom',cup:13,dl:3,waterType:'vodovod'},
-  // POHÁR 14 — Vodovod + NONA soľ + Mg taurát + B6
-  {time:'22:00',icon:'🧂',label:'POHÁR 14 + Mg taurát + B6',sub:'300ml vody z vodovodu (nechaj postáť, nech vyprchá chlór) + 2–3 zrnká NONA soli + šťava z ¼ citróna. Mg taurát + B6 — zapiť týmto pohárom, NIE naraz so zinkom! Nemusíš vypiť celý, nechaj pol pohára pri posteli.',why:'Nočná mineralizácia. NONA soľ = jód navyše. Citrón neutralizuje chlór.',tag:'dom',cup:14,dl:3,waterType:'vodovod'},
+  // POHÁR 13 — Vodovod (NONA soľ vyradená, zostáva len citrón)
+  {time:'21:30',icon:'🧂',label:'POHÁR 13 — Vodovod',sub:'200ml vody z vodovodu (nechaj 15 min postáť v otvorenom pohári, nech vyprchá chlór) + šťava z ¼ citróna',why:'Chlór vo vodovode prekysľuje — citrón po vyvetraní chlóru alkalizuje. Večerná mineralizácia — doma. NONA soľ tu už nie je.',tag:'dom',cup:13,dl:2,waterType:'vodovod'},
+  // POHÁR 14 — Vodovod + Mg taurát + B6
+  {time:'22:30',icon:'🧂',label:'POHÁR 14 + Mg taurát + B6',sub:'150ml vody z vodovodu (nechaj postáť, nech vyprchá chlór) + Mg taurát + B6 — zapiť trochou vody, Mg nikdy NIE naraz so zinkom! Nevypiť celý, iba zapiť tabletku.',why:'Nočná mineralizácia.',tag:'dom',cup:14,dl:1.5,waterType:'vodovod'},
 ];
+DAILY_PLAN.sort((a,b)=>a.time.localeCompare(b.time));
 DAILY_PLAN.sort((a,b)=>a.time.localeCompare(b.time));
 
 // Farby pre typy nápojov
@@ -1610,6 +1612,10 @@ function renderDailyChecklist(){
   DAILY_PLAN.forEach((item,i)=>{
     if(item.weekdayOnly && todayIsWeekend) return;
     if(item.weekendOnly && !todayIsWeekend) return;
+    // Kurací kolagén a pod. — skryté kým priemerné ranné pH nedosiahne prahovú hodnotu
+    if(item.lockUntilPH && (t.ph||0) < item.lockUntilPH) return;
+    // Večerná emulzia a pod. — skryté kým posledný zapísaný KM neklesne pod prah
+    if(item.lockUntilKmBelow && getLastKm() >= item.lockUntilKmBelow) return;
     // Graphites — každý 2. deň od štartu protokolu
     if(item.everyOtherDay && st.phaseStart){
       const start=new Date(st.phaseStart);
@@ -1664,6 +1670,8 @@ function toggleDayItem(i){
   // Skontroluj či je položka viditeľná
   if(item.weekdayOnly&&todayIsWeekend)return;
   if(item.weekendOnly&&!todayIsWeekend)return;
+  if(item.lockUntilPH){const t3=td();if((t3.ph||0)<item.lockUntilPH)return;}
+  if(item.lockUntilKmBelow && getLastKm()>=item.lockUntilKmBelow)return;
   if(item.everyOtherDay&&st.phaseStart){
     const s=new Date(st.phaseStart);const t2=new Date();
     t2.setHours(0,0,0,0);s.setHours(0,0,0,0);
