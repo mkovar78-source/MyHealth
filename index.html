@@ -1353,8 +1353,8 @@ const TEA_GROUPS=[
 ];
 
 function getCurrentTeaWeek(){
-  // Štart čajovej rotácie: 25.05.2026
-  const start=new Date('2026-05-25');
+  // Štart čajovej rotácie: 18.05.2026 (posunuté o -1 týždeň, aby 17.8.2026 = Anti-Inflam)
+  const start=new Date('2026-05-18');
   const now=new Date();
   const diffDays=Math.floor((now-start)/(1000*60*60*24));
   const weekNum=(Math.floor(diffDays/7)%4)+1; // rotácia 1-2-3-4-1-2-3-4...
