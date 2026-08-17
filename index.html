@@ -160,7 +160,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   <div class="kpi-grid">
     <div class="kpi"><div class="kpi-label">pH moču (ráno)</div><div class="kpi-value" id="kpi-ph" style="font-size:24px;font-weight:300">–</div><div class="kpi-status" id="kpi-ph-status">Cieľ: 6,5–7,0 (zelená: 6,0–7,0)</div></div>
-    <div class="kpi"><div class="kpi-label" style="color:var(--teal)">Voda dnes</div><div class="kpi-value" id="kpi-water" style="color:var(--teal)">0<span class="kpi-unit">dl</span></div><div class="kpi-status" id="kpi-water-status">Cieľ: 38–42 dl</div></div>
+    <div class="kpi"><div class="kpi-label" style="color:var(--teal)">Voda dnes</div><div class="kpi-value" id="kpi-water" style="color:var(--teal)">0<span class="kpi-unit">dl</span></div><div class="kpi-status" id="kpi-water-status">Cieľ: 35 dl</div></div>
     <div class="kpi"><div class="kpi-label">Váha</div><div class="kpi-value" id="kpi-weight" style="font-size:24px;font-weight:300">–<span class="kpi-unit">kg</span></div><div class="kpi-status" id="kpi-weight-status">Cieľ: –10,4 kg</div></div>
     <div class="kpi"><div class="kpi-label">Kys. močová</div><div class="kpi-value" id="kpi-km" style="font-size:24px;font-weight:300">–</div><div class="kpi-status" id="kpi-km-status">Cieľ: 210–450 μmol/l</div></div>
   </div>
@@ -299,11 +299,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <!-- 1. VODA -->
   <div class="card">
     <div class="card-title">💧 Voda dnes</div>
-    <div class="info-box" id="water-type-info"><strong>Pitný režim:</strong> Poháre 3,4,7 (08:00,09:45,13:30) = Mattoni neperlivá — BEZ citrónu, mimo jedálenského okna. Poháre 8,11 (14:30,19:00) = bylinkový čaj + ¼ citróna (podľa rotácie). Pohár 5 (10:30) = Urea-Detox šťava, len PO–PI. Poháre 2,6,9,10,12 = voda z vodovodu (elektrolyty/B9/zinok/keltská soľ podľa pohára). Poháre 1,13,14 = vodovod (vyvetrať chlór) — 1 a 13 s citrónom, 1 aj s NONA soľou, 14 s Mg taurátom + B6. Rajec sa už nepije (nízke TDS).<br><strong>BioMineral Biokomplex:</strong> 3×/deň — rozpustiť v ústach, NEZAPÍJAŤ.<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
+    <div class="info-box" id="water-type-info"><strong>Pitný režim:</strong> Poháre 3,4 (08:00,09:45) = Mattoni neperlivá — BEZ citrónu, mimo jedálenského okna. Poháre 7,8,11 (13:30,14:30,19:00) = bylinkový čaj — 7 a 8 bez citrónu, 11 s ¼ citróna (podľa rotácie). Pohár 5 (10:30) = Urea-Detox šťava, len PO–PI. Poháre 2,6,9,10 = voda z vodovodu (elektrolyty/B9/zinok podľa pohára). Poháre 1,12,13,14 = vodovod (vyvetrať chlór) — 1 s citrónom, 12 a 13 bez citrónu/soli, 14 s Mg taurátom + B6. NONA soľ vysadená. Rajec sa už nepije (nízke TDS).<br><strong>BioMineral Biokomplex:</strong> 3×/deň — rozpustiť v ústach, NEZAPÍJAŤ.<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú.<br><strong>Na čaj a varenie:</strong> vodovod je OK.</div>
     <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:10px">
       <span id="water-label2" style="font-size:32px;font-weight:300;color:var(--teal);line-height:1">0</span>
       <span style="font-size:14px;color:var(--text2)">dl</span>
-      <span style="font-size:12px;color:var(--text3);margin-left:4px">z 38–42 dl</span>
+      <span style="font-size:12px;color:var(--text3);margin-left:4px">z 35 dl</span>
     </div>
     <div class="hydration-bar-bg"><div class="hydration-bar-fill" id="hydration-bar2" style="width:0%"></div></div>
     <div style="display:flex;gap:8px;margin-top:10px">
@@ -335,12 +335,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div id="ph-message" style="margin-top:8px;font-size:13px;color:var(--text2)"></div>
   </div>
 
-  <!-- 3. VODOVOD + NONA SOĽ - info -->
+  <!-- 3. VODOVOD + CITRÓN - info -->
   <div class="card">
-    <div class="card-title">🧂 Vodovod + NONA soľ – ráno a po 17:00</div>
+    <div class="card-title">🧂 Vodovod + citrón – ráno</div>
     <div style="font-size:13px;color:var(--text2);line-height:1.6">
-      <strong>300ml vody z vodovodu + 2–3 zrnká NONA soli + šťava z ¼ citróna</strong> — ihneď po vstávaní nalačno, a potom až po 17:00 (po práci).<br><br>
-      NONA soľ obsahuje jód a stopové minerály. Do práce sa NONA soľ neberie — preto len ráno doma a večer po návrate.<br><br>
+      <strong>300ml vody z vodovodu + šťava z ¼ citróna</strong> — ihneď po vstávaní nalačno.<br><br>
+      NONA soľ vysadená (2. zmena) — už sa nepije, ani ráno.<br><br>
       <span style="color:var(--text3);font-size:12px">📋 Recept → záložka Recepty → Šťavy & Shoty</span>
     </div>
   </div>
@@ -360,17 +360,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="card">
     <div class="card-title">🏅 Mattoni + vodovod so suplementmi</div>
     <div style="font-size:13px;color:var(--text2);line-height:1.6">
-      <strong>3× denne Mattoni neperlivá/nesýtená (NIE perlivá!) — samostatne, 250ml, BEZ citrónu</strong><br>
+      <strong>2× denne Mattoni neperlivá/nesýtená (NIE perlivá!) — samostatne, 250ml, BEZ citrónu</strong><br>
       💧 Pohár 3 — 08:00<br>
-      ⚡ Pohár 4 — 09:45 (iba ak nie je mlieko na raňajky)<br>
-      🏅 Pohár 7 — 13:30 (~2h po obede)<br><br>
+      ⚡ Pohár 4 — 09:45 (iba ak nie je mlieko na raňajky)<br><br>
       <span style="color:var(--orange)">⚠️ Vždy mimo jedla — nikdy tesne po jedle, znížilo by to žalúdočnú kyselinu.</span><br><br>
       <strong>+ vodovod so suplementmi (bez citrónu, bez Rajca — už sa nepije, má nízke TDS)</strong><br>
       🏅 Pohár 2 — 07:00 (+ GymBeam elektrolyty 1/2)<br>
       ⚡ Pohár 6 — 12:30 (+ B9 methylfolát)<br>
       ⚡ Pohár 9 — 16:00 (+ Zinok)<br>
       🏅 Pohár 10 — 18:00 (+ GymBeam elektrolyty 2/2)<br>
-      🍵 Pohár 12 — 20:15 (+ štipka keltskej soli)<br><br>
+      🍵 Pohár 12 — 20:15 (bez soli)<br><br>
       <div class="alert alert-orange" style="margin-bottom:0">💡 Mattoni alkalizuje moč — pomáha znižovať kyselinu močovú (dna). Kvôli vyššiemu obsahu vápnika a sodíka ju striedaj so zvyškom dňa, ktorý je postavený na vodovode.</div>
     </div>
   </div>
@@ -1216,7 +1215,7 @@ const RECIPES=[
 
 const TRAFFIC={
   green:[
-    {n:'Bylinkový čaj + šťava z ¼ citróna/limetky — poháre 8 a 11',r:'Citrón/limetka = alkalizácia moču. Rajec sa už nepije (nízke TDS) — citrón je teraz v čajoch a v pohári 13.'},
+    {n:'Bylinkový čaj — poháre 7,8 bez citrónu, pohár 11 + šťava z ¼ citróna/limetky',r:'Citrón/limetka = alkalizácia moču. Rajec sa už nepije (nízke TDS) — citrón je teraz len v pohári 1 a 11.'},
     {n:'Bylinkové čaje – breza, zlatobyľ, praslička, baza',r:'Vyplavujú kyselinu močovú. Na varenie čaju môžeš použiť vodovod.'},
     {n:'Uhorka, stonkový zeler, cuketa, fenikel',r:'Diuretické účinky, nízke oxaláty.'},
     {n:'Biela reďkovka, čakanka, listové šaláty',r:'Biela reďkovka = diuretikum. Čakanka = prirodzený inulín.'},
@@ -1466,7 +1465,7 @@ function renderTeaRotation(){
     </div>`;
   }).join('');
 }
-// Pitný režim: poháre 3,4,7 = Mattoni (bez citrónu, mimo jedla), poháre 8,11 = bylinkový čaj+citrón, pohár 5 = Urea-Detox (PO-PI), poháre 1,13,14 = vodovod (vyvetrať chlór), zvyšok = vodovod so suplementmi
+// Pitný režim: poháre 3,4 = Mattoni (bez citrónu, mimo jedla), poháre 7,8,11 = bylinkový čaj (7,8 bez citrónu, 11 s citrónom), pohár 5 = Urea-Detox (PO-PI), poháre 1,12,13,14 = vodovod (1 s citrónom, 12,13 bez citrónu/soli, 14 s Mg+B6), zvyšok (2,6,9,10) = vodovod so suplementmi
 
 // Masážny protokol — dynamicky podľa mesiaca od štartu
 function getMassageMonth(){
@@ -1499,12 +1498,12 @@ function getWaterEmoji(){return '🫙';}
 
 const DAILY_PLAN=[
   // POHÁR 1 — Citrátová bomba
-  {time:'06:00',icon:'🧂',label:'POHÁR 1 — Vodovod + NONA soľ + citrón',sub:'Nalej si 300ml vlažnej vody z vodovodu HNEĎ po vstaní a nechaj postáť (v otvorenom pohári) počas dýchania a SM systému — chlór vyprchá. Až potom pridaj 2 zrnká NONA soli + šťavu z ¼ citróna a vypi (cca 06:35), stále nalačno.',why:'Chlór vo vodovode prekysľuje — vyvetraním sa ho zbavíš, citrón potom alkalizuje ešte viac. NONA soľ = jód + minerály. Ráno pi čo najteplejšiu na prázdny žalúdok.',tag:'dom',cup:1,dl:3,waterType:'vodovod'},
+  {time:'06:00',icon:'🧂',label:'POHÁR 1 — Vodovod + citrón',sub:'Nalej si 300ml vlažnej vody z vodovodu HNEĎ po vstaní a nechaj postáť (v otvorenom pohári) počas dýchania a SM systému — chlór vyprchá. Potom pridaj šťavu z ¼ citróna a vypi (cca 06:35), stále nalačno.',why:'Chlór vo vodovode prekysľuje — vyvetraním sa ho zbavíš, citrón potom alkalizuje ešte viac. NONA soľ vysadená (2. zmena) — už sa nepije. Ráno pi čo najteplejšiu na prázdny žalúdok.',tag:'dom',cup:1,dl:3,waterType:'vodovod'},
   {time:'06:00',icon:'📏',label:'Zmeral som váhu',sub:'Po toalete, pred jedlom — zapiš do Monitoringu',why:'Každý deň rovnaké podmienky = porovnateľný trend',tag:'dom'},
   {time:'06:00',icon:'🧪',label:'Zmeral som pH moču',sub:'PO–PI: prúžkom | SO+NE: pH metrom pri teplote moču ~25°C — zapiš do Voda & pH',why:'Ranné pH je najdôležitejší denný indikátor stavu obličiek',tag:'dom'},
   {time:'06:10',icon:'🫁',label:'Krokodílie dýchanie',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Uvoľňuje psoas, aktivuje bránicu — priorita pri L4/5 a Th12-L1',tag:'dom'},
   {time:'06:20',icon:'🏋️',label:'SM systém',sub:'15 minút — záložka Telo → Pohyb',why:'Trakcia chrbtice, uvoľnenie psoasu, stabilizácia L4/5',tag:'dom'},
-  {time:'06:30',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Fľaša s 750ml vody z vodovodu (pohár 6 o 12:30 + čaj o 14:30 + pohár 9 o 16:00). Urea-Detox šťava (250g uhorky + 100g hlávkového šalátu + ½ limetky + 1čl inulínu), bylinkový čaj, suplementy 09:45/10:30/12:00/12:30/13:30/14:45/16:00',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci. Zeler vyradený, nahradený hlávkovým šalátom. Odchod z domu o 07:00 — po 17:00 už si doma, preto sa do práce neberie nič na 17:00.',tag:'dom',weekdayOnly:true},
+  {time:'06:30',icon:'🎒',label:'Pripraviť tašku do práce',sub:'Fľaša s 750ml vody z vodovodu (pohár 6 o 12:30 + čaj o 14:30 + pohár 9 o 16:00). Urea-Detox šťava (250g uhorky + 100g hlávkového šalátu + ¼ limetky + 1čl inulínu), bylinkový čaj (2× na pohár 7 aj 8), suplementy 09:45/10:30/12:00/12:30/13:30/14:45/16:00',why:'Bez prípravy ráno zabudneš — 5 minút teraz ušetrí chaos v práci. Zeler vyradený, nahradený hlávkovým šalátom. Odchod z domu o 07:00 — po 17:00 už si doma, preto sa do práce neberie nič na 17:00.',tag:'dom',weekdayOnly:true},
   // POHÁR 2 — Mattoni + elektrolyty (1/2)
   {time:'07:00',icon:'🏅',label:'POHÁR 2 + GymBeam elektrolyty (1/2)',sub:'250ml vlažnej vody z vodovodu + 1 tbl GymBeam elektrolytov',why:'Na krvný tlak. Elektrolyty znížené na 2×/deň.',tag:'dom',cup:2,dl:2.5,waterType:'vodovod'},
   {time:'07:45',icon:'💊',label:'BioMineral Biokomplex (1/3)',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť. NEZAPÍJAŤ.',why:'Bunková hygiena: minerálna rovnováha cez sliznicu.',tag:'praca'},
@@ -1518,15 +1517,15 @@ const DAILY_PLAN=[
   // POHÁR 4 — Mattoni (podmienené, ak nie je mlieko na raňajky)
   {time:'09:45',icon:'⚡',label:'POHÁR 4',sub:'250ml Mattoni (neperlivá/nesýtená, NIE perlivá!), iba ak nemáš na raňajky mlieko alebo mliečny shake — vtedy rátaj to mlieko ako pohár 4',why:'',tag:'praca',cup:4,dl:2.5,waterType:'mineral'},
   {time:'09:45',icon:'💊',label:'A-Z Multivitamín',sub:'1 tableta — zapiť s Mattoni z pohára 4, alebo trochou vody, ak máš mliečne raňajky.',why:'Komplex vitamínov a minerálov. Draslík v ňom nie je.',tag:'praca'},
-  {time:'10:30',icon:'🥤',label:'POHÁR 5 — Urea-Detox šťava',sub:'250g uhorky + 100g hlávkového šalátu (~4-5 veľkých listov) + šťava z ½ limetky + 1čl inulínu — fľaša z domu, cca 250ml. Cez sobotu a nedeľu vynechať.',why:'Šalát riedi moč a posúva pH z 5,25 smerom nahor + B9. Limetka = alkalizácia. Inulín = oxalátová bariéra a lepšie vstrebávanie minerálov. Zeler vyradený.',tag:'praca',weekdayOnly:true,cup:5,dl:2.5,waterType:'urea'},
+  {time:'10:30',icon:'🥤',label:'POHÁR 5 — Urea-Detox šťava',sub:'250g uhorky + 100g hlávkového šalátu (~4-5 veľkých listov) + šťava z ¼ limetky + 1čl inulínu — fľaša z domu, cca 250ml. Cez sobotu a nedeľu vynechať.',why:'Šalát riedi moč a posúva pH z 5,25 smerom nahor + B9. Limetka = alkalizácia. Inulín = oxalátová bariéra a lepšie vstrebávanie minerálov. Zeler vyradený.',tag:'praca',weekdayOnly:true,cup:5,dl:2.5,waterType:'urea'},
   {time:'11:30',icon:'☀️',label:'Obed v jedálni',sub:'Pozri Jedálniček → dnešné odporúčanie — BEZ omáčok. ⚠️ Po jedle NECHAJ 15 MIN PAUZU pred pitím — nezrieď žalúdočnú kyselinu! Jedz pomaly, dobre požuj.',why:'Biela ryba/kura na prírodno + zelenina + ½ prílohy',tag:'praca',weekdayOnly:true},
   {time:'11:30',icon:'🍳',label:'Varenie obeda doma',sub:'Pozri Jedálniček → dnešný deň',why:'Víkend = doma varené, plná kontrola nad ingredienciami.',tag:'dom',weekendOnly:true},
   {time:'12:00',icon:'💊',label:'Koenzým Q10 + Vitamín E',sub:'Po obede — nie nalačno, zapiť len trochou vody',why:'Motor mitochondrií. Rozpustný v tukoch = musí byť s jedlom.',tag:'praca'},
   // POHÁR 6 — Mattoni + B9 (elektrolyty odtiaľto preč)
   {time:'12:30',icon:'⚡',label:'POHÁR 6 + B9',sub:'200ml vody z vodovodu + Methylfolát B9 1 tbl — zapiť vodou, nie čajom!',why:'Príliš blízko obeda — čaj a minerálky by prealkalizovali a zhoršili trávenie. B9 znižuje HCY pri Leidene. GymBeam elektrolyty tu už nie sú — zmena na 2×/deň.',tag:'praca',cup:6,dl:2,waterType:'vodovod'},
-  // POHÁR 7 — Mattoni (2h po obede)
-  {time:'13:30',icon:'🏅',label:'POHÁR 7 — Mattoni neperlivá',sub:'250ml Mattoni (neperlivá/nesýtená) — bez citrónu, cca 2h po obede',why:'Alkalizuje moč, dopĺňa elektrolyty. Až cca 2h po jedle — inak by znížila žalúdočnú kyselinu.',tag:'praca',cup:7,dl:2.5,waterType:'mineral'},
-  {time:'14:30',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj + citrón',sub:'300ml + šťava zo ¼ citróna. Voliteľne: trochu medu alebo bazového sirupu.',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! NIE po obede. Podľa rotácie, pridaný citrón. Trocha medu/sirupu = glukóza pre mozog cez deň (mozog vie fungovať iba na glukózu, nie na ketóny) — ale naozaj len trochu.',tag:'praca',cup:8,dl:3,waterType:'caj',teaType:true},
+  // POHÁR 7 — Bylinkový čaj (2h po obede) — 2. zmena: pôvodne Mattoni, teraz čaj
+  {time:'13:30',icon:'🍵',label:'POHÁR 7 — Bylinkový čaj',sub:'250ml bylinkový čaj — bez citrónu, cca 2h po obede',why:'Alkalizuje moč. Až cca 2h po jedle — inak by znížila žalúdočnú kyselinu.',tag:'praca',cup:7,dl:2.5,waterType:'caj',teaType:true},
+  {time:'14:30',icon:'🍵',label:'POHÁR 8 — Bylinkový čaj',sub:'250ml — bez citrónu. Voliteľne: trochu medu alebo bazového sirupu.',why:'Vyplavuje kyselinu močovú. NIE čierny ani zelený čaj! NIE po obede. Podľa rotácie, citrón zrušený (2. zmena). Trocha medu/sirupu = glukóza pre mozog cez deň (mozog vie fungovať iba na glukózu, nie na ketóny) — ale naozaj len trochu.',tag:'praca',cup:8,dl:2.5,waterType:'caj',teaType:true},
   {time:'14:30',icon:'🫁',label:'Bránicové dýchanie v sede',sub:'5 minút — záložka Telo → Dýchanie. Každých 60 minút vstať a pohybovať sa (Leiden!).',why:'V práci nemôžeš ľahnúť — aspoň sed.',tag:'praca'},
   {time:'14:45',icon:'💊',label:'BioMineral Biokomplex (2/3)',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť. NEZAPÍJAŤ.',why:'Bunková hygiena: minerálna rovnováha cez sliznicu.',tag:'praca'},
   // POHÁR 9 — Mattoni + Zinok (elektrolyty odtiaľto preč)
@@ -1541,14 +1540,14 @@ const DAILY_PLAN=[
   {time:'19:45',icon:'🦶',label:'Teplý kúpeľ nôh',sub:'Kúpeľ nôh v teplej vode s NONA/epsomskou soľou (striedať), niekoľko minút — príprava pred aplikáciou Biominerál D6 krému.',why:'Teplo dilatuje póry na chodidlách — zlepšuje vstrebávanie krému (transdermálny bypass).',tag:'dom'},
   {time:'19:55',icon:'🧴',label:'Biominerál D6 krém na chodidlá',sub:'Aplikovať ihneď po kúpeli nôh, kým sú chodidlá ešte teplé a póry otvorené.',why:'Transdermálny bypass — minerály sa vstrebávajú priamo cez pokožku chodidiel.',tag:'dom'},
   {time:'20:00',icon:'⚗️',label:'Graphites CH15',sub:'5 globúl — nechaj rozpustiť v ústach. 10 min nič nejesť/nepiť. Sezónne (júl–august).',why:'Prevencia sebopsoriázy v lete. Nevstrebáva sa cez tráviaci trakt.',tag:'dom',everyOtherDay:true},
-  // POHÁR 12 — Vodovod + keltská soľ (nové, oddelené od citrónovej vody)
-  {time:'20:15',icon:'🍵',label:'POHÁR 12 — Vodovod + keltská soľ',sub:'200ml vlažnej vody z vodovodu + štipka keltskej soli',why:'Večerná mineralizácia.',tag:'dom',cup:12,dl:2,waterType:'vodovod'},
+  // POHÁR 12 — Vodovod (2. zmena: keltská soľ zrušená)
+  {time:'20:15',icon:'🍵',label:'POHÁR 12 — Vodovod',sub:'200ml vlažnej vody z vodovodu',why:'Večerná podpora detoxu. Keltská soľ zrušená (2. zmena).',tag:'dom',cup:12,dl:2,waterType:'vodovod'},
   {time:'20:30',icon:'💊',label:'BioMineral Biokomplex (3/3)',sub:'Rozpustiť v ústach! 10 min pred aj po nič nepiť/nejesť. NEZAPÍJAŤ.',why:'Bunková hygiena: minerálna rovnováha cez sliznicu.',tag:'dom'},
   {time:'20:30',icon:'🧴',label:'Večerná emulzia + infralampa',sub:'',why:'Nočná oprava platničiek. Spustí sa automaticky, keď zapíšeš KM pod 400.',tag:'dom',massageInfo:true,massageType:'evening',lockUntilKmBelow:400},
   {time:'21:00',icon:'🫁',label:'Krokodílie dýchanie — večerné',sub:'5 minút na bruchu — záložka Telo → Dýchanie',why:'Nočná regenerácia platničiek začína uvoľnenou bránicou.',tag:'dom'},
   {time:'21:10',icon:'🌬️',label:'Dych 4-7-8',sub:'4 cykly — záložka Telo → Dýchanie',why:'Alkalizuje krv, upokojuje CNS pred spaním.',tag:'dom'},
-  // POHÁR 13 — Vodovod (NONA soľ vyradená, zostáva len citrón)
-  {time:'21:30',icon:'🧂',label:'POHÁR 13 — Vodovod + citrón',sub:'200ml vody z vodovodu (nechaj 15 min postáť v otvorenom pohári, nech vyprchá chlór) + šťava z ¼ citróna',why:'Chlór vo vodovode prekysľuje — citrón po vyvetraní chlóru alkalizuje. Večerná mineralizácia — doma. NONA soľ tu už nie je.',tag:'dom',cup:13,dl:2,waterType:'vodovod'},
+  // POHÁR 13 — Vodovod (2. zmena: citrón zrušený, NONA soľ dávno vyradená)
+  {time:'21:30',icon:'🧂',label:'POHÁR 13 — Vodovod',sub:'200ml vody z vodovodu (nechaj 15 min postáť v otvorenom pohári, nech vyprchá chlór)',why:'Chlór vo vodovode prekysľuje — vyvetraním sa ho zbavíš. Večerná mineralizácia — doma. Citrón zrušený (2. zmena).',tag:'dom',cup:13,dl:2,waterType:'vodovod'},
   // POHÁR 14 — Vodovod + Mg taurát + B6
   {time:'22:30',icon:'🧂',label:'POHÁR 14 + Mg taurát + B6',sub:'150ml vody z vodovodu (nechaj postáť, nech vyprchá chlór) + Mg taurát + B6 — zapiť trochou vody, Mg nikdy NIE naraz so zinkom! Nevypiť celý, iba zapiť tabletku.',why:'Nočná mineralizácia.',tag:'dom',cup:14,dl:1.5,waterType:'vodovod'},
 ];
@@ -1572,6 +1571,18 @@ function getCupLabel(item){
   if(!item.waterType)return '';
   const lbl=WATER_LABELS[item.waterType];
   return typeof lbl==='function'?lbl():lbl;
+}
+
+// Krátke slovo pre typ nápoja — VŽDY nahrádza druhé "POHÁR" v názve rovnakým slovom, aby to bolo konzistentné
+const CUP_TYPE_WORD={mineral:'MATTONI',caj:'ČAJ',urea:'ŠŤAVA',vodovod:'VODA'};
+// Základné meno, ktoré sa odstráni zo zvyšku textu, nech sa neduplikuje s CUP_TYPE_WORD (napr. "neperlivá", "+ citrón" ostáva, "Mattoni"/"Vodovod" ide preč)
+const CUP_BASE_STRIP={mineral:/^Mattoni\s*/i,caj:/^Bylinkový čaj\s*/i,urea:/^Urea-Detox šťava\s*/i,vodovod:/^Vodovod\s*/i};
+function cupDisplayText(item){
+  let rest=(item.label||'').replace(/^POHÁR\s*\d+\s*/,'').replace(/^—\s*/,'').trim();
+  const stripRe=CUP_BASE_STRIP[item.waterType];
+  if(stripRe)rest=rest.replace(stripRe,'').trim();
+  const tw=CUP_TYPE_WORD[item.waterType]||'';
+  return tw+(rest?' '+rest:'');
 }
 
 function renderDailyChecklist(){
@@ -1638,7 +1649,7 @@ function renderDailyChecklist(){
           <span style="color:${isCurrent&&!checked?'var(--accent)':'var(--text3)'};font-weight:400;font-size:12px;flex-shrink:0;min-width:38px">${item.time}</span>
           <span style="font-size:11px">${item.icon}</span>
           <span style="font-size:14px;font-weight:${isCurrent&&!checked?600:400};color:${checked?'var(--text3)':item.highlight?'var(--accent)':item.cup?cupColor:'var(--text)'};text-decoration:${checked?'line-through':''}">
-            ${item.cup?`🥛 ${item.cup}. pohár · ${item.dl}dl — ${item.label.replace(/^POHÁR \d+ — /,'')}`:item.label}
+            ${item.cup?`🥛 ${item.cup}. pohár · ${item.dl}dl — ${cupDisplayText(item)}`:item.label}
           </span>
           <span style="font-size:10px;color:${tagColor};flex-shrink:0">${tagLabel}</span>
           ${massageBadge}
@@ -2092,7 +2103,7 @@ function init(){
 
   // Aktualizuj info o dnešnom type vody
   const wti=document.getElementById('water-type-info');
-  if(wti)wti.innerHTML=`<strong>Pitný režim ${getWaterEmoji()}:</strong> Poháre 3,4,7 (08:00,09:45,13:30) = Mattoni neperlivá — BEZ citrónu, mimo jedálenského okna a min. 2h od jedla (alkalizuje moč pri dne). Poháre 8,11 (14:30,19:00) = bylinkový čaj + ¼ citróna (podľa rotácie). Pohár 5 (10:30) = Urea-Detox šťava, len PO–PI. Poháre 2,6,9,10,12 = vodovod so suplementom podľa pohára (elektrolyty/B9/zinok/keltská soľ). Poháre 1,13,14 = vodovod (nechaj vyvetrať chlór 15–20 min) — 1 a 13 s citrónom, 1 aj s NONA soľou, 14 s Mg taurátom + B6. Rajec sa už nepije (nízke TDS).<br><strong>BioMineral Biokomplex:</strong> 3×/deň (07:45/14:45/20:30) — rozpustiť v ústach, NEZAPÍJAŤ, 10 min pred/po nič nejesť/nepiť.<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú. Záloha = tlačidlo +3dl nižšie.<br><strong>Na čaj a varenie:</strong> voda z vodovodu je OK.`;
+  if(wti)wti.innerHTML=`<strong>Pitný režim ${getWaterEmoji()}:</strong> Poháre 3,4 (08:00,09:45) = Mattoni neperlivá — BEZ citrónu, mimo jedálenského okna. Poháre 7,8,11 (13:30,14:30,19:00) = bylinkový čaj — 7 a 8 bez citrónu, 11 s ¼ citróna (podľa rotácie). Pohár 5 (10:30) = Urea-Detox šťava, len PO–PI. Poháre 2,6,9,10 = vodovod so suplementom podľa pohára (elektrolyty/B9/zinok). Poháre 1,12,13,14 = vodovod (nechaj vyvetrať chlór 15–20 min) — 1 s citrónom, 12 a 13 bez citrónu/soli, 14 s Mg taurátom + B6. NONA soľ vysadená (2. zmena). Rajec sa už nepije (nízke TDS).<br><strong>BioMineral Biokomplex:</strong> 3×/deň (07:45/14:45/20:30) — rozpustiť v ústach, NEZAPÍJAŤ, 10 min pred/po nič nejesť/nepiť.<br><strong>Poháre:</strong> Odklikávaj poháre v Dennom pláne — automaticky sa započítavajú. Záloha = tlačidlo +3dl nižšie.<br><strong>Na čaj a varenie:</strong> voda z vodovodu je OK.`;
 
   renderPhaseCard();
   renderDailyChecklist();
@@ -2170,7 +2181,7 @@ function renderKupel(){
 
 function updateWaterUI(){
   const t=td();const w=t.water||0;
-  const pct=Math.min(100,(w/40)*100);
+  const pct=Math.min(100,(w/35)*100);
   ['hydration-bar','hydration-bar2'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.width=pct+'%';});
   ['water-label','water-label2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=w.toFixed(1);});
   const gl=document.getElementById('water-glasses');
@@ -2663,7 +2674,7 @@ function updateKPIs(){
   const ws=document.getElementById('kpi-water-status');
   if(w>=35){ws.textContent='✅ Cieľ splnený';ws.className='kpi-status good';}
   else if(w>=20){ws.textContent='⚠️ Zostatok: '+(35-w).toFixed(1)+' dl';ws.className='kpi-status warn';}
-  else{ws.textContent='Cieľ: 38–42 dl denne';ws.className='kpi-status';}
+  else{ws.textContent='Cieľ: 35 dl denne';ws.className='kpi-status';}
   const ph=t.ph;
   if(ph){
     document.getElementById('kpi-ph').innerHTML=ph;
